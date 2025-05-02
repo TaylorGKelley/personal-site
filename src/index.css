@@ -1,0 +1,23 @@
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  src: url('../src/assets/fonts/Inter/Inter-VariableFont_opsz\wght.ttf');
+}
+
+@font-face {
+  font-family: Inter;
+  font-style: italic;
+  src: url('../src/assets/fonts/Inter/Inter-Italic-VariableFont_opsz\wght.ttf');
+}
+
+@font-face {
+  font-family: Inconsolata;
+  src: url('../src/assets/fonts/Inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf');
+}
+
+@import 'tailwindcss';
+
+@theme {
+  --font-inter: Inter;
+  --font-mono: Inconsolata;
+}
