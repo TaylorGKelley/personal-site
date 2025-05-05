@@ -22,6 +22,10 @@
   --font-mono: Inconsolata;
 }
 
+body {
+  @apply font-inter;
+}
+
 h1 {
   @apply text-4xl font-semibold;
   letter-spacing: calc(-0.01 * var(--text-4xl));
