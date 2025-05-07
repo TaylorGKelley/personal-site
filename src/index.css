@@ -20,10 +20,17 @@
 @theme {
   --font-inter: 'Inter';
   --font-mono: Inconsolata;
+
+  --color-green-50: #edf4f2;
+  --color-green-300: #598276;
+  --color-green-500: #31473a;
+  --color-green-600: #394840;
+  --color-green-800: #293733;
+  --color-green-950: #0c201a;
 }
 
 body {
-  @apply font-inter;
+  @apply font-inter bg-green-50;
 }
 
 h1 {
