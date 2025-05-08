@@ -1,29 +1,6 @@
-type HomePageDataType = {
-  link: {
-    linkedIn: string;
-    gitHub: string;
-    resume: string;
-  };
-  about: {
-    text: string;
-  };
-  experience: {
-    data: {
-      title: string;
-      company: string;
-      startDate: Date;
-      endDate: Date;
-    }[];
-  };
-  portfolio: {
-    projects: {
-      imgSrc: string;
-      title: string;
-    }[];
-  };
-};
+import type HomePageData from '../types/HomePageData';
 
-const homePage: HomePageDataType = {
+const homePage: HomePageData = {
   link: {
     linkedIn: 'https://linkedin.com/in/taylor-g-kelley',
     gitHub: 'https://github.com/TaylorGKelley',
@@ -51,12 +28,17 @@ const homePage: HomePageDataType = {
   portfolio: {
     projects: [
       {
-        imgSrc: 'image src',
+        id: 0,
+        imgSrc: '/images/authService.png',
         title: 'Auth Service (API)',
+        description:
+          'A snippet that shows on hover about the authentication api I created to deal with the problem of locally hosted authentication without all of the hassle of setting it up manually. This is just a summary!',
       },
       {
-        imgSrc: 'image src',
+        id: 1,
+        imgSrc: '/images/findMyMoney.png',
         title: 'Project Title',
+        description: 'blah blah blah',
       },
     ],
   },

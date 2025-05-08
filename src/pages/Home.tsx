@@ -2,17 +2,21 @@ import { Link } from 'react-router';
 import data from '../data/homePage';
 import isSameDate from '../utils/isSameDate';
 import { dateFormatOptions } from '../utils/constants/dateFormatOptions';
+import ProjectCard from '../components/ProjectCard';
 
 function Home() {
   return (
     <>
       <header className="mb-9">
         <div className="min-h-48 w-full relative mb-8">
-          <img className="absolute bottom-0 left-0 w-36 h-36 rounded-full bg-green-950" />
+          <img
+            className="absolute bottom-0 left-0 w-36 h-36 rounded-full shadow-xl"
+            src="/images/profile.jpg"
+          />
         </div>
         <h1 className="text-4xl font-semibold mb-4">Hi, I'm Taylor Kelley</h1>
         <h4 className="mb-2">Full-Stack Web Developer</h4>
-        <p>
+        <p className="text-green-300">
           <a href={data.link.linkedIn} target="_blank">
             LinkedIn
           </a>
@@ -59,24 +63,15 @@ function Home() {
         </section>
         <section>
           <h3 className="font-mono">Portfolio</h3>
-          <div className="grid grid-cols-2 px-4">
-            <div className="w-64 h-44 relative">
-              <img src={''} className="absolute inset-0" />
-              <div className="m-2 bg-green-900 opacity-75 rounded-lg">
-                <h5>{'Project Title'}</h5>
-              </div>
-            </div>
-            <div className="w-64 h-44 relative">
-              <img src={''} className="absolute inset-0" />
-              <div className="m-2 bg-green-900 opacity-75 rounded-lg">
-                <h5>{'Project Title'}</h5>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <Link to="/projects" className="">
-                <small>See All Projects...</small>
-              </Link>
-            </div>
+          <div className="grid grid-cols-2 gap-6 px-4">
+            {data.portfolio.projects.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+          <div className="px-4">
+            <Link to="/projects">
+              <small>See All Projects...</small>
+            </Link>
           </div>
         </section>
       </main>

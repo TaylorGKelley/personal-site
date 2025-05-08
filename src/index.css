@@ -30,7 +30,7 @@
 }
 
 body {
-  @apply font-inter bg-green-50;
+  @apply font-inter bg-green-50 text-green-950;
 }
 
 h1 {
