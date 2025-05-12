@@ -16,7 +16,7 @@ function Home() {
         </div>
         <h1 className="text-4xl font-semibold mb-4">Hi, I'm Taylor Kelley</h1>
         <h4 className="mb-2">Full-Stack Web Developer</h4>
-        <p className="text-green-300">
+        <p className="text-green-300 [&>a]:underline">
           <a href={data.link.linkedIn} target="_blank">
             LinkedIn
           </a>
@@ -32,11 +32,11 @@ function Home() {
       </header>
       <main className="flex flex-col gap-8">
         <section>
-          <h3 className="font-mono">About Me</h3>
+          <h3 className="font-mono mb-2">About Me</h3>
           <p>{data.about.text}</p>
         </section>
         <section>
-          <h3 className="font-mono">Experience</h3>
+          <h3 className="font-mono mb-2">Experience</h3>
           <div className="grid grid-cols-2">
             {data.experience.data.map((exp) => (
               <div className="relative pl-3.5 after:content-[''] after:w-[3px] after:rounded-full after:absolute after:inset-y-0 after:left-0 after:bg-green-950 after:h-full">
@@ -62,7 +62,7 @@ function Home() {
           </div>
         </section>
         <section>
-          <h3 className="font-mono">Portfolio</h3>
+          <h3 className="font-mono mb-2">Portfolio</h3>
           <div className="grid grid-cols-2 gap-6 px-4">
             {data.portfolio.projects.map((project) => (
               <ProjectCard project={project} />

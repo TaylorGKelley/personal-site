@@ -1,4 +1,4 @@
-import type Project from './Project';
+import projects from '../data/projects';
 
 type HomePageDataType = {
   link: {
@@ -20,6 +20,12 @@ type HomePageDataType = {
   portfolio: {
     projects: Project[];
   };
+};
+
+type Project = {
+  id: (typeof projects)[number]['id'];
+  imgSrc: string;
+  title: string;
 };
 
 export default HomePageDataType;

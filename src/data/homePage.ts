@@ -28,20 +28,17 @@ const homePage: HomePageData = {
   portfolio: {
     projects: [
       {
-        id: 0,
+        id: 1,
         imgSrc: '/images/authService.png',
         title: 'Auth Service (API)',
-        description:
-          'A snippet that shows on hover about the authentication api I created to deal with the problem of locally hosted authentication without all of the hassle of setting it up manually. This is just a summary!',
       },
       {
-        id: 1,
+        id: 2,
         imgSrc: '/images/findMyMoney.png',
         title: 'Project Title',
-        description: 'blah blah blah',
       },
     ],
   },
-} as const;
+};
 
 export default homePage;

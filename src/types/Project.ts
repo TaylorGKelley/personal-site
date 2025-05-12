@@ -1,8 +1,16 @@
 type Project = {
-  id: number;
-  imgSrc: string;
   title: string;
-  description: string;
+  content: Section[];
+};
+
+export type Section = {
+  heading: string;
+  body: (string | ImageBlock)[];
+};
+export type ImageBlock = {
+  src: string;
+  alt: string;
+  caption?: string;
 };
 
 export default Project;
