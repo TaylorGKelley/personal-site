@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'Funnel-Sans';
+  font-family: 'FunnelSans';
   font-style: normal;
   src: url('../src/assets/fonts/funnel-sans/FunnelSans-VariableFont_wght.ttf');
 }
 
 @font-face {
-  font-family: 'Funnel-Sans';
+  font-family: 'FunnelSans';
   font-style: italic;
   src: url('../src/assets/fonts/funnel-sans/FunnelSans-Italic-VariableFont_wght.ttf');
 }
@@ -14,13 +14,14 @@
 
 @theme {
   --font-sans: 'FunnelSans';
+}
 
-  --color-green-50: #edf4f2;
-  --color-green-300: #598276;
-  --color-green-500: #31473a;
-  --color-green-600: #394840;
-  --color-green-800: #293733;
-  --color-green-950: #0c201a;
+html {
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+.dark {
+  @apply bg-black text-white;
 }
 
 body {
