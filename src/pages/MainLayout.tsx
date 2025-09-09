@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router';
+import NavBar from '../components/NavBar';
 
-function MainLayout() {
+export default function MainLayout() {
   return (
-    <div className="container mx-auto max-w-2xl py-12">
+    <>
+      <NavBar />
       <Outlet />
-    </div>
+    </>
   );
 }
-
-export default MainLayout;

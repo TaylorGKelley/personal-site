@@ -1,25 +1,19 @@
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Funnel-Sans';
   font-style: normal;
-  src: url('../src/assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf');
+  src: url('../src/assets/fonts/funnel-sans/FunnelSans-VariableFont_wght.ttf');
 }
 
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Funnel-Sans';
   font-style: italic;
-  src: url('../src/assets/fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf');
-}
-
-@font-face {
-  font-family: Inconsolata;
-  src: url('../src/assets/fonts/Inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf');
+  src: url('../src/assets/fonts/funnel-sans/FunnelSans-Italic-VariableFont_wght.ttf');
 }
 
 @import 'tailwindcss';
 
 @theme {
-  --font-inter: 'Inter';
-  --font-mono: Inconsolata;
+  --font-sans: 'FunnelSans';
 
   --color-green-50: #edf4f2;
   --color-green-300: #598276;
@@ -30,40 +24,5 @@
 }
 
 body {
-  @apply font-inter bg-green-50 text-green-950;
-}
-
-h1 {
-  @apply text-4xl font-semibold;
-  letter-spacing: calc(-0.01 * var(--text-4xl));
-}
-
-h2 {
-  @apply text-3xl font-semibold;
-  letter-spacing: calc(-0.01 * var(--text-3xl));
-}
-
-h3 {
-  @apply text-2xl font-semibold;
-  letter-spacing: calc(0 * var(--text-2xl));
-}
-
-h4 {
-  @apply text-xl font-medium;
-  letter-spacing: calc(0 * var(--text-xl));
-}
-
-h5 {
-  @apply font-medium;
-  letter-spacing: calc(0.02 * var(--text-base));
-}
-
-p {
-  @apply text-sm;
-  letter-spacing: calc(0.02 * var(--text-sm));
-}
-
-small {
-  @apply text-xs;
-  letter-spacing: calc(-0.01 * var(--text-xs));
+  @apply font-sans;
 }
