@@ -20,10 +20,12 @@ html {
   @apply transition-colors duration-300 ease-in-out;
 }
 
-.dark {
-  @apply bg-black text-white;
+body {
+  @apply font-sans bg-white text-black;
 }
 
-body {
-  @apply font-sans;
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-black text-white;
+  }
 }

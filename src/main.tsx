@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Project from './pages/Project';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
-import { ThemeProvider } from './context/ThemeProvider';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: '/about', Component: About },
       {
-        path: '/project/:projectId',
+        path: '/projects/:projectId',
 
         Component: Project,
       },
@@ -31,8 +30,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <RouterProvider router={router} />
   </StrictMode>
 );

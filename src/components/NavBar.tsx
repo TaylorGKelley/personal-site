@@ -1,20 +1,18 @@
 import { Link } from 'react-router';
-import { ThemeToggle } from './ThemeToggle';
 
 export default function NavBar() {
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center p-12 max-w-[1440px] mx-auto">
       <h3 className="text-2xl font-semibold">Taylor Kelley</h3>
-      <nav className="flex items-center">
-        <ul className="flex gap-12">
+      <nav className="">
+        <ul className="flex gap-12 items-center">
           <li>
             <Link to="/">Work</Link>
           </li>
           <li>
-            <Link to="/">About</Link>
+            <Link to="/about">About</Link>
           </li>
         </ul>
-        <ThemeToggle />
       </nav>
     </header>
   );
