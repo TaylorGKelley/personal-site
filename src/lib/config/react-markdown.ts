@@ -11,7 +11,6 @@ const config: Components = {
   h2: Heading2,
   h3: Heading3,
   p: Paragraph,
-  img: Image,
 };
 
 export default config;
