@@ -1,82 +1,80 @@
 import { Link } from 'react-router';
-import data from '../data/homePage';
-import isSameDate from '../utils/isSameDate';
-import { dateFormatOptions } from '../utils/constants/dateFormatOptions';
-import ProjectCard from '../components/ProjectCard';
+import projects from '../data/projects';
+import workPlaces from '../data/workPlaces';
+import formatDate from '../utils/formatDate';
+import { cn } from '../utils/tw';
+import { ArrowRight } from 'lucide-react';
 
-function Home() {
-  return (
-    <>
-      <header className="mb-9">
-        <div className="min-h-48 w-full relative mb-8">
-          <img
-            className="absolute bottom-0 left-0 w-36 h-36 rounded-full shadow-xl"
-            src="/images/profile.jpg"
-          />
-        </div>
-        <h1 className="text-4xl font-semibold mb-4">Hi, I'm Taylor Kelley</h1>
-        <h4 className="mb-2">Full-Stack Web Developer</h4>
-        <p className="text-green-300 [&>a]:underline">
-          <a href={data.link.linkedIn} target="_blank">
-            LinkedIn
-          </a>
-          <span>{'  /  '}</span>
-          <a href={data.link.gitHub} target="_blank">
-            GitHub
-          </a>
-          <span>{'  /  '}</span>
-          <a href={data.link.resume} download="Taylor Kelley | Resume.pdf">
-            Resume
-          </a>
-        </p>
-      </header>
-      <main className="flex flex-col gap-8">
-        <section>
-          <h3 className="font-mono mb-2">About Me</h3>
-          <p>{data.about.text}</p>
-        </section>
-        <section>
-          <h3 className="font-mono mb-2">Experience</h3>
-          <div className="grid grid-cols-2">
-            {data.experience.data.map((exp) => (
-              <div className="relative pl-3.5 after:content-[''] after:w-[3px] after:rounded-full after:absolute after:inset-y-0 after:left-0 after:bg-green-950 after:h-full">
-                <h5>{exp.title}</h5>
-                <div className="pl-1 mt-1">
-                  <p className="font-mono">{exp.company}</p>
-                  <p className="text-green-950">
-                    <small>{`${exp.startDate.toLocaleDateString(
-                      'en-US',
-                      dateFormatOptions
-                    )} - ${
-                      isSameDate(exp.endDate, new Date(Date.now()))
-                        ? 'Present'
-                        : exp.endDate.toLocaleDateString(
-                            'en-US',
-                            dateFormatOptions
-                          )
-                    }`}</small>
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section>
-          <h3 className="font-mono mb-2">Portfolio</h3>
-          <div className="grid grid-cols-2 gap-6 px-4">
-            {data.portfolio.projects.map((project) => (
-              <ProjectCard project={project} />
-            ))}
-          </div>
-          <div className="px-4">
-            <Link to="/projects">
-              <small>See All Projects...</small>
-            </Link>
-          </div>
-        </section>
-      </main>
-    </>
-  );
+export default function Home() {
+	return (
+		<main className='flex flex-col gap-8 max-w-5xl mx-auto'>
+			<section className='flex justify-center items-center sm:py-32 py-20 px-4'>
+				<h1 className='text-6xl max-lg:sm:text-[calc(3*1.4vw+1rem)] max-sm:text-4xl'>
+					Taylor Kelley is a Full Stack Software Developer working at{' '}
+					<span className='text-gray-500 dark:text-gray-400'>
+						Alabama's Law Enforcement Agency
+					</span>
+				</h1>
+			</section>
+			<section className='grid gap-36 py-20 px-4'>
+				{projects.map((project, i) => (
+					<div className='grid md:grid-cols-2 items-center md:gap-24 gap-8 '>
+						<img
+							src={project.coverImageSrc}
+							className={cn(
+								'object-cover max-w-md w-full aspect-video h-full max-md:mx-auto',
+								{
+									'md:order-2': i % 2 != 0,
+								}
+							)}
+						/>
+						<div
+							className={cn(
+								'grid gap-4 max-md:mx-auto max-w-md max-md:text-center',
+								{
+									'md:order-1': i % 2 != 0,
+								}
+							)}>
+							<h3 className='text-4xl '>{project.title}</h3>
+							<p className='text-xl '>{project.description}</p>
+							<Link
+								to={`projects/${project.id}`}
+								className='flex gap-2 hover:gap-3 transition-all ease-in-out items-center hover:underline underline-offset-4 max-md:mx-auto'
+								viewTransition>
+								<span>Learn More</span>
+								<ArrowRight className='size-4' />
+							</Link>
+						</div>
+					</div>
+				))}
+			</section>
+			<section>
+				<h3 className='font-bold text-5xl px-2 md:text-6xl text-gray-400 dark:text-gray-500'>
+					Where I Worked
+				</h3>
+				<div className='grid gap-36 py-24 px-4'>
+					{workPlaces.map((workPlace) => (
+						<div className='grid md:grid-cols-2 md:gap-16 gap-4'>
+							<h4 className='md:text-4xl text-3xl italic'>
+								{workPlace.jobTitle}
+							</h4>
+							<div className='grid gap-4'>
+								<h5 className='text-2xl max-md:text-gray-300 max-md:text-xl'>
+									{workPlace.company}
+								</h5>
+								<p className='text-gray-600 dark:text-gray-300'>
+									{workPlace.description}
+								</p>
+								<p className='text-gray-600 dark:text-gray-300 italic'>{`${
+									workPlace.location
+								} - ${formatDate(workPlace.startDate)} - ${
+									workPlace.endDate ? formatDate(workPlace.endDate) : 'Present'
+								}`}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</section>
+		</main>
+	);
 }
-
-export default Home;

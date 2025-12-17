@@ -1,42 +1,38 @@
 import { Link, useParams } from 'react-router';
 import projects from '../data/projects';
-import invalidProjectData from '../data/projects/invalidProject';
-import { type ImageBlock as ImageBlockType } from '../types/Project';
-import ImageBlock from '../components/ImageBlock';
+import { ArrowLeft } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import config from '../lib/config/react-markdown';
 
-function Project() {
-  const params = useParams<{ projectId: string }>();
-  const project =
-    params.projectId &&
-    (projects.map((entry) => entry.id) as number[]).includes(
-      parseInt(params.projectId)
-    )
-      ? projects.find((project) => project.id === parseInt(params.projectId!))!
-          .project
-      : invalidProjectData;
+export default function Project() {
+	const params = useParams<{ projectId: string }>();
 
-  return (
-    <>
-      <header>
-        <Link to="/">{'<- Home'}</Link>
-        <h1 className="font-mono">{project.title}</h1>
-      </header>
-      <main>
-        {project.content.map((section) => (
-          <section>
-            <h3 className="font-mono">{section.heading}</h3>
-            {section.body.map((block) =>
-              typeof block === 'string' ? (
-                <p>{block}</p>
-              ) : (
-                <ImageBlock image={block as ImageBlockType} />
-              )
-            )}
-          </section>
-        ))}
-      </main>
-    </>
-  );
+	const project = projects.find((project) => project.id === params.projectId);
+
+	if (!project) {
+		return (
+			<main className='flex flex-col items-center justify-center gap-4 max-w-5xl mx-auto h-[70svh] p-4'>
+				<h1 className='text-4xl font-extralight'>
+					<i>404:&nbsp;</i>A project with that id doesn't exist
+				</h1>
+				<Link
+					to='/'
+					viewTransition
+					className='underline underline-offset-4 flex gap-2 items-center text-lg text-gray-400'>
+					<ArrowLeft className='size-5' />
+					<i>Back</i>
+				</Link>
+			</main>
+		);
+	}
+
+	return (
+		<main className='flex flex-col gap-8 max-w-5xl mx-auto p-4'>
+			<img src={project.coverImageSrc} className='w-full object-cover h-80' />
+			<h1 className='text-5xl'>{project.title}</h1>
+			<article>
+				<ReactMarkdown components={config}>{project.markdown}</ReactMarkdown>
+			</article>
+		</main>
+	);
 }
-
-export default Project;

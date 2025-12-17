@@ -1,69 +1,64 @@
 @font-face {
-  font-family: 'Inter';
+  font-family: 'FunnelSans';
   font-style: normal;
-  src: url('../src/assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf');
+  src: url('../src/assets/fonts/funnel-sans/FunnelSans-VariableFont_wght.ttf');
 }
 
 @font-face {
-  font-family: 'Inter';
+  font-family: 'FunnelSans';
   font-style: italic;
-  src: url('../src/assets/fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf');
-}
-
-@font-face {
-  font-family: Inconsolata;
-  src: url('../src/assets/fonts/Inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf');
+  src: url('../src/assets/fonts/funnel-sans/FunnelSans-Italic-VariableFont_wght.ttf');
 }
 
 @import 'tailwindcss';
 
 @theme {
-  --font-inter: 'Inter';
-  --font-mono: Inconsolata;
+  --font-sans: 'FunnelSans';
 
-  --color-green-50: #edf4f2;
-  --color-green-300: #598276;
-  --color-green-500: #31473a;
-  --color-green-600: #394840;
-  --color-green-800: #293733;
-  --color-green-950: #0c201a;
+  --animate-wave: wave-animation 1.5s linear;
+}
+
+html {
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 body {
-  @apply font-inter bg-green-50 text-green-950;
+  @apply font-sans bg-white text-black;
 }
 
-h1 {
-  @apply text-4xl font-semibold;
-  letter-spacing: calc(-0.01 * var(--text-4xl));
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-black text-white;
+  }
 }
 
-h2 {
-  @apply text-3xl font-semibold;
-  letter-spacing: calc(-0.01 * var(--text-3xl));
-}
-
-h3 {
-  @apply text-2xl font-semibold;
-  letter-spacing: calc(0 * var(--text-2xl));
-}
-
-h4 {
-  @apply text-xl font-medium;
-  letter-spacing: calc(0 * var(--text-xl));
-}
-
-h5 {
-  @apply font-medium;
-  letter-spacing: calc(0.02 * var(--text-base));
-}
-
-p {
-  @apply text-sm;
-  letter-spacing: calc(0.02 * var(--text-sm));
-}
-
-small {
-  @apply text-xs;
-  letter-spacing: calc(-0.01 * var(--text-xs));
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+    transform-origin: 70% 70%;
+  }
+  16% {
+    transform: rotate(14deg);
+    transform-origin: 70% 70%;
+  }
+  32% {
+    transform: rotate(-8deg);
+    transform-origin: 70% 70%;
+  }
+  49% {
+    transform: rotate(14deg);
+    transform-origin: 70% 70%;
+  }
+  68% {
+    transform: rotate(-4deg);
+    transform-origin: 70% 70%;
+  }
+  84% {
+    transform: rotate(14deg);
+    transform-origin: 70% 70%;
+  }
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 70% 70%;
+  }
 }
