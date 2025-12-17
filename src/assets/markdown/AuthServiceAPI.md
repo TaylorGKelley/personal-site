@@ -1,20 +1,34 @@
-## Why
+Visit the repository at: [TayLabs/Auth](https://github.com/TayLabs/Auth)
 
-The goal of this project is to create a flexible yet opinionated open-source REST Api that can be used in place of services like Kinde, Auth0, or Supabase. It will allow the creator of a software product to self host their auth service, owning all of their users data, all for free.
+# TayLabs/Auth
 
-## What
+A self-hosted, open-source authentication service I built to provide secure user management for personal projects, serving as an alternative to commercial providers like Auth0 or Kinde.
 
-This service provides a few basic functions including, but not limited too, the following:
+## Overview
 
-- Login/signup and basic authentication routes
-- Session tracking to know which device sessions are active for a users account
-- TOTP 2-factor authentication (compatible with most authenticator apps)
-- Email verification after signup
-- Ability to force password reset and/or logout of all devices for users
-- Basic profile information and profile photos (coming soon)
+This REST API handles all aspects of user authentication and account management, allowing developers to own their user data without relying on third-party services. It's part of the TayLabs microservices suite, designed for flexibility, security, and ease of deployment.
 
-## Where
+## Key Features
 
-This service includes running alongside a few other 'micro-services' under the TayLabs suite, including Mail, Keys (api-key auth), and Media. This allows for separation of concerns so that the Auth service is only responsible for Authentication and nothing more, giving more flexibility and increasing maintainability.
+- **User Authentication**: Secure signup, login, and session management with JWT tokens.
+- **Security Enhancements**: Two-factor authentication (TOTP), email verification, password resets, and CSRF protection.
+- **Account Management**: Profile updates, device session tracking, and account deletion.
+- **Administrative Controls**: Role-based access control (RBAC) for managing services, roles, and permissions.
+- **Rate Limiting & Monitoring**: Built-in protection against abuse with Redis-backed rate limiting and logging.
 
-It is for use within a self-hosted, or externally hosted environment. Whilest some features are still in development, the service is actively functional and can easily be deployed via a docker-compose container.
+## Technologies Used
+
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Caching**: Redis
+- **Security**: Argon2, JWT, Helmet, Csurf, and Zod for validation
+- **Deployment**: Docker/Docker Compose
+- **Testing**: Jest
+
+## What I Learned
+
+Building this service challenged me to implement robust security practices, manage complex authentication flows, and design scalable APIs and micro-services. I gained experience with modern TypeScript development, database schema design, and integrating microservices.
+
+## Deployment
+
+Easily deployable via Docker Compose for self-hosted environments. Includes setup for development and production with automated database migrations.
