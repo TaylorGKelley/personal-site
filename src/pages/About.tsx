@@ -2,11 +2,11 @@ import { DownloadIcon } from 'lucide-react';
 
 export default function About() {
 	return (
-		<main className='flex flex-col gap-8 max-w-5xl mx-auto'>
+		<main className='flex flex-col gap-8 max-w-5xl mx-auto p-2'>
 			<section className='grid sm:grid-cols-2 md:gap-16 gap-8 sm:py-36 py-20'>
 				<img
-					src='/images/about-me.jpg'
-					className='min-w-sm w-full h-full object-cover'
+					src='/images/about-me.png'
+					className='min-w-sm w-full h-full object-cover rounded-full'
 				/>
 				<div>
 					<h3 className='flex gap-4 items-center mb-4 text-4xl font-semibold group'>

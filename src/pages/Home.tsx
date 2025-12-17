@@ -49,7 +49,7 @@ export default function Home() {
 				))}
 			</section>
 			<section>
-				<h3 className='font-bold text-5xl px-2 md:text-6xl text-gray-300 dark:text-gray-600'>
+				<h3 className='font-bold text-5xl px-2 md:text-6xl text-gray-400 dark:text-gray-500'>
 					Where I Worked
 				</h3>
 				<div className='grid gap-36 py-24 px-4'>

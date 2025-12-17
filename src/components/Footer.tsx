@@ -3,7 +3,7 @@ export default function Footer() {
 		<footer className='py-20 flex flex-col gap-2 text-center text-gray-600 dark:text-gray-300'>
 			<div>
 				<a
-					href='mailto:taylorgkelley@outlook.com'
+					href='mailto:contact@taylorkelley.dev'
 					className='hover:underline underline-offset-4'>
 					Email
 				</a>
