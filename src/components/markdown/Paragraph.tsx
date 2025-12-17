@@ -12,4 +12,12 @@ function UnorderedList({ children }: React.PropsWithChildren) {
 	return <ul className='ml-6 my-4 list-disc'>{children}</ul>;
 }
 
-export { Paragraph, List, UnorderedList };
+function Link({ children, href }: React.PropsWithChildren & { href: string }) {
+	return (
+		<a href={href} target='_blank' className='text-underline'>
+			{children}
+		</a>
+	);
+}
+
+export { Paragraph, List, UnorderedList, Link };

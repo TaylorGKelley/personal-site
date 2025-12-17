@@ -1,6 +1,4 @@
-Visit the repository at: [TayLabs/Auth](https://github.com/TayLabs/Auth)
-
-# TayLabs/Auth
+Visit the repository at: [https://github.com/TayLabs/Auth](https://github.com/TayLabs/Auth)
 
 A self-hosted, open-source authentication service I built to provide secure user management for personal projects, serving as an alternative to commercial providers like Auth0 or Kinde.
 
