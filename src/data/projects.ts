@@ -31,6 +31,6 @@ const projects = [
 			'Secure and clean solution for managing user accounts and security in your application.',
 		markdown: AuthServiceApiMarkdown,
 	},
-] as Project[];
+] satisfies Project[];
 
 export default projects;
