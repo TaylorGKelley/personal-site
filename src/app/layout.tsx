@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Azeret_Mono } from "next/font/google";
+import { Inter_Tight, Azeret_Mono } from "next/font/google";
 
 import "./globals.css";
 
-const interSans = Inter({
+const interSans = Inter_Tight({
   variable: "--font-inter-sans",
   subsets: ["latin"],
 });
