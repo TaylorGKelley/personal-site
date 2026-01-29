@@ -8,7 +8,7 @@ export default function Home() {
         <motion.div
           animate={{ scale: 1, opacity: 1 }}
           initial={{ opacity: 0, scale: 0 }}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ rotate: 5, scale: 1.05 }}
           transition={{
             type: "spring",
             visualDuration: 0.25,
@@ -27,13 +27,19 @@ export default function Home() {
         <motion.div
           animate={{ scale: 1, opacity: 1 }}
           initial={{ opacity: 0, scale: 0 }}
-          whileHover={{ scale: 1.1 }}
-          transition={{
-            type: "spring",
-            visualDuration: 0.25,
-            bounce: 0.27,
-            delay: 0.05, // Delay to allow image to animate slightly before the text
+          whileHover={{ scale: 0.975, cursor: "grab" }}
+          whileTap={{ cursor: "grabbing" }}
+          drag
+          // dragDirectionLock
+          dragConstraints={{
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
           }}
+          dragTransition={{ bounceStiffness: 500, bounceDamping: 15 }}
+          dragElastic={0.2}
+          whileDrag={{ cursor: "grabbing" }}
         >
           <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
             <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
@@ -59,11 +65,17 @@ export default function Home() {
           </div>
         </motion.div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
+          <motion.a
             className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{
+              scale: 1.05,
+            }}
+            whileTap={{
+              scale: 0.95,
+            }}
           >
             <Image
               className="dark:invert"
@@ -73,15 +85,21 @@ export default function Home() {
               height={16}
             />
             Deploy Now
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{
+              scale: 1.05,
+            }}
+            whileTap={{
+              scale: 0.95,
+            }}
           >
             Documentation
-          </a>
+          </motion.a>
         </div>
       </main>
     </div>
