@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter_Tight, Azeret_Mono } from "next/font/google";
 
 import "./globals.css";
+import NavBar from "../components/navbar";
+import Footer from "../components/footer";
 
 const interSans = Inter_Tight({
   variable: "--font-inter-sans",
@@ -28,7 +30,9 @@ export default function RootLayout({
       <body
         className={`${interSans.variable} ${azeretMono.variable} antialiased`}
       >
+        <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );
