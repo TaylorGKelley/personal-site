@@ -1,14 +1,14 @@
 "use client";
 
 import * as motion from "motion/react-client";
-import Link from "next/link";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
-import infoConfig from "../data/info.config";
-import formatDate from "../utils/formatDate";
-import { ArrowRightIcon } from "lucide-react";
-import { cn } from "../utils/tw";
-import Image from "next/image";
+import { ReactIcon } from "../components/ui/icons/react-icon";
+import { NextJSIcon } from "../components/ui/icons/next-js-icon";
+import { NodeJSIcon } from "../components/ui/icons/node-js-icon";
+import { TailwindIcon } from "../components/ui/icons/tailwind-icon";
+import { GraphQLIcon } from "../components/ui/icons/graphql-icon";
+import { PostgresIcon } from "../components/ui/icons/postgres-icon";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -29,8 +29,8 @@ export default function Home() {
             onAnimationComplete={() => setShowIntro(false)}
             className="bg-gray-700 z-50 fixed inset-0 overflow-clip h-dvh"
           >
-            <div className="min-h-dvh w-screen flex justify-center items-center flex-col gap-8">
-              <h1 className="text-7xl font-mono font-bold text-white">
+            <div className="min-h-dvh w-screen flex justify-center items-center flex-col gap-12">
+              <h1 className="text-7xl font-mono font-extrabold text-white">
                 taylor_kelley
               </h1>
               <ul className="grid grid-cols-3 gap-6 text-white text-xl">
@@ -76,7 +76,37 @@ export default function Home() {
         )}
       </AnimatePresence>
       <main className="flex flex-col gap-8 max-w-5xl mx-auto">
-        <section></section>
+        <motion.section className="flex flex-col gap-16 justify-center items-center min-h-[60dvh]">
+          <div className="w-fit">
+            <h3 className="font-light text-3xl text-left">taylor is a</h3>
+            <h1 className="font-extrabold text-5xl font-mono tracking-tighter">
+              Full-Stack Software Engineer
+            </h1>
+            <h2 className="font-light text-4xl text-right">
+              crafting experiences for the web
+            </h2>
+          </div>
+          <div className="flex gap-8">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <ReactIcon />
+            </div>
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <NextJSIcon className="size-18 text-gray-500" />
+            </div>
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <NodeJSIcon />
+            </div>
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <TailwindIcon />
+            </div>
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <GraphQLIcon />
+            </div>
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+              <PostgresIcon className="size-15" />
+            </div>
+          </div>
+        </motion.section>
       </main>
     </>
   );
