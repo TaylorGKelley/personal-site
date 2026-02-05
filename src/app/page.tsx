@@ -9,6 +9,8 @@ import { NodeJSIcon } from "../components/ui/icons/node-js-icon";
 import { TailwindIcon } from "../components/ui/icons/tailwind-icon";
 import { GraphQLIcon } from "../components/ui/icons/graphql-icon";
 import { PostgresIcon } from "../components/ui/icons/postgres-icon";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -76,9 +78,12 @@ export default function Home() {
         )}
       </AnimatePresence>
       <main className="flex flex-col gap-8 max-w-5xl mx-auto">
-        <motion.section className="flex flex-col gap-16 justify-center items-center min-h-[60dvh]">
+        <motion.section
+          id="home"
+          className="flex flex-col gap-16 justify-center items-center min-h-[60dvh]"
+        >
           <div className="w-fit">
-            <h3 className="font-light text-3xl text-left">taylor is a</h3>
+            <h2 className="font-light text-3xl text-left">taylor is a</h2>
             <h1 className="font-extrabold text-5xl font-mono tracking-tighter">
               Full-Stack Software Engineer
             </h1>
@@ -107,6 +112,24 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
+        <section id="projects">
+          <h3>Showcased Projects</h3>
+          <Image />
+          <div>
+            {/*Container holding scrollable content */}
+            <div>
+              <h4>Project title</h4>
+              <p>Description of this project as you scroll past them</p>
+            </div>
+            <div>
+              <h4>Project title</h4>
+              <p>Description of this project as you scroll past them</p>
+            </div>
+          </div>
+        </section>
+        <section id="contact" className="h-screen">
+          <Link></Link>
+        </section>
       </main>
     </>
   );
