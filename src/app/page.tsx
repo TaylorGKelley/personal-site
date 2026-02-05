@@ -114,7 +114,7 @@ export default function Home() {
         </motion.section>
         <section id="projects">
           <h3>Showcased Projects</h3>
-          <Image />
+          <Image src="" alt="project image" />
           <div>
             {/*Container holding scrollable content */}
             <div>
@@ -127,8 +127,11 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section id="contact" className="h-screen">
-          <Link></Link>
+        <section id="contact" className="h-screen bg-gray-900 text-gray-50">
+          <Link href="https://github.com/TaylorGKelley">GitHub</Link>
+          <Link href="https://linkedin.com/in/taylor-g-kelley">Linked_In</Link>
+          <Link href="https://youtube.com/@taylorkelley_dev">YouTube</Link>
+          <Link href="/blog">Blog</Link>
         </section>
       </main>
     </>
