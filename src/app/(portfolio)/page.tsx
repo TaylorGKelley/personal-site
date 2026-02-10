@@ -3,12 +3,12 @@
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { ReactIcon } from "../components/ui/icons/react-icon";
-import { NextJSIcon } from "../components/ui/icons/next-js-icon";
-import { NodeJSIcon } from "../components/ui/icons/node-js-icon";
-import { TailwindIcon } from "../components/ui/icons/tailwind-icon";
-import { GraphQLIcon } from "../components/ui/icons/graphql-icon";
-import { PostgresIcon } from "../components/ui/icons/postgres-icon";
+import { ReactIcon } from "@/src/components/ui/icons/react-icon";
+import { NextJSIcon } from "@/src/components/ui/icons/next-js-icon";
+import { NodeJSIcon } from "@/src/components/ui/icons/node-js-icon";
+import { TailwindIcon } from "@/src/components/ui/icons/tailwind-icon";
+import { GraphQLIcon } from "@/src/components/ui/icons/graphql-icon";
+import { PostgresIcon } from "@/src/components/ui/icons/postgres-icon";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -77,10 +77,10 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-      <main className="flex flex-col gap-8 max-w-5xl mx-auto">
+      <main className="flex flex-col gap-8">
         <motion.section
           id="home"
-          className="flex flex-col gap-16 justify-center items-center min-h-[60dvh]"
+          className="flex flex-col gap-16 justify-center items-center min-h-[60dvh] max-w-5xl mx-auto"
         >
           <div className="w-fit">
             <h2 className="font-light text-3xl text-left">taylor is a</h2>
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
-        <section id="projects">
+        <section id="projects" className="max-w-5xl w-full mx-auto">
           <h3>Showcased Projects</h3>
           <Image src="" alt="project image" />
           <div>
@@ -128,10 +128,16 @@ export default function Home() {
           </div>
         </section>
         <section id="contact" className="h-screen bg-gray-900 text-gray-50">
-          <Link href="https://github.com/TaylorGKelley">GitHub</Link>
-          <Link href="https://linkedin.com/in/taylor-g-kelley">Linked_In</Link>
-          <Link href="https://youtube.com/@taylorkelley_dev">YouTube</Link>
-          <Link href="/blog">Blog</Link>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid gap-1 text-8xl font-mono font-black italic">
+              <Link href="https://github.com/TaylorGKelley">GitHub</Link>
+              <Link href="https://linkedin.com/in/taylor-g-kelley">
+                Linked_In
+              </Link>
+              <Link href="https://youtube.com/@taylorkelley_dev">YouTube</Link>
+              <Link href="/blog">Blog</Link>
+            </div>
+          </div>
         </section>
       </main>
     </>
