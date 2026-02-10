@@ -5,7 +5,7 @@ export default function MotionTextShuffle({
   children,
   className,
 }: {
-  children: React.ReactNode;
+  children: string;
   className?: string;
 }) {
   const characters = (children as string).split("");
