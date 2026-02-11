@@ -1,11 +1,12 @@
 import RenderMarkdown from "@/src/components/markdown/render-markdown";
 import { fetchPost, fetchPostSlugs } from "@/src/utils/fetchPosts";
 import formatDate from "@/src/utils/formatDate";
-import ReactMarkdown from "react-markdown";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export const revalidate = 300; // Revalidate every 5 minutes
 
 export async function generateStaticParams(): Promise<
   Awaited<PostPageProps["params"]>[]
@@ -28,16 +29,26 @@ export async function generateStaticParams(): Promise<
 
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
-
   const post = await fetchPost("TaylorGKelley", "personal-blog", `${slug}.md `);
 
   return !post ? (
     <>404</>
   ) : (
     <div className="mx-auto conainer">
-      <section>
+      <section
+        id="title"
+        className="min-h-[40dvh] py-24 flex flex-col justify-center items-center"
+      >
+        <h2 className="text-8xl font-medium text-gray-900 mt-8 mb-4 text-center">
+          {post.title}
+        </h2>
+        <h3 className="text-gray-600 text-xl mb-8 text-center">
+          {formatDate(post.date)}
+        </h3>
+      </section>
+      <section id="heading" className="mb-16">
         {post.youtube_url && (
-          <div className="mx-auto w-min shadow-xl rounded-2xl overflow-hidden">
+          <div className="mx-auto w-min shadow rounded-2xl overflow-hidden">
             <iframe
               width="720"
               height="405"
@@ -49,15 +60,14 @@ export default async function PostPage({ params }: PostPageProps) {
             ></iframe>
           </div>
         )}
-        <h2 className="text-8xl font-medium text-gray-900 mt-8 mb-4 text-center">
-          {post.title}
-        </h2>
-        <h3 className="text-gray-600 text-xl mb-8 text-center">
-          {formatDate(post.date)}
-        </h3>
       </section>
-      <section className="container mx-auto max-w-4xl">
-        <RenderMarkdown>{post.content}</RenderMarkdown>
+      <section id="flex gap-8">
+        <aside>
+          <nav></nav>
+        </aside>
+        <article id="post" className="container mx-auto max-w-4xl">
+          <RenderMarkdown>{post.content}</RenderMarkdown>
+        </article>
       </section>
     </div>
   );
