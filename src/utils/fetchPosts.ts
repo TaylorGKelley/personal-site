@@ -1,7 +1,7 @@
 import matter from "gray-matter";
 
 export type Post = {
-  youtube_url?: string;
+  youtube_url: string;
   title: string;
   description: string;
   date: Date;
@@ -44,7 +44,7 @@ export async function fetchPostSlugs(
 
     // Step 3: Filter for Markdown files
     const posts = (data as GitHubFile[])
-      .filter((file) => file.type === "blob" && file.name.endsWith(".md"))
+      .filter((file) => file.type === "file" && file.name.endsWith(".md"))
       .map((file) => file.name.replace(/\.md$/, "")); // Return file names as slugs
 
     return posts;

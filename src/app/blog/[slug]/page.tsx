@@ -19,7 +19,7 @@ export async function generateStaticParams(): Promise<
     });
 
     return slugs.map((slug) => ({
-      slug: slug.replace(/\.md$/, "").replace("/posts/", ""),
+      slug,
     }));
   } catch (error) {
     console.error("Error fetching posts:", error);
