@@ -37,16 +37,17 @@ export default async function PostPage({ params }: PostPageProps) {
     <div className="mx-auto conainer">
       <section
         id="title"
-        className="min-h-[40dvh] py-24 flex flex-col justify-center items-center"
+        className="min-h-[40dvh] py-16 flex flex-col justify-center items-center"
       >
-        <h2 className="text-8xl font-medium text-gray-900 mt-8 mb-4 text-center">
+        <h2 className="text-6xl font-black font-mono text-gray-900 mt-8 text-center mb-6">
           {post.title}
         </h2>
-        <h3 className="text-gray-600 text-xl mb-8 text-center">
+        <h3 className="text-gray-600 text-2xl mb-6">{post.description}</h3>
+        <h4 className="text-gray-600 text-xl mb-8 text-center">
           {formatDate(post.date)}
-        </h3>
+        </h4>
       </section>
-      <section id="heading" className="mb-16">
+      <section id="heading" className="mb-24">
         {post.youtube_url && (
           <div className="mx-auto w-min shadow rounded-2xl overflow-hidden">
             <iframe
