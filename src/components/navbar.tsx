@@ -9,7 +9,7 @@ export default function NavBar() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="flex justify-between items-center p-4 md:p-12 max-w-360 mx-auto">
+    <header className="flex justify-between items-center p-4 md:p-12 max-w-360 mx-auto bg-gray-100">
       <h3 className="text-lg font-mono font-semibold">taylor_kelley</h3>
       <button onClick={() => setOpen(true)} className="cursor-pointer">
         menu

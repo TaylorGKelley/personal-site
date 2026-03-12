@@ -10,7 +10,7 @@ import { TailwindIcon } from "@/src/components/ui/icons/tailwind-icon";
 import { GraphQLIcon } from "@/src/components/ui/icons/graphql-icon";
 import { PostgresIcon } from "@/src/components/ui/icons/postgres-icon";
 import Link from "next/link";
-import { ParallaxImage } from "../components/ui/parallax-image";
+import Card from "../components/ui/card";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -80,7 +80,7 @@ export default function Home() {
       <main className="flex flex-col gap-8">
         <motion.section
           id="home"
-          className="flex flex-col gap-16 justify-center items-center min-h-[60dvh] max-w-5xl mx-auto"
+          className="flex flex-col gap-16 justify-center items-center min-h-[60dvh] max-w-7xl container mx-auto"
         >
           <div className="w-fit">
             <h2 className="font-light text-3xl text-left">taylor is a</h2>
@@ -92,143 +92,166 @@ export default function Home() {
             </h2>
           </div>
           <div className="flex gap-8">
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <ReactIcon />
             </div>
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <NextJSIcon className="size-18 text-gray-500" />
             </div>
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <NodeJSIcon />
             </div>
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <TailwindIcon />
             </div>
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <GraphQLIcon />
             </div>
-            <div className="w-24 aspect-square flex items-center justify-center bg-gray-100 text-gray-400 shadow-inner rounded-full">
+            <div className="w-24 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-inner rounded-full">
               <PostgresIcon className="size-15" />
             </div>
           </div>
         </motion.section>
         <section
           id="projects"
-          className="max-w-5xl w-full mx-auto py-8 grid grid-cols-[1fr_auto] gap-16"
+          className="max-w-7xl container w-full mx-auto py-8 grid grid-cols-2 gap-16"
         >
-          <aside className="pb-8">
-            <div className="sticky top-20">
-              <h3 className="font-mono font-medium text-gray-800 text-5xl italic mb-20">
-                Showcased Projects
-              </h3>
-              <ParallaxImage
-                src="images/taylabs-auth.jpeg"
-                alt="project image"
-                width={500}
-                height={400}
-                className="shadow bg-gray-700 rounded-3xl w-full"
-              />
-            </div>
-          </aside>
-          <div className="flex flex-col gap-30">
-            <div className="grid gap-76 mt-72 mb-8 text-right">
-              {/*Container holding scrollable content */}
-              <div>
-                <h4 className="text-4xl leading-10 font-mono font-light">
-                  TayLabs Auth
-                </h4>
-                <p className="text-gray-800 font-light">
-                  own your user data, without the hastle
+          <Card className="col-span-2">
+            <h2 className="text-5xl font-mono font-black italic mb-6">
+              Auth and User Management API
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-6">
+                <p className="text-xl text-gray-600">
+                  Easy, self-hostable user management to have ownership over
+                  your data without writing single line of code
                 </p>
-                <Link
-                  href="projects/taylabs-auth"
-                  className="text-xs leading-4 font-light"
-                >
-                  <span className="underline">learn more</span>
-                  {" →"}
-                </Link>
+                <div className="flex gap-4">
+                  <Link
+                    href=""
+                    className="cursor-pointer px-4 py-3 bg-gray-800 border border-gray-800 hover:bg-gray-700 hover:border-gray-700 transition-colors text-gray-50 rounded-lg"
+                  >
+                    Preview
+                  </Link>
+                  <Link
+                    href=""
+                    className="cursor-pointer px-4 py-3 border bg-gray-200/0 transition-colors hover:bg-gray-200/30 border-gray-600 text-gray-600 rounded-lg"
+                  >
+                    Learn More
+                  </Link>
+                </div>
               </div>
-              <div>
-                <h4 className="text-4xl leading-10 font-mono font-light">
-                  Zero-hastle Blog
-                </h4>
-                <p className="text-gray-800 font-light">
-                  an easy to manage markdown based blog
-                </p>
-                <Link
-                  href="projects/zero-hastle-blog"
-                  className="text-xs leading-4 font-light"
-                >
-                  <span className="underline">learn more</span>
-                  {" →"}
-                </Link>
-              </div>
-              <div>
-                <h4 className="text-4xl leading-10 font-mono font-light">
-                  Rich Text Editor
-                </h4>
-                <p className="text-gray-800 font-light">
-                  c# based rich text component for the web
-                </p>
-                <Link
-                  href="projects/rich-text-editor"
-                  className="text-xs leading-4 font-light"
-                >
-                  <span className="underline">learn more</span>
-                  {" →"}
-                </Link>
+              <div className="flex items-center">
+                <div className="z-30 aspect-video w-96 bg-gray-500 mx-auto rounded-2xl shadow-md"></div>
+                <div className="z-20 -ml-36 aspect-video w-72 bg-gray-400 mx-auto rounded-2xl shadow-md"></div>
+                <div className="z-10 -ml-30 aspect-video w-56 bg-gray-300 mx-auto rounded-2xl shadow-md"></div>
               </div>
             </div>
-            <div className="flex justify-end">
-              <Link href="projects" className="underline italic text-gray-700">
-                See all projects
+          </Card>
+          <Card className="grid gap-10">
+            <h3 className="text-4xl font-mono font-black italic">
+              Static Markdown-based Blog
+            </h3>
+            <div className="flex gap-4 mx-auto">
+              <Link
+                href=""
+                className="cursor-pointer px-4 py-3 bg-gray-800 border border-gray-800 hover:bg-gray-700 hover:border-gray-700 transition-colors text-gray-50 rounded-lg"
+              >
+                Preview
+              </Link>
+              <Link
+                href=""
+                className="cursor-pointer px-4 py-3 border bg-gray-200/0 transition-colors hover:bg-gray-200/30 border-gray-600 text-gray-600 rounded-lg"
+              >
+                Learn More
               </Link>
             </div>
-          </div>
+            <div className="aspect-video w-96 bg-gray-500 mx-auto rounded-2xl shadow-md"></div>
+          </Card>
+          <Card className="grid gap-10">
+            <h3 className="text-4xl font-mono font-black italic">
+              Rich Text Editor for Blazor
+            </h3>
+            <div className="flex gap-4 mx-auto">
+              <Link
+                href=""
+                className="cursor-pointer px-4 py-3 bg-gray-800 border border-gray-800 hover:bg-gray-700 hover:border-gray-700 transition-colors text-gray-50 rounded-lg"
+              >
+                Preview
+              </Link>
+              <Link
+                href=""
+                className="cursor-pointer px-4 py-3 border bg-gray-200/0 transition-colors hover:bg-gray-200/30 border-gray-600 text-gray-600 rounded-lg"
+              >
+                Learn More
+              </Link>
+            </div>
+            <div className="aspect-video w-96 bg-gray-500 mx-auto rounded-2xl shadow-md"></div>
+          </Card>
         </section>
         <section
           id="contact"
-          className="h-screen bg-gray-900 text-gray-50 grid grid-cols-2 justify-center items-center"
+          className="py-24 bg-gray-900 text-gray-50 grid grid-cols-2 justify-center items-center"
         >
           <div className="max-w-5xl mx-auto">
             <div className="grid gap-1 text-8xl font-mono font-black italic">
-              <Link href="https://github.com/TaylorGKelley">GitHub</Link>
-              <Link href="https://linkedin.com/in/taylor-g-kelley">
+              <Link
+                href="https://github.com/TaylorGKelley"
+                className="hover:translate-x-2 hover:rotate-2 transition-transform"
+              >
+                GitHub
+              </Link>
+              <Link
+                href="https://linkedin.com/in/taylor-g-kelley"
+                className="hover:translate-x-2 hover:-rotate-2 transition-transform"
+              >
                 Linked_In
               </Link>
-              <Link href="https://youtube.com/@taylorkelley_dev">YouTube</Link>
-              <Link href="/blog">Blog</Link>
+              <Link
+                href="https://youtube.com/@taylorkelley_dev"
+                className="hover:translate-x-2 hover:rotate-1 transition-transform"
+              >
+                YouTube
+              </Link>
+              <Link
+                href="/blog"
+                className="hover:translate-x-2 hover:-rotate-3 transition-transform"
+              >
+                Blog
+              </Link>
             </div>
           </div>
           <div>
-            <h4 className="text-4xl font-mono font-light italic">Contact Me</h4>
-            <form>
-              <div>
-                <label htmlFor="email">email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
-              <div>
-                <label htmlFor="email">email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
-              <div>
-                <label htmlFor="email">email</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  placeholder="What's up?"
-                />
-              </div>
+            <h4 className="text-6xl font-mono font-semibold italic mb-8">
+              Contact Me
+            </h4>
+            <form className="flex flex-col gap-6 max-w-md">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                className="px-4 py-2 w-full rounded-2xl border-gray-700 border bg-gray-800 text-gray-50 placeholder:text-gray-300"
+              />
+              <input
+                type="subject"
+                id="subject"
+                name="subject"
+                placeholder="Subject"
+                className="px-4 py-2 w-full rounded-2xl border-gray-700 border bg-gray-800 text-gray-50 placeholder:text-gray-300"
+              />
+              <textarea
+                id="description"
+                name="description"
+                placeholder="What's up?"
+                className="px-4 py-2 w-full rounded-2xl border-gray-700 border bg-gray-800 min-h-64 resize-none text-gray-50 placeholder:text-gray-300"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 w-full rounded-2xl border-gray-700 border bg-gray-800 text-gray-50 transition-colors hover:bg-gray-100 hover:text-gray-900 hover:border-gray-200 cursor-pointer"
+              >
+                Get in touch!
+              </button>
             </form>
           </div>
         </section>

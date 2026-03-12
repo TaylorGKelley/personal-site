@@ -26,7 +26,7 @@ export function image({
         height={typeof height === "string" ? parseInt(height) : height || 768}
         src={src}
         alt={alt || "Post image"}
-        className={cn("aspect-video w-full rounded-2xl", className)}
+        className={cn("aspect-video w-full rounded-2xl shadow-md", className)}
       />
       {alt && alt.length > 0 && (
         <span className="inline-block w-full mt-2 text-center text-gray-600">
