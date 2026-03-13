@@ -1,8 +1,9 @@
 export type Project = {
   coverImageSrc: string;
-  slug: string; // unique identifier for use when navigating to project page
   title: string;
+  url: string;
   description: string;
+  slug: string;
 };
 
 export type WorkPlace = {
@@ -18,36 +19,33 @@ export default {
   projects: [
     {
       coverImageSrc: "/images/taylabs-auth.jpeg",
-      slug: "auth-dashboard",
-      title: "Auth Dashboard",
+      title: "Auth and User Management API",
+      url: "https://taylabs.taylorkelley.dev/",
       description:
-        "User-friendly dashboard for managing user accounts and security in your environment.",
+        "Easy, self-hostable user management to have ownership over your data without writing single line of code",
+      slug: "auth-api.md",
     },
     {
-      coverImageSrc: "/images/taylabs-auth.jpeg",
-      slug: "auth-api",
-      title: "Authentication API",
+      coverImageSrc: "/images/markdown-blog.jpeg",
+      title: "Static Markdown-based Blog",
+      url: "/blog",
       description:
-        "Secure and clean solution for managing user accounts and security in your application.",
+        "Easy to manage blog posts with Markdown syntax and GitHub based management",
+      slug: "markdown-blog.md",
+    },
+    {
+      coverImageSrc: "/images/rich-text-blazor.jpeg",
+      title: "Rich Text Editor for Blazor",
+      url: "https://blazor-ui.taylorkelley.dev/",
+      description:
+        "Fully featured rich text editor for Blazor, conquering challenges with the Virtual-DOM and XSS prevention",
+      slug: "rich-text-blazor.md",
     },
   ] satisfies Project[],
-  workPlaces: [
-    {
-      jobTitle: "Full-Stack Software Developer",
-      company: "Alabama Law Enforcement Agency",
-      location: "Montgomery, AL",
-      description:
-        "Designing and developing web applications that give users a smooth, secure browsing experience.",
-      startDate: new Date(2023, 6, 16),
-    },
-    {
-      jobTitle: "System Administrator",
-      company: "Alabama Medicaid Agency",
-      location: "Montgomery, AL",
-      description:
-        "Keeping things up and running, setting up FTP automations, and generating reports on servers.",
-      startDate: new Date(2021, 7, 16),
-      endDate: new Date(2023, 6, 15),
-    },
-  ] satisfies WorkPlace[],
+  contact: {
+    github: "https://github.com/TaylorGKelley",
+    linkedin: "https://www.linkedin.com/in/taylor-g-kelley",
+    youtube: "https://youtube.com/@taylorkelley_dev",
+    blog: "/blog",
+  },
 } as const;
