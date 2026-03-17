@@ -4,18 +4,11 @@ import { calculateTimeToRead } from "@/src/utils/helpers";
 import PostThumbnail from "@/src/components/ui/post-thumbnail";
 import formatDate from "@/src/utils/formatDate";
 
-type BlogPageProps = {
-  params: Promise<{ posts: Post[] }>;
-};
-
 export const revalidate = 300; // Revalidate every 5 minutes
 
-export async function generateStaticParams(): Promise<
-  Awaited<BlogPageProps["params"]>
-> {
+export default async function BlogPage() {
   const slugs = await fetchPostSlugs("TaylorGKelley", "personal-blog");
-
-  const posts = (
+  const [recent, ...posts] = (
     await Promise.all(
       slugs.map(async (slug) => {
         const post = await fetchPost(
@@ -27,14 +20,6 @@ export async function generateStaticParams(): Promise<
       }),
     )
   ).filter((post) => post !== null) as Post[];
-
-  return { posts };
-}
-
-export default async function BlogPage({ params }: BlogPageProps) {
-  const {
-    posts: [recent, ...posts],
-  } = await params;
 
   if (!recent) return <>No posts have been made yet!</>;
 
