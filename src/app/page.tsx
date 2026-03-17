@@ -226,9 +226,9 @@ export default function Home() {
           id="contact"
           className="px-4 py-12 md:py-24 bg-gray-900 text-gray-50 w-full"
         >
-          <div className="max-w-7xl mx-auto w-full px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center md:items-start justify-items-center md:justify-items-stretch">
+          <div className="max-w-7xl mx-auto w-full px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center lg:items-start justify-items-center lg:justify-items-stretch">
             <div className="w-full">
-              <div className="grid auto-rows-min gap-3 md:gap-4 text-center md:text-left">
+              <div className="grid auto-rows-min gap-3 md:gap-4 text-center lg:text-left">
                 <Link
                   href={infoConfig.contact.github}
                   className="text-3xl md:text-7xl xl:text-8xl font-mono font-black italic hover:translate-x-2 xl:hover:rotate-2 transition-transform"
@@ -256,7 +256,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full">
+            <div className="min">
               <h4 className="text-2xl md:text-4xl font-mono font-semibold italic mb-6">
                 Contact Me
               </h4>
