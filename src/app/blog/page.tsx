@@ -1,4 +1,4 @@
-import { fetchPost, fetchPostSlugs, Post } from "@/src/utils/fetchPosts";
+import { fetchPost, fetchPostSlugs } from "@/src/utils/fetchPosts";
 import Link from "next/link";
 import { calculateTimeToRead } from "@/src/utils/helpers";
 import PostThumbnail from "@/src/components/ui/post-thumbnail";
@@ -19,7 +19,7 @@ export default async function BlogPage() {
         return post !== null ? { slug, ...post } : null;
       }),
     )
-  ).filter((post) => post !== null) as Post[];
+  ).filter((post) => post !== null);
 
   if (!recent) return <>No posts have been made yet!</>;
 
@@ -31,13 +31,14 @@ export default async function BlogPage() {
       >
         <Link
           href={`/blog/${recent.slug}`}
-          className="grid lg:grid-cols-2 gap-8 justify-center items-center"
+          className="grid lg:grid-cols-2 gap-8 justify-center items-center cursor-pointer"
         >
           <PostThumbnail youtubeUrl={recent.youtube_url} className="m-auto" />
           <div className="grid gap-4">
             <h1 className="font-mono font-black text-4xl lg:text-5xl">
               {recent.title}
             </h1>
+            <p className="text-gray-600">{recent.description}</p>
             <div className="text-base flex gap-4 text-gray-700">
               <p>{`Posted on ${formatDate(recent.date, {
                 day: "2-digit",
@@ -60,7 +61,7 @@ export default async function BlogPage() {
               <li key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="flex gap-6 items-center"
+                  className="flex gap-6 items-center cursor-pointer"
                 >
                   <PostThumbnail
                     youtubeUrl={post.youtube_url}

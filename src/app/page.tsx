@@ -45,7 +45,7 @@ export default function Home() {
             className="bg-gray-700 z-50 fixed inset-0 overflow-clip h-dvh"
           >
             <div className="min-h-dvh w-screen flex justify-center items-center flex-col gap-12">
-              <h1 className="text-5xl md:text-7xl font-mono font-extrabold text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-mono font-extrabold text-white">
                 taylor_kelley
               </h1>
               <ul className="grid grid-cols-3 gap-6 text-white text-lg md:text-xl">
@@ -96,7 +96,7 @@ export default function Home() {
           id="home"
           className="px-4 flex flex-col gap-8 justify-center items-center min-h-[60dvh] max-w-7xl mx-auto w-full"
         >
-          <div className="w-max max-w-4xl">
+          <div className="w-fit max-w-4xl">
             <h2 className="font-light md:text-3xl text-2xl text-left">
               taylor is a
             </h2>
@@ -154,7 +154,7 @@ export default function Home() {
           className="px-4 max-w-7xl mx-auto w-full py-8 grid md:grid-cols-2 gap-8"
         >
           <Card className="md:col-span-2">
-            <h2 className="text-3xl md:text-5xl font-mono font-black italic mb-4 md:mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-mono font-black italic mb-4 md:mb-6">
               {highlightedProject.title}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -186,8 +186,8 @@ export default function Home() {
                 {/* stacked covers for md+ */}
                 <div className="hidden md:flex items-center justify-center">
                   <div className="z-30 aspect-video w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
-                  <div className="z-20 -ml-36 aspect-video w-72 bg-gray-400 rounded-2xl shadow-md overflow-hidden"></div>
-                  <div className="z-10 -ml-30 aspect-video w-56 bg-gray-300 rounded-2xl shadow-md overflow-hidden"></div>
+                  {/*<div className="z-20 -ml-36 aspect-video w-72 bg-gray-400 rounded-2xl shadow-md overflow-hidden"></div>
+                  <div className="z-10 -ml-30 aspect-video w-56 bg-gray-300 rounded-2xl shadow-md overflow-hidden"></div>*/}
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function Home() {
 
           {projects.map((project) => (
             <Card key={project.slug} className="grid gap-6">
-              <h3 className="text-2xl md:text-4xl font-mono font-black italic">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-mono font-black italic">
                 {project.title}
               </h3>
 

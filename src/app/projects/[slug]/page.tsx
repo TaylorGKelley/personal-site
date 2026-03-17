@@ -20,7 +20,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         href="/"
         className="flex gap-2 items-center text-gray-600 hover:gap-3 transition-[gap] mb-4"
       >
-        <ArrowLeftIcon />
+        <ArrowLeftIcon className="size-5" />
         <span>Back Home</span>
       </Link>
       <RenderMarkdown>{content}</RenderMarkdown>

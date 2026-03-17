@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
         hostname: "img.youtube.com",
       },
     ],
+    minimumCacheTTL: 600, // cache images at least 10 minutes to prevent re-fetching from github
   },
 };
 
