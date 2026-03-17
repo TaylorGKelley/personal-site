@@ -43,14 +43,14 @@ export default function NavBar() {
                 },
               },
             }}
-            className="fixed inset-0 bg-gray-700 text-gray-50 grid grid-rows-[auto_1fr] origin-top"
+            className="fixed inset-0 bg-gray-700 text-gray-50 grid grid-rows-[auto_1fr] origin-top z-50"
           >
             <div className="flex justify-end pt-4 pr-4 md:pt-12 md:pr-12 w-full max-w-360 mx-auto">
               <button onClick={() => setOpen(false)} className="cursor-pointer">
                 close
               </button>
             </div>
-            <ul className="container mx-auto flex flex-col justify-center h-full gap-4 max-w-7xl">
+            <ul className="container mx-auto flex flex-col justify-center items-center md:items-start h-full gap-4 max-w-5xl">
               <li>
                 <Link onClick={() => setOpen(false)} href="/">
                   <MotionTextShuffle>Home</MotionTextShuffle>
@@ -59,11 +59,6 @@ export default function NavBar() {
               <li>
                 <Link onClick={() => setOpen(false)} href="/about">
                   <MotionTextShuffle>About</MotionTextShuffle>
-                </Link>
-              </li>
-              <li>
-                <Link onClick={() => setOpen(false)} href="/projects">
-                  <MotionTextShuffle>Projects</MotionTextShuffle>
                 </Link>
               </li>
               <li>

@@ -23,7 +23,7 @@ export default {
       url: "https://taylabs.taylorkelley.dev/",
       description:
         "Easy, self-hostable user management to have ownership over your data without writing single line of code",
-      slug: "auth-api.md",
+      slug: "auth-api",
     },
     {
       coverImageSrc: "/images/markdown-blog.jpeg",
@@ -31,7 +31,7 @@ export default {
       url: "/blog",
       description:
         "Easy to manage blog posts with Markdown syntax and GitHub based management",
-      slug: "markdown-blog.md",
+      slug: "markdown-blog",
     },
     {
       coverImageSrc: "/images/rich-text-blazor.jpeg",
@@ -39,7 +39,7 @@ export default {
       url: "https://blazor-ui.taylorkelley.dev/",
       description:
         "Fully featured rich text editor for Blazor, conquering challenges with the Virtual-DOM and XSS prevention",
-      slug: "rich-text-blazor.md",
+      slug: "rich-text-blazor",
     },
   ] satisfies Project[],
   contact: {
