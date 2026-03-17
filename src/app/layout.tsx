@@ -4,6 +4,7 @@ import { Inter_Tight, Azeret_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/navbar";
 import Footer from "../components/footer";
+import Toaster from "../components/ui/toaster";
 
 const interSans = Inter_Tight({
   variable: "--font-inter-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
         <NavBar />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

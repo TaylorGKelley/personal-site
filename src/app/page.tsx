@@ -12,21 +12,35 @@ import { PostgresIcon } from "@/src/components/ui/icons/postgres-icon";
 import Link from "next/link";
 import Card from "../components/ui/card";
 import infoConfig from "../data/info.config";
-import { sendContactEmail } from "../actions/mail";
+import { ContactForm, sendContactEmail } from "../actions/mail";
+import { toast } from "sonner";
+import { FormActionState } from "../actions/types/FormActionState";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
   const [highlightedProject, ...projects] = infoConfig.projects;
 
-  const [state, action, isPending] = useActionState(sendContactEmail, {
-    success: false,
-    values: {
-      email: "",
-      name: "",
-      description: "",
+  const [state, action, isPending] = useActionState(
+    async (initialState: FormActionState<ContactForm>, formData: FormData) => {
+      const result = await sendContactEmail(initialState, formData);
+
+      if (!result.success) {
+        toast.error(result.error);
+      } else {
+        toast.success("Message sent successfully!");
+      }
+      return result;
     },
-    error: "",
-  });
+    {
+      success: false,
+      values: {
+        email: "",
+        name: "",
+        description: "",
+      },
+      error: "",
+    },
+  );
 
   return (
     <>

@@ -10,7 +10,7 @@ export type ContactForm = {
 };
 
 export async function sendContactEmail(
-  initialState: FormActionState<ContactForm>,
+  _initialState: FormActionState<ContactForm>,
   formData: FormData,
 ): Promise<FormActionState<ContactForm>> {
   const values = Object.fromEntries(formData.entries()) as ContactForm;
