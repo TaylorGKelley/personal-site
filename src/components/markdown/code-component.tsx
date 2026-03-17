@@ -3,6 +3,7 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import type { ExtraProps } from "react-markdown";
+import { cn } from "@/src/utils/tw";
 
 export type CodeProps = Readonly<
   React.PropsWithChildren<
@@ -23,18 +24,20 @@ export function code({
 
   if (!inline) {
     return (
-      <SyntaxHighlighter
-        {...props}
-        style={dracula}
-        language={match ? language : "text"}
-        PreTag="div"
-      >
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
+      <div className={cn("rounded-2xl overflow-clip shadow-md", className)}>
+        <SyntaxHighlighter
+          {...props}
+          style={dracula}
+          language={match ? language : "text"}
+          PreTag="div"
+        >
+          {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
+      </div>
     );
   } else {
     return (
-      <code className={className} {...props}>
+      <code className={cn("rounded-2xl", className)} {...props}>
         {children}
       </code>
     );
