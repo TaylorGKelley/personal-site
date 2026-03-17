@@ -1,7 +1,7 @@
 import { fetchPost, fetchPostSlugs } from "@/src/utils/fetchPosts";
 import Link from "next/link";
 import Image from "next/image";
-import { calculateTimeToRead, getYouTubeVideoId } from "@/src/utils/helpers";
+import { calculateTimeToRead } from "@/src/utils/helpers";
 import PostThumbnail from "@/src/components/ui/post-thumbnail";
 import formatDate from "@/src/utils/formatDate";
 
