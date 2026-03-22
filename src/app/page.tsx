@@ -193,7 +193,7 @@ export default function Home() {
               </div>
 
               {/* image column: show single responsive thumbnail on mobile and stacked covers on md+ */}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center w-full">
                 {/* mobile single thumbnail */}
                 <div className="block md:hidden aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
 
@@ -228,9 +228,10 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* responsive thumbnail: full width on small, fixed on md+ */}
-              <div className="aspect-video w-full md:w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden">
-                {/* project image placeholder */}
+              <div className="w-full flex justify-center">
+                <div className="aspect-video w-full md:w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden">
+                  {/* project image placeholder */}
+                </div>
               </div>
             </Card>
           ))}

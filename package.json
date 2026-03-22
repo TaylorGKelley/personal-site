@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@m2d/react-markdown": "^1.0.0",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.563.0",
@@ -17,10 +18,17 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-pretty-code": "^0.14.3",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "shiki": "^4.0.2",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
