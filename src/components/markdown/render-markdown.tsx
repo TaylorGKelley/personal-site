@@ -1,20 +1,27 @@
-import ReactMarkdown from "react-markdown";
-import * as textComponents from "./text-components";
-import { code as Code, type CodeProps } from "./code-component";
-import { image as Image, type ImageProps } from "./image-component";
+"use server";
 
-export default function RenderMarkdown({
+import { Md } from "@m2d/react-markdown";
+import * as textComponents from "./text-components";
+import { CodeBlock } from "./code-component";
+import { image as Image, type ImageProps } from "./image-component";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import remarkParse from "remark-parse";
+import rehypeHighlight from "rehype-highlight";
+
+export default async function RenderMarkdown({
   children,
 }: Readonly<{ children: string }>) {
   return (
-    <ReactMarkdown
+    <Md
+      remarkPlugins={[remarkParse, remarkGfm, remarkRehype]}
+      rehypePlugins={[rehypeHighlight]}
       components={{
+        pre: (props) => <CodeBlock {...props} />,
         ...textComponents,
-        code: (props) => <Code {...(props as CodeProps)} />,
-        img: (props) => <Image {...(props as ImageProps)} />,
       }}
     >
       {children}
-    </ReactMarkdown>
+    </Md>
   );
 }

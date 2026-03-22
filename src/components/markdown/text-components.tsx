@@ -1,11 +1,21 @@
-import Link from "next/link";
+import { cn } from "@/src/utils/tw";
+import Link, { type LinkProps } from "next/link";
+
+function formatId(children: string = "") {
+  const result = children
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+  return result;
+}
 
 export function h1({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
+    <Link href={`#${formatId(children?.toString())}`}>
       <h1
-        className="text-5xl font-semibold mt-4 mb-6 font-mono"
-        id={children?.toString()}
+        className="text-5xl font-bold mt-8 mb-6 font-mono"
+        id={formatId(children?.toString())}
       >
         {children}
       </h1>
@@ -15,10 +25,10 @@ export function h1({ children }: Readonly<React.PropsWithChildren>) {
 
 export function h2({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
+    <Link href={`#${formatId(children?.toString())}`}>
       <h2
-        className="text-4xl font-semibold mt-3 mb-5 font-mono"
-        id={children?.toString()}
+        className="text-4xl font-bold mt-8 mb-5 font-mono"
+        id={formatId(children?.toString())}
       >
         {children}
       </h2>
@@ -28,10 +38,10 @@ export function h2({ children }: Readonly<React.PropsWithChildren>) {
 
 export function h3({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
+    <Link href={`#${formatId(children?.toString())}`}>
       <h3
-        className="text-3xl font-medium mt-3 mb-4 font-mono"
-        id={children?.toString()}
+        className="text-3xl font-semibold mt-6 mb-4 font-mono"
+        id={formatId(children?.toString())}
       >
         {children}
       </h3>
@@ -41,10 +51,10 @@ export function h3({ children }: Readonly<React.PropsWithChildren>) {
 
 export function h4({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
+    <Link href={`#${formatId(children?.toString())}`}>
       <h4
-        className="text-2xl font-medium mt-2 mb-3 font-mono"
-        id={children?.toString()}
+        className="text-2xl font-semibold mt-6 mb-3 font-mono"
+        id={formatId(children?.toString())}
       >
         {children}
       </h4>
@@ -54,10 +64,10 @@ export function h4({ children }: Readonly<React.PropsWithChildren>) {
 
 export function h5({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
+    <Link href={`#${formatId(children?.toString())}`}>
       <h5
-        className="text-xl font-medium mt-2 mb-3 font-mono"
-        id={children?.toString()}
+        className="text-xl font-medium mt-6 mb-3 font-mono"
+        id={formatId(children?.toString())}
       >
         {children}
       </h5>
@@ -67,11 +77,13 @@ export function h5({ children }: Readonly<React.PropsWithChildren>) {
 
 export function h6({ children }: Readonly<React.PropsWithChildren>) {
   return (
-    <Link href={`#${children}`}>
-      <h6 className="text-lg mt-1 mb-2 font-mono" id={children?.toString()}>
+    <Link href={`#${formatId(children?.toString())}`}>
+      <h6
+        className="text-lg font-bold mt-4 mb-2 font-mono"
+        id={formatId(children?.toString())}
+      >
         {children}
       </h6>
-      ;
     </Link>
   );
 }
@@ -85,4 +97,40 @@ export function blockquote({ children }: Readonly<React.PropsWithChildren>) {
       {children}
     </blockquote>
   );
+}
+
+export function a({
+  children,
+  href,
+}: Readonly<React.PropsWithChildren> &
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps<any>> &
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  LinkProps<any>) {
+  return (
+    <Link
+      className="hover:text-gray-700 transition-colors text-gray-900 hover:underline"
+      href={href}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export function strong({ children }: Readonly<React.PropsWithChildren>) {
+  return <strong className="font-semibold">{children}</strong>;
+}
+
+export function hr({
+  className,
+  ...props
+}: Readonly<React.HTMLAttributes<HTMLHRElement>>) {
+  return <hr className={cn("my-6 border-t-gray-600", className)} {...props} />;
+}
+
+export function li({
+  className,
+  ...props
+}: Readonly<React.HTMLAttributes<HTMLLIElement>>) {
+  return <li className={cn("ml-4 mb-3 list-disc", className)} {...props} />;
 }
