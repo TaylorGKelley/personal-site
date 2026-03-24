@@ -1,4 +1,5 @@
 import { cn } from "@/src/utils/tw";
+import { ComponentProps } from "@m2d/react-markdown/utils";
 import Link, { type LinkProps } from "next/link";
 
 function formatId(children: string = "") {
@@ -121,16 +122,20 @@ export function strong({ children }: Readonly<React.PropsWithChildren>) {
   return <strong className="font-semibold">{children}</strong>;
 }
 
-export function hr({
-  className,
-  ...props
-}: Readonly<React.HTMLAttributes<HTMLHRElement>>) {
-  return <hr className={cn("my-6 border-t-gray-600", className)} {...props} />;
+export function hr({ className, ...props }: Readonly<ComponentProps>) {
+  return (
+    <hr
+      className={cn("my-6 border-t-gray-600", className)}
+      {...(props as React.HTMLAttributes<HTMLHRElement>)}
+    />
+  );
 }
 
-export function li({
-  className,
-  ...props
-}: Readonly<React.HTMLAttributes<HTMLLIElement>>) {
-  return <li className={cn("ml-4 mb-3 list-disc", className)} {...props} />;
+export function li({ className, ...props }: Readonly<ComponentProps>) {
+  return (
+    <li
+      className={cn("ml-4 mb-3 list-disc", className)}
+      {...(props as React.HTMLAttributes<HTMLLIElement>)}
+    />
+  );
 }
