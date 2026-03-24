@@ -9,6 +9,11 @@ type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export function generateStaticParams() {
+  const files = fs.readdirSync(path.join(process.cwd(), "public", "projects"));
+  return files.map((file) => ({ slug: file.replace(".md", "") }));
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const raw = fs
