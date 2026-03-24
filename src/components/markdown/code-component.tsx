@@ -22,7 +22,9 @@ export function CodeBlock({ children, ...rest }: ComponentProps) {
   const child = Array.isArray(children) ? children[0] : children;
 
   if (!child || typeof child !== "object" || !("props" in (child as object))) {
-    return <pre {...rest}>{children}</pre>;
+    return (
+      <pre {...(rest as React.HTMLAttributes<HTMLPreElement>)}>{children}</pre>
+    );
   }
 
   const codeEl = child as React.ReactElement<ComponentProps>;
