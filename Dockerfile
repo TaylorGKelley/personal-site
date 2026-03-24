@@ -10,8 +10,6 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Optional: Disable telemetry to speed up build
-# ENV NEXT_TELEMETRY_DISABLED=1
 RUN corepack enable pnpm && pnpm run build
 
 # Production image, copy all the files and run next
@@ -29,9 +27,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 EXPOSE 3000
 
 ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
+ENV HOSTNAME="localhost"
 
 CMD ["node", "server.js"]
