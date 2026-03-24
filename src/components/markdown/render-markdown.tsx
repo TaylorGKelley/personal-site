@@ -17,8 +17,12 @@ export default async function RenderMarkdown({
       remarkPlugins={[remarkParse, remarkGfm, remarkRehype]}
       rehypePlugins={[rehypeHighlight]}
       components={{
-        pre: (props) => <CodeBlock {...props} />,
         ...textComponents,
+        a: (props) => (
+          <a {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)} />
+        ),
+        pre: (props) => <CodeBlock {...props} />,
+        image: (props) => <Image {...(props as ImageProps)} />,
       }}
     >
       {children}
