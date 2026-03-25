@@ -306,4 +306,4 @@ Building this project gave me a much deeper understanding of Authentication conc
 ## Links
 
 - **GitHub:** [github.com/TayLabs/Auth](https://github.com/TayLabs/Auth)
-- **Preview:** [auth.taylorkelley.dev](https://auth.taylorkelley.dev)
+- **Preview:** [taylabs.taylorkelley.dev](https://taylabs.taylorkelley.dev)
