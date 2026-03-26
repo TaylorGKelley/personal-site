@@ -43,7 +43,7 @@ export default function NavBar() {
                 },
               },
             }}
-            className="fixed inset-0 bg-gray-700 text-gray-50 grid grid-rows-[auto_1fr] origin-top z-50"
+            className="fixed inset-0 bg-gray-700 text-gray-50 grid grid-rows-[auto_1fr] origin-top z-50 p-4"
           >
             <div className="flex justify-end pt-4 pr-4 md:pt-12 md:pr-12 w-full max-w-360 mx-auto">
               <button onClick={() => setOpen(false)} className="cursor-pointer">
