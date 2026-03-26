@@ -52,7 +52,7 @@ export default async function BlogPage() {
         </Link>
       </section>
       {posts.length > 0 && (
-        <section id="posts">
+        <section id="posts" className="px-4">
           <h2 className="font-mono font-medium text-3xl mb-12">
             Previous Posts
           </h2>
@@ -61,7 +61,7 @@ export default async function BlogPage() {
               <li key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="flex gap-6 items-center cursor-pointer"
+                  className="flex flex-wrap gap-6 items-center cursor-pointer"
                 >
                   <PostThumbnail
                     youtubeUrl={post.youtube_url}
