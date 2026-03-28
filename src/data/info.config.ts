@@ -20,7 +20,7 @@ export default {
     {
       coverImageSrc: "/images/taylabs-auth.jpeg",
       title: "Auth and User Management API",
-      url: "https://taylabs.taylorkelley.dev/",
+      url: "https://taylabs.taylorkelley.dev/auth/login?email=test@taylorkelley.dev&password=Password123!",
       description:
         "Easy, self-hostable user management to have ownership over your data without writing single line of code",
       slug: "auth-api",

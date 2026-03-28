@@ -1,6 +1,6 @@
 ---
 title: Authentication service and Identity provider
-preview_url: https://taylabs.taylorkelley.dev
+preview_url: https://taylabs.taylorkelley.dev/auth/login?email=test@taylorkelley.dev&password=Password123!
 github_url: https://github.com/TayLabs/Auth
 ---
 
@@ -306,4 +306,4 @@ Building this project gave me a much deeper understanding of Authentication conc
 ## Links
 
 - **GitHub:** [github.com/TayLabs/Auth](https://github.com/TayLabs/Auth)
-- **Preview:** [taylabs.taylorkelley.dev](https://taylabs.taylorkelley.dev)
+- **Preview:** [taylabs.taylorkelley.dev](https://taylabs.taylorkelley.dev/auth/login?email=test@taylorkelley.dev&password=Password123!)
