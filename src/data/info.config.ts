@@ -18,7 +18,7 @@ export type WorkPlace = {
 export default {
   projects: [
     {
-      coverImageSrc: "/images/taylabs-auth.jpeg",
+      coverImageSrc: "/images/taylabs.jpeg",
       title: "Auth and User Management API",
       url: "https://taylabs.taylorkelley.dev/auth/login?email=test@taylorkelley.dev&password=Password123!",
       description:
@@ -26,7 +26,7 @@ export default {
       slug: "auth-api",
     },
     {
-      coverImageSrc: "/images/markdown-blog.jpeg",
+      coverImageSrc: "/images/blog.jpeg",
       title: "Static Markdown-based Blog",
       url: "/blog",
       description:
@@ -34,7 +34,7 @@ export default {
       slug: "markdown-blog",
     },
     {
-      coverImageSrc: "/images/rich-text-blazor.jpeg",
+      coverImageSrc: "/images/blazor-ui.jpeg",
       title: "Rich Text Editor for Blazor",
       url: "https://blazor-ui.taylorkelley.dev/rich-text-editor",
       description:
