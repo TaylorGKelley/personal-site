@@ -49,7 +49,7 @@ export default function AboutPage() {
             minimalist aesthetics, and a good challenge.
           </p>
           <Link
-            href="/docs/resume.pdf"
+            href="/docs/Resume - Taylor Kelley.pdf"
             className="mt-6 bg-white text-gray-900 font-bold py-3 px-6 rounded-full
                       hover:bg-gray-800 hover:text-gray-50 transition-colors
                       inline-grid grid-cols-[auto_1fr] gap-2"
