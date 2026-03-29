@@ -45,7 +45,7 @@ export default {
   contact: {
     github: "https://github.com/TaylorGKelley",
     linkedin: "https://www.linkedin.com/in/taylor-g-kelley",
-    youtube: "https://youtube.com/@taylorkelley_dev",
+    youtube: "https://www.youtube.com/@taylorkelley-dev",
     blog: "/blog",
   },
 } as const;
