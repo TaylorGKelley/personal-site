@@ -15,9 +15,9 @@ export default function AboutPage() {
       <section className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-16 md:h-[70vh] p-4">
         <div className="h-full min-h-96 w-full bg-gray-500 rounded-2xl relative overflow-clip shadow-lg hover:[&>img]:scale-105 hover:rotate-2 transition-transform">
           <Image
-            width={500}
-            height={800}
-            src="images/profile.jpeg"
+            width={1000}
+            height={1600}
+            src="/images/profile.jpeg"
             alt="Profile photo of Taylor Kelley"
             className="w-full h-full object-cover transition-transform"
           />
