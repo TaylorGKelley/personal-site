@@ -42,25 +42,9 @@ export function CodeBlock({ children, ...rest }: ComponentProps) {
   const code = extractTextFromChildren(codeChildren).replace(/\n$/, "");
 
   return (
-    <div
-      style={{
-        borderRadius: "6px",
-        overflow: "hidden",
-        margin: "20px 0",
-        border: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
+    <div className="shadow rounded-lg overflow-y-auto my-8 bg-gray-800">
       {filename && (
-        <div
-          style={{
-            background: "#21252b",
-            padding: "6px 16px",
-            fontSize: "12px",
-            fontFamily: "monospace",
-            color: "#abb2bf",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
+        <div className="bg-gray-800 py-2 px-4 text-xs font-mono text-gray-300">
           {filename}
         </div>
       )}
@@ -68,8 +52,6 @@ export function CodeBlock({ children, ...rest }: ComponentProps) {
         language={language}
         style={oneDark}
         customStyle={{
-          margin: 0,
-          borderRadius: filename ? "0" : "6px",
           fontSize: "14px",
         }}
         showLineNumbers={code.split("\n").length > 5}
