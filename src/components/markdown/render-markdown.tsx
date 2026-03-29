@@ -2,6 +2,7 @@
 
 import { Md } from "@m2d/react-markdown";
 import * as textComponents from "./text-components";
+import * as tableComponents from "./table-components";
 import { CodeBlock } from "./code-component";
 import { image as Image, type ImageProps } from "./image-component";
 import remarkGfm from "remark-gfm";
@@ -18,11 +19,9 @@ export default async function RenderMarkdown({
       rehypePlugins={[rehypeHighlight]}
       components={{
         ...textComponents,
-        a: (props) => (
-          <a {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)} />
-        ),
+        ...tableComponents,
         pre: (props) => <CodeBlock {...props} />,
-        image: (props) => <Image {...(props as ImageProps)} />,
+        img: (props) => <Image {...(props as ImageProps)} />,
       }}
     >
       {children}

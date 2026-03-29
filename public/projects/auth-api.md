@@ -52,7 +52,7 @@ The goal wasn't to reinvent auth for its own sake, but to deeply understand how 
 
 ## 2. The Architecture
 
-![Architecture Diagram - placeholder](projects/images/auth-architecture.png)
+![Architecture Diagram - placeholder](/projects/images/auth-architecture.png)
 *High-level architecture. Auth talks to Postgres for persistent storage, Redis for session whitelisting, and two internal TayLabs microservices (/Mail and /Keys).*
 
 The service is structured around three base API routes in Express:
@@ -144,7 +144,7 @@ The admin surface covers:
 - **Roles** - full CRUD, including permission assignment. Internal (seeded) roles are protected from modification or deletion.
 - **Services & Permissions** - register external services with their permission sets, update or remove them. Internal permissions are synced from each service's `taylab.config.yml` at startup and cannot be modified.
 
-![Admin API - Role response example](/projects/images/admin-role.png)
+![Admin API - Role response example](/projects/images/admin-role.jpg)
 *Figure 2: Dashboard page showing all the roles that exist in the configured environment*
 
 ---

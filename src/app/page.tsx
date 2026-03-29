@@ -197,8 +197,8 @@ export default function Home() {
                 <div className="block aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-clip">
                   <Image
                     className="w-full h-full object-cover"
-                    width={600}
-                    height={400}
+                    width={1200}
+                    height={600}
                     src={highlightedProject.coverImageSrc}
                     alt={"Project image for " + highlightedProject.title}
                   />
@@ -232,8 +232,8 @@ export default function Home() {
                 <div className="aspect-video w-full lg:w-96 bg-gray-500 rounded-2xl shadow-md overflow-clip">
                   <Image
                     className="w-full h-full object-cover"
-                    width={600}
-                    height={400}
+                    width={1200}
+                    height={600}
                     src={project.coverImageSrc}
                     alt={"Project image for " + project.title}
                   />
