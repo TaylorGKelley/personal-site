@@ -26,13 +26,8 @@ export function image({
         height={typeof height === "string" ? parseInt(height) : height || 768}
         src={src}
         alt={alt || "Post image"}
-        className={cn("w-full rounded-2xl shadow-md object-cover", className)}
+        className={cn("w-full rounded-lg shadow object-cover", className)}
       />
-      {alt && alt.length > 0 && (
-        <span className="inline-block w-full mt-2 text-center text-gray-600">
-          {alt}
-        </span>
-      )}
     </span>
   );
 }

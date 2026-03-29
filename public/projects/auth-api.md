@@ -52,7 +52,7 @@ The goal wasn't to reinvent auth for its own sake, but to deeply understand how 
 
 ## 2. The Architecture
 
-![Architecture Diagram - placeholder](projects/images/architecture.png)
+![Architecture Diagram - placeholder](/projects/images/auth-architecture.png)
 *High-level architecture. Auth talks to Postgres for persistent storage, Redis for session whitelisting, and two internal TayLabs microservices (/Mail and /Keys).*
 
 The service is structured around three base API routes in Express:
@@ -144,7 +144,7 @@ The admin surface covers:
 - **Roles** - full CRUD, including permission assignment. Internal (seeded) roles are protected from modification or deletion.
 - **Services & Permissions** - register external services with their permission sets, update or remove them. Internal permissions are synced from each service's `taylab.config.yml` at startup and cannot be modified.
 
-![Admin API - Role response example](/projects/images/admin-role.png)
+![Admin API - Role response example](/projects/images/admin-role.jpg)
 *Figure 2: Dashboard page showing all the roles that exist in the configured environment*
 
 ---
@@ -217,9 +217,6 @@ try {
 
 ## 5. Database Design
 
-![Database ERD - placeholder](/project/images/db-diagram.png)
-*Figure 3: Entity-relationship diagram. 11 tables spanning user identity, session/device tracking, TOTP, RBAC, and linked OAuth accounts.*
-
 The schema spans 11 tables, with migrations managed by Drizzle:
 
 | Table | Purpose |
@@ -278,9 +275,6 @@ The admin user and default roles need to exist in the database from the first ru
 I wanted a logout to be per-device (so logging out on mobile doesn't kill your desktop session), while also being able to logout a certain device if credentials had been compromised.
 
 **Solution:** Each login creates a row in the `devices` table with a `sessionId` that maps to a Redis key. The `_selected_s` cookie tells the client which session is "active." Logout uses the `deviceId` cookie to look up the session and delete it from Redis. While `invalidateAll` updates every device row for the user and deletes all their associated Redis entries
-
-![Token Refresh Sequence - placeholder](/project/images/refresh-sequence.png)
-*Figure 4: Token refresh sequence. The server validates the refresh JWT, checks the Redis whitelist for the matching session, validates device identity, rotates the refresh token ID in Redis, and issues a fresh access token.*
 
 ---
 

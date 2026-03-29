@@ -15,6 +15,7 @@ import infoConfig from "../data/info.config";
 import { ContactForm, sendContactEmail } from "../actions/mail";
 import { toast } from "sonner";
 import { FormActionState } from "../actions/types/FormActionState";
+import Image from "next/image";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -179,6 +180,7 @@ export default function Home() {
                 <div className="flex flex-wrap gap-3">
                   <Link
                     href={highlightedProject.url}
+                    target="_blank"
                     className="inline-block px-4 py-2 bg-gray-800 border border-gray-800 hover:bg-gray-700 hover:border-gray-700 transition-colors text-gray-50 rounded-lg text-sm"
                   >
                     Preview
@@ -192,16 +194,15 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* image column: show single responsive thumbnail on mobile and stacked covers on md+ */}
               <div className="flex items-center justify-center w-full">
-                {/* mobile single thumbnail */}
-                <div className="block md:hidden aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
-
-                {/* stacked covers for md+ */}
-                <div className="hidden md:flex items-center justify-center">
-                  <div className="z-30 aspect-video w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
-                  {/*<div className="z-20 -ml-36 aspect-video w-72 bg-gray-400 rounded-2xl shadow-md overflow-hidden"></div>
-                  <div className="z-10 -ml-30 aspect-video w-56 bg-gray-300 rounded-2xl shadow-md overflow-hidden"></div>*/}
+                <div className="block aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-clip">
+                  <Image
+                    className="w-full h-full object-cover"
+                    width={1200}
+                    height={600}
+                    src={highlightedProject.coverImageSrc}
+                    alt={"Project image for " + highlightedProject.title}
+                  />
                 </div>
               </div>
             </div>
@@ -216,6 +217,7 @@ export default function Home() {
               <div className="flex gap-3 flex-wrap">
                 <Link
                   href={project.url}
+                  target="_blank"
                   className="inline-block px-4 py-2 bg-gray-800 border border-gray-800 hover:bg-gray-700 hover:border-gray-700 transition-colors text-gray-50 rounded-lg text-sm"
                 >
                   Preview
@@ -229,8 +231,14 @@ export default function Home() {
               </div>
 
               <div className="w-full flex justify-center">
-                <div className="aspect-video w-full md:w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden">
-                  {/* project image placeholder */}
+                <div className="aspect-video w-full lg:w-96 bg-gray-500 rounded-2xl shadow-md overflow-clip">
+                  <Image
+                    className="w-full h-full object-cover"
+                    width={1200}
+                    height={600}
+                    src={project.coverImageSrc}
+                    alt={"Project image for " + project.title}
+                  />
                 </div>
               </div>
             </Card>
@@ -246,24 +254,28 @@ export default function Home() {
               <div className="grid auto-rows-min gap-3 md:gap-4 text-center lg:text-left">
                 <Link
                   href={infoConfig.contact.github}
+                  target="_blank"
                   className="text-3xl md:text-7xl xl:text-8xl font-mono font-black italic hover:translate-x-2 xl:hover:rotate-2 transition-transform"
                 >
                   GitHub
                 </Link>
                 <Link
                   href={infoConfig.contact.linkedin}
+                  target="_blank"
                   className="text-3xl md:text-7xl xl:text-8xl font-mono font-black italic hover:translate-x-2 xl:hover:-rotate-2 transition-transform"
                 >
                   Linked_In
                 </Link>
                 <Link
                   href={infoConfig.contact.youtube}
+                  target="_blank"
                   className="text-3xl md:text-7xl xl:text-8xl font-mono font-black italic hover:translate-x-2 xl:hover:rotate-1 transition-transform"
                 >
                   YouTube
                 </Link>
                 <Link
                   href={infoConfig.contact.blog}
+                  // target="_blank"
                   className="text-3xl md:text-7xl xl:text-8xl font-mono font-black italic hover:translate-x-2 xl:hover:-rotate-3 transition-transform"
                 >
                   Blog

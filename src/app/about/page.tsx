@@ -1,4 +1,5 @@
 import { DownloadIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const maskStyle = {
@@ -13,9 +14,11 @@ export default function AboutPage() {
     <main className="flex flex-col gap-8">
       <section className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-16 md:h-[70vh] p-4">
         <div className="h-full min-h-96 w-full bg-gray-500 rounded-2xl relative overflow-clip shadow-lg hover:[&>img]:scale-105 hover:rotate-2 transition-transform">
-          <img
-            src="images/taylabs-auth.jpeg"
-            alt="Taylor Kelley"
+          <Image
+            width={1000}
+            height={1600}
+            src="/images/profile.jpeg"
+            alt="Profile photo of Taylor Kelley"
             className="w-full h-full object-cover transition-transform"
           />
           <div
@@ -46,7 +49,7 @@ export default function AboutPage() {
             minimalist aesthetics, and a good challenge.
           </p>
           <Link
-            href="/docs/resume.pdf"
+            href="/docs/Resume - Taylor Kelley.pdf"
             className="mt-6 bg-white text-gray-900 font-bold py-3 px-6 rounded-full
                       hover:bg-gray-800 hover:text-gray-50 transition-colors
                       inline-grid grid-cols-[auto_1fr] gap-2"

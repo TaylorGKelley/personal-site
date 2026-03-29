@@ -20,7 +20,7 @@ export default function Card({ children, className }: CardProps) {
       className={cn(
         // Full width, limited padding on small screens, larger padding on md+ and increased padding on lg+
         "w-full max-w-full bg-gray-50 rounded-3xl shadow-md overflow-hidden",
-        "px-6 py-8 md:px-16 md:py-20",
+        "px-6 py-8 lg:px-16 lg:py-20",
         // Allow consumers to override/add classes
         className,
       )}

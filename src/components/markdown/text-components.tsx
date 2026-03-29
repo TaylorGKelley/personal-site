@@ -100,18 +100,18 @@ export function blockquote({ children }: Readonly<React.PropsWithChildren>) {
   );
 }
 
-export function a({
-  children,
-  href,
-}: Readonly<React.PropsWithChildren> &
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps<any>> &
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  LinkProps<any>) {
+export function a({ children, ...props }: Readonly<ComponentProps>) {
   return (
     <Link
-      className="hover:text-gray-700 transition-colors text-gray-900 hover:underline"
-      href={href}
+      {...(props as object as Omit<
+        React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        keyof LinkProps<any>
+      > &
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        LinkProps<any>)}
+      className="hover:text-gray-600 visited:text-gray-900 transition-colors text-gray-700 underline mx-px"
+      target="_blank"
     >
       {children}
     </Link>
