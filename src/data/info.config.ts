@@ -20,7 +20,7 @@ export default {
     {
       coverImageSrc: "/images/taylabs-auth.jpeg",
       title: "Auth and User Management API",
-      url: "https://taylabs.taylorkelley.dev/",
+      url: "https://taylabs.taylorkelley.dev/auth/login?email=test@taylorkelley.dev&password=Password123!",
       description:
         "Easy, self-hostable user management to have ownership over your data without writing single line of code",
       slug: "auth-api",
@@ -36,7 +36,7 @@ export default {
     {
       coverImageSrc: "/images/rich-text-blazor.jpeg",
       title: "Rich Text Editor for Blazor",
-      url: "https://blazor-ui.taylorkelley.dev/rich-text",
+      url: "https://blazor-ui.taylorkelley.dev/rich-text-editor",
       description:
         "Fully featured rich text editor for Blazor, conquering challenges with the Virtual-DOM and XSS prevention",
       slug: "rich-text-blazor",
