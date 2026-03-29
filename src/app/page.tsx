@@ -15,6 +15,7 @@ import infoConfig from "../data/info.config";
 import { ContactForm, sendContactEmail } from "../actions/mail";
 import { toast } from "sonner";
 import { FormActionState } from "../actions/types/FormActionState";
+import Image from "next/image";
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
@@ -192,16 +193,15 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* image column: show single responsive thumbnail on mobile and stacked covers on md+ */}
               <div className="flex items-center justify-center w-full">
-                {/* mobile single thumbnail */}
-                <div className="block md:hidden aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
-
-                {/* stacked covers for md+ */}
-                <div className="hidden md:flex items-center justify-center">
-                  <div className="z-30 aspect-video w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden"></div>
-                  {/*<div className="z-20 -ml-36 aspect-video w-72 bg-gray-400 rounded-2xl shadow-md overflow-hidden"></div>
-                  <div className="z-10 -ml-30 aspect-video w-56 bg-gray-300 rounded-2xl shadow-md overflow-hidden"></div>*/}
+                <div className="block aspect-video w-full bg-gray-500 rounded-2xl shadow-md overflow-clip">
+                  <Image
+                    className="w-full h-full object-cover"
+                    width={600}
+                    height={400}
+                    src={highlightedProject.coverImageSrc}
+                    alt={"Project image for " + highlightedProject.title}
+                  />
                 </div>
               </div>
             </div>
@@ -229,8 +229,14 @@ export default function Home() {
               </div>
 
               <div className="w-full flex justify-center">
-                <div className="aspect-video w-full md:w-96 bg-gray-500 rounded-2xl shadow-md overflow-hidden">
-                  {/* project image placeholder */}
+                <div className="aspect-video w-full lg:w-96 bg-gray-500 rounded-2xl shadow-md overflow-clip">
+                  <Image
+                    className="w-full h-full object-cover"
+                    width={600}
+                    height={400}
+                    src={project.coverImageSrc}
+                    alt={"Project image for " + project.title}
+                  />
                 </div>
               </div>
             </Card>
