@@ -1,6 +1,6 @@
 ---
 title: Blazor-based Rich Text Editor
-  preview_url: https://blazor-ui.taylorkelley.dev/rich-text-editor
+preview_url: https://blazor-ui.taylorkelley.dev/rich-text-editor
 github_url: https://github.com/TaylorGKelley/Blazor-UI
 ---
 
