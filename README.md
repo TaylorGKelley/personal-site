@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Site
+
+A personal portfolio and blog built with Next.js 16, React, and Tailwind CSS. Features a markdown-based blog powered by a GitHub repository, project case studies, a contact form, and smooth motion transitions.
+
+**Live site:** [taylorkelley.dev](https://taylorkelley.dev)
+
+---
+
+## Features
+
+- **Portfolio** — Highlighted projects with descriptions, live previews, and detailed case-study pages rendered from local markdown files
+- **Blog** — Posts are fetched at build time from a separate [GitHub repository](https://github.com/TaylorGKelley/personal-blog), parsed with gray-matter, and rendered with syntax-highlighted code blocks
+- **Contact form** — Server action that sends email via the Mailtrap API
+- **Animated UI** — Intro loader, nav overlay, and text-shuffle effects powered by Motion (Framer Motion)
+- **Markdown renderer** — Custom components for headings, code blocks (Prism syntax highlighting), images, and links
+
+## Tech Stack
+
+| Layer | Library / Tool |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React, Tailwind CSS |
+| Animation | Motion (Framer Motion) |
+| Markdown | `@m2d/react-markdown`, remark-gfm, rehype-highlight |
+| Email | Mailtrap |
+| Language | TypeScript 5 |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy the example env file and fill in your values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .example.env .env.local
+```
 
-## Learn More
+| Variable | Description |
+|---|---|
+| `MAILTRAP_API_KEY` | API key for the Mailtrap email service |
+| `GITHUB_ACCESS_TOKEN` | *(Optional)* Personal access token to increase GitHub API rate limits for blog post fetching |
 
-To learn more about Next.js, take a look at the following resources:
+### Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+### Build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Blog
+
+Blog posts are fetched from the [`TaylorGKelley/personal-blog`](https://github.com/TaylorGKelley/personal-blog) repository at build time (or on-demand with a 5-minute revalidation window). Posts are markdown files with frontmatter:
+
+```yaml
+---
+title: My Post Title
+description: A short summary.
+date: 2025-01-15
+youtube_url: https://youtube.com/embed/...
+tags: [typescript, nextjs]
+---
+```
+
+To draft a post without publishing it, keep it on a non-`main` branch in the blog repo.
+
+## Adding a Project
+
+1. Add an entry to `src/data/info.config.ts` under `projects`.
+2. Create a corresponding markdown file at `public/projects/<slug>.md` with frontmatter:
+
+```yaml
+---
+title: Project Name
+preview_url: https://example.com
+github_url: https://github.com/...
+---
+```
+
+The first project in the array is rendered as the featured/highlighted card on the home page.
+
+## License
+
+[MIT](./LICENSE) © 2026 Taylor Kelley
