@@ -25,32 +25,6 @@ A personal portfolio and blog built with Next.js 16, React, and Tailwind CSS. Fe
 | Email | Mailtrap |
 | Language | TypeScript 5 |
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── page.tsx              # Home — hero, projects, contact
-│   ├── about/page.tsx        # About page
-│   ├── blog/
-│   │   ├── page.tsx          # Blog index
-│   │   └── [slug]/page.tsx   # Individual post
-│   └── projects/[slug]/page.tsx  # Project case study
-├── actions/
-│   └── mail.ts               # sendContactEmail server action
-├── components/
-│   ├── navbar.tsx
-│   ├── footer.tsx
-│   ├── markdown/             # Custom markdown renderers
-│   ├── motion/               # Animation components
-│   └── ui/                   # Cards, icons, toaster, etc.
-├── data/
-│   └── info.config.ts        # Projects + contact links config
-└── utils/                    # Helpers, date formatting, post fetching
-public/
-└── projects/                 # Local markdown for project case studies
-```
-
 ## Getting Started
 
 ### Prerequisites
