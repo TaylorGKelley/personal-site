@@ -23,5 +23,17 @@ export const Projects: CollectionConfig = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'frameworks',
+      type: 'array',
+      fields: [
+        {
+          name: 'framework',
+          type: 'relationship',
+          relationTo: 'frameworks',
+          required: true,
+        },
+      ],
+    }
   ],
 }
