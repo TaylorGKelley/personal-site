@@ -1,9 +1,10 @@
+import { anyone } from '@/access/anyone'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true,
+    read: anyone,
   },
   fields: [
     {
@@ -12,5 +13,22 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: 'media',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 300,
+        position: 'centre',
+      },
+      {
+        name: 'hero',
+        width: 1920,
+        height: 1080,
+        position: 'centre'
+      }
+    ],
+    mimeTypes: ['image/*']
+  },
 }
