@@ -10,6 +10,9 @@ import { Media } from './collections/Media'
 import { HomePage } from './globals/HomePage'
 import { Files } from './collections/Files'
 import { Projects } from './collections/Projects'
+import { Frameworks } from './collections/Frameworks'
+import { Categories } from './collections/Categories'
+import { Posts } from './collections/Posts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Files, Projects],
+  collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories],
   globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
