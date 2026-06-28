@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import config from '@/payload.config' // Adjust this path to your payload config
-import { Header } from '@/payload-types'
+import config from '@/payload.config'
+import type { Header } from '@/payload-types'
 
 export async function HeaderComponent() {
   // Fetching the global data server-side
