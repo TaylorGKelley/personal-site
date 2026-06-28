@@ -98,12 +98,16 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    header: Header;
+    footer: Footer;
     'home-page': HomePage;
     'contact-page': ContactPage;
     'posts-page': PostsPage;
     'projects-page': ProjectsPage;
   };
   globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
     'posts-page': PostsPageSelect<false> | PostsPageSelect<true>;
@@ -592,6 +596,50 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  logo: string;
+  links: {
+    name: string;
+    url: string;
+    id?: string | null;
+  }[];
+  resume: number | File;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  copyright: string;
+  navigation: {
+    title: string;
+    links: {
+      name: string;
+      url: string;
+      id?: string | null;
+    }[];
+  };
+  connect: {
+    title: string;
+    links: {
+      name: string;
+      url: string;
+      id?: string | null;
+    }[];
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".
  */
 export interface HomePage {
@@ -672,6 +720,60 @@ export interface ProjectsPage {
   subtitle: string;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  links?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        id?: T;
+      };
+  resume?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  copyright?: T;
+  navigation?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              name?: T;
+              url?: T;
+              id?: T;
+            };
+      };
+  connect?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              name?: T;
+              url?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
