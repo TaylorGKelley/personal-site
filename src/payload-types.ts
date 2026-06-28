@@ -238,7 +238,26 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
-  layout: unknown[];
+  layout: {
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'two-column';
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -484,7 +503,17 @@ export interface ProjectsSelect<T extends boolean = true> {
         framework?: T;
         id?: T;
       };
-  layout?: T | {};
+  layout?:
+    | T
+    | {
+        'two-column'?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
