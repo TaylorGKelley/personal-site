@@ -2,8 +2,9 @@ import React from 'react'
 import './styles.css'
 import { HeaderComponent } from '@/components/globals/Header'
 import { FooterComponent } from '@/components/globals/Footer'
+import type { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   description: 'A blank template using Payload in a Next.js app.',
   title: 'Payload Blank Template',
 }

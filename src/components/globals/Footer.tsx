@@ -2,8 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-// Import the generated Global type from your payload-types file
-import { Footer } from '@/payload-types'
+import type { Footer } from '@/payload-types'
 
 export async function FooterComponent() {
   const payload = await getPayload({ config })
