@@ -3,8 +3,8 @@ import { RecentPostsBlock } from "@/blocks/Home/RecentPosts";
 import { RecentProjectsBlock } from "@/blocks/Home/RecentProjects";
 import type { GlobalConfig } from "payload";
 
-export const HomePage: GlobalConfig = {
-  slug: 'home-page',
+export const ContactPage: GlobalConfig = {
+  slug: 'contact-page',
   admin: {
       group: 'Navigation & Pages',
       livePreview: {
@@ -18,14 +18,29 @@ export const HomePage: GlobalConfig = {
     {
       name: 'title',
       type: 'text',
-      defaultValue: 'Home',
+      defaultValue: 'Get in touch.',
       required: true,
     },
     {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [HeroBlock, RecentProjectsBlock, RecentPostsBlock],
+      name: 'subtitle',
+      type: 'text',
       required: true,
+    },
+    {
+      name: 'links',
+      type: 'array',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+        }
+      ]
     }
   ]
 }

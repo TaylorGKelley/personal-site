@@ -99,9 +99,15 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-page': HomePage;
+    'contact-page': ContactPage;
+    'posts-page': PostsPage;
+    'projects-page': ProjectsPage;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'posts-page': PostsPageSelect<false> | PostsPageSelect<true>;
+    'projects-page': ProjectsPageSelect<false> | ProjectsPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -232,6 +238,7 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
+  layout: unknown[];
   updatedAt: string;
   createdAt: string;
 }
@@ -252,14 +259,10 @@ export interface Framework {
 export interface Post {
   id: number;
   title: string;
-  description: string;
+  slug: string;
+  excerpt: string;
   coverImage: number | Media;
-  categories?:
-    | {
-        category: number | Category;
-        id?: string | null;
-      }[]
-    | null;
+  category: number | Category;
   content: {
     root: {
       type: string;
@@ -277,6 +280,7 @@ export interface Post {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -480,6 +484,7 @@ export interface ProjectsSelect<T extends boolean = true> {
         framework?: T;
         id?: T;
       };
+  layout?: T | {};
   updatedAt?: T;
   createdAt?: T;
 }
@@ -498,17 +503,14 @@ export interface FrameworksSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
+  slug?: T;
+  excerpt?: T;
   coverImage?: T;
-  categories?:
-    | T
-    | {
-        category?: T;
-        id?: T;
-      };
+  category?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -604,6 +606,46 @@ export interface ProjectViewAllLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  title: string;
+  subtitle: string;
+  links?:
+    | {
+        title: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts-page".
+ */
+export interface PostsPage {
+  id: number;
+  title: string;
+  subtitle: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects-page".
+ */
+export interface ProjectsPage {
+  id: number;
+  title: string;
+  subtitle: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -649,6 +691,46 @@ export interface HomePageSelect<T extends boolean = true> {
 export interface ProjectViewAllLinkSelect<T extends boolean = true> {
   displayText?: T;
   url?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  links?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts-page_select".
+ */
+export interface PostsPageSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects-page_select".
+ */
+export interface ProjectsPageSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

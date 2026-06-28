@@ -1,10 +1,7 @@
-import { HeroBlock } from "@/blocks/Home/Hero";
-import { RecentPostsBlock } from "@/blocks/Home/RecentPosts";
-import { RecentProjectsBlock } from "@/blocks/Home/RecentProjects";
 import type { GlobalConfig } from "payload";
 
-export const HomePage: GlobalConfig = {
-  slug: 'home-page',
+export const PostsPage: GlobalConfig = {
+  slug: 'posts-page',
   admin: {
       group: 'Navigation & Pages',
       livePreview: {
@@ -18,14 +15,13 @@ export const HomePage: GlobalConfig = {
     {
       name: 'title',
       type: 'text',
-      defaultValue: 'Home',
+      defaultValue: 'Technical Blog',
       required: true,
     },
     {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [HeroBlock, RecentProjectsBlock, RecentPostsBlock],
+      name: 'subtitle',
+      type: 'text',
       required: true,
-    }
+    },
   ]
 }
