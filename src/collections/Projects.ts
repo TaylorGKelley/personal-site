@@ -1,4 +1,5 @@
 import { anyone } from '@/access/anyone'
+import { TwoColumnBlock } from '@/blocks/Project/TwoColumn'
 import type { CollectionConfig } from 'payload'
 
 export const Projects: CollectionConfig = {
@@ -34,6 +35,12 @@ export const Projects: CollectionConfig = {
           required: true,
         },
       ],
+    },
+    {
+      name: 'layout',
+      type: 'blocks',
+      blocks: [TwoColumnBlock], // TODO: add blocks for building
+      required: true,
     }
   ],
 }
