@@ -17,6 +17,8 @@ import { Posts } from './collections/Posts'
 import { PostsPage } from './globals/PostsPage'
 import { ContactPage } from './globals/ContactPage'
 import { ProjectsPage } from './globals/ProjectsPage'
+import { Header } from './globals/shared/Header'
+import { Footer } from './globals/shared/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,7 +31,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories],
-  globals: [HomePage, ContactPage, PostsPage, ProjectsPage],
+  globals: [Header, Footer, HomePage, ContactPage, PostsPage, ProjectsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
