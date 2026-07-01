@@ -1,4 +1,4 @@
-import type { GlobalConfig } from "payload";
+import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -26,6 +26,7 @@ export const Footer: GlobalConfig = {
         {
           name: 'title',
           type: 'text',
+          defaultValue: 'Navigation',
           required: true,
         },
         {
@@ -44,8 +45,8 @@ export const Footer: GlobalConfig = {
             },
           ],
           required: true,
-        }
-      ]
+        },
+      ],
     },
     {
       name: 'connect',
@@ -54,6 +55,7 @@ export const Footer: GlobalConfig = {
         {
           name: 'title',
           type: 'text',
+          defaultValue: 'Connect',
           required: true,
         },
         {
@@ -72,8 +74,8 @@ export const Footer: GlobalConfig = {
             },
           ],
           required: true,
-        }
-      ]
+        },
+      ],
     },
   ],
 }
