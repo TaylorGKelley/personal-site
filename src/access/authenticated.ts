@@ -1,5 +1,5 @@
-import type { Access } from 'payload';
+import type { PayloadRequest } from 'payload'
 
-export const authenticated: Access = ({ req: { user } }) => {
+export const authenticated = ({ req: { user } }: { req: PayloadRequest }) => {
   return Boolean(user)
 }

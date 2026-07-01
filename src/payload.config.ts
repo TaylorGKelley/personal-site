@@ -5,6 +5,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { betterAuthPlugin } from 'payload-auth'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -19,6 +20,9 @@ import { ContactPage } from './globals/ContactPage'
 import { ProjectsPage } from './globals/ProjectsPage'
 import { Header } from './globals/shared/Header'
 import { Footer } from './globals/shared/Footer'
+import { magicLink } from 'better-auth/plugins/magic-link'
+import { nextCookies } from 'better-auth/next-js'
+import { emailOTP } from 'better-auth/plugins/email-otp'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -60,6 +64,31 @@ export default buildConfig({
           secretAccessKey: process.env.SUPABASE_SECRET_ACCESS_KEY || '',
         },
         forcePathStyle: true,
+      },
+    }),
+    betterAuthPlugin({
+      betterAuthOptions: {
+        secret: process.env.BETTER_AUTH_SECRET || '',
+        baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+        emailAndPassword: {
+          enabled: true,
+        },
+        plugins: [
+          nextCookies(),
+          magicLink({
+            sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
+              // TODO: send magic link email
+            },
+          }),
+          emailOTP({
+            sendVerificationOTP: async ({ email, otp, type }) => {
+              if (type === 'sign-in') {
+                // send the otp for sign in
+              }
+              // else if (type === 'email-verification') { }
+            },
+          }),
+        ],
       },
     }),
   ],
