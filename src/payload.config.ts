@@ -72,6 +72,9 @@ export default buildConfig({
         baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
         emailAndPassword: {
           enabled: true,
+          autoSignIn: true,
+          onPasswordReset: async ({ email, token, url, metadata }, ctx) => {},
+          requireEmailVerification: true,
         },
         plugins: [
           nextCookies(),
