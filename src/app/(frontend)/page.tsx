@@ -13,11 +13,14 @@ async function getHomePageData() {
 }
 
 export default async function HomePage({
-  searchParams
-}: { searchParams: Promise<{ preview?: string }> }) {
-  const {preview} = await searchParams
+  searchParams,
+}: {
+  searchParams: Promise<{ preview?: string }>
+}) {
+  const { preview } = await searchParams
+  console.log(preview)
   const homeData = await getHomePageData()
-
+  console.log(homeData)
   // Gracefully fallback if the home page wasn't built yet
   if (!homeData || homeData.layout.length === 0) {
     return (

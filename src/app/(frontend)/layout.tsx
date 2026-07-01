@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles.css'
+import '../global.css'
 import { HeaderComponent } from '@/components/globals/Header'
 import { FooterComponent } from '@/components/globals/Footer'
 import type { Metadata } from 'next'
