@@ -14,5 +14,6 @@ export const Users: CollectionConfig = {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
   },
+  fields: [],
   timestamps: true,
 }

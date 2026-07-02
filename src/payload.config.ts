@@ -73,8 +73,8 @@ export default buildConfig({
         emailAndPassword: {
           enabled: true,
           autoSignIn: true,
-          onPasswordReset: async ({ email, token, url, metadata }, ctx) => {},
           requireEmailVerification: true,
+          sendResetPassword: async ({ token, url, user }) => {},
         },
         plugins: [
           nextCookies(),
