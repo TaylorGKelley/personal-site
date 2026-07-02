@@ -79,7 +79,7 @@ export default async function PostsPage({
                 </span>
               </div>
               <h2 className="font-headline-md text-headline-md group-hover:text-on-tertiary-container transition-colors">
-                <a className="after:absolute after:inset-0" href="#">
+                <a className="after:absolute after:inset-0" href="/posts/this-is-a-slug">
                   The Calculus of Distributed Consensus
                 </a>
               </h2>

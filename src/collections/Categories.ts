@@ -6,6 +6,9 @@ export const Categories: CollectionConfig = {
   access: {
     read: anyone,
   },
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
     {
       name: 'name',

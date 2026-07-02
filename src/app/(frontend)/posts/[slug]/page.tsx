@@ -4,14 +4,17 @@ import configPromise from '@/payload.config'
 async function getPostPageData(slug: string) {
   const payload = await getPayload({ config: configPromise })
 
-  const data = await payload.find({
-    collection: 'posts',
-    where: {
-      slug: {
-        equals: slug,
+  const data = (
+    await payload.find({
+      collection: 'posts',
+      overrideAccess: false,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+    })
+  ).docs[0]
 
   return data
 }
