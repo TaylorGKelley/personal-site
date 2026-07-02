@@ -23,6 +23,7 @@ import { Footer } from './globals/shared/Footer'
 import { magicLink } from 'better-auth/plugins/magic-link'
 import { nextCookies } from 'better-auth/next-js'
 import { emailOTP } from 'better-auth/plugins/email-otp'
+import { Comments } from './collections/Comments'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories],
+  collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories, Comments],
   globals: [Header, Footer, HomePage, ContactPage, PostsPage, ProjectsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -50,9 +51,11 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        // Enable it for your media collection
         media: {
-          disablePayloadAccessControl: true, // Speeds up client reads by pointing directly to Supabase URLs
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename }) => {
+            return `https://${process.env.SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/${process.env.SUPABASE_BUCKET_NAME}/${filename}`
+          },
         },
       },
       bucket: process.env.SUPABASE_BUCKET_NAME || '',
