@@ -30,7 +30,6 @@ export const Header: GlobalConfig = {
       name: 'resume',
       type: 'upload',
       relationTo: 'files',
-      required: true,
     }
   ],
 }

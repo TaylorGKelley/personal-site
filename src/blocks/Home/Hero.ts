@@ -1,6 +1,6 @@
 import type { Block } from "payload";
 
-export const HeroBlock: Block = {
+export const Hero: Block = {
   slug: 'hero',
   labels: {
     singular: 'Hero Section',
@@ -10,6 +10,7 @@ export const HeroBlock: Block = {
     {
       name: 'heading',
       type: 'text',
+      defaultValue: 'Taylor Kelley',
       required: true,
     },
     {
@@ -17,11 +18,9 @@ export const HeroBlock: Block = {
       type: 'textarea',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
+      name: 'actionText',
+      type: 'text',
+      defaultValue: 'Explore Projects'
     }
   ],
-
 }

@@ -20,62 +20,38 @@ export const Footer: GlobalConfig = {
       required: true,
     },
     {
-      name: 'navigation',
-      type: 'group',
+      name: 'navigationLinks',
+      type: 'array',
       fields: [
         {
-          name: 'title',
+          name: 'name',
           type: 'text',
-          defaultValue: 'Navigation',
           required: true,
         },
         {
-          name: 'links',
-          type: 'array',
-          fields: [
-            {
-              name: 'name',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              required: true,
-            },
-          ],
+          name: 'url',
+          type: 'text',
           required: true,
         },
       ],
+      required: true,
     },
     {
-      name: 'connect',
-      type: 'group',
+      name: 'connectLinks',
+      type: 'array',
       fields: [
         {
-          name: 'title',
+          name: 'name',
           type: 'text',
-          defaultValue: 'Connect',
           required: true,
         },
         {
-          name: 'links',
-          type: 'array',
-          fields: [
-            {
-              name: 'name',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              required: true,
-            },
-          ],
+          name: 'url',
+          type: 'text',
           required: true,
         },
       ],
+      required: true,
     },
   ],
 }
