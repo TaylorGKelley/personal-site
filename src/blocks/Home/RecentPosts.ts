@@ -1,21 +1,27 @@
 import { Block } from 'payload'
 
-export const RecentPostsBlock: Block = {
+export const RecentPosts: Block = {
   slug: 'recentPosts',
   labels: {
-    singular: 'Recent Posts',
+    singular: 'Recent Posts Section',
     plural: 'Recent Posts Sections',
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      defaultValue: 'Technical Blog',
+      defaultValue: 'Latest Thoughts',
       required: true,
     },
     {
       name: 'subtitle',
       type: 'text',
     },
+    {
+      name: 'viewAllText',
+      type: 'text',
+      defaultValue: 'View More',
+      required: true,
+    }
   ],
 }

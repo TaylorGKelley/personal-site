@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1075.0",
+    "@base-ui/react": "^1.6.0",
     "@payloadcms/db-postgres": "3.85.1",
     "@payloadcms/live-preview-react": "^3.85.1",
     "@payloadcms/next": "3.85.1",
@@ -27,17 +28,25 @@
     "@payloadcms/ui": "3.85.1",
     "@tailwindcss/postcss": "^4.3.1",
     "better-auth": "^1.6.23",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
+    "lucide-react": "^1.23.0",
+    "motion": "^12.42.2",
     "next": "16.2.6",
     "payload": "3.85.1",
     "payload-auth": "^1.9.4",
+    "payload-icon-picker": "^1.5.11",
     "postcss": "^8.5.15",
     "react": "19.2.6",
     "react-dom": "19.2.6",
+    "shadcn": "^4.13.0",
     "sharp": "0.34.2",
-    "tailwindcss": "^4.3.1"
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.1",
+    "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
     "@playwright/test": "1.58.2",
@@ -57,7 +66,7 @@
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9 || ^10"
+    "pnpm": "^10 || ^11"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

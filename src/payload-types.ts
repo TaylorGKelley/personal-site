@@ -378,6 +378,7 @@ export interface File {
  */
 export interface Project {
   id: number;
+  slug: string;
   title: string;
   description: string;
   coverImage: number | Media;
@@ -409,6 +410,7 @@ export interface Project {
   }[];
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -731,6 +733,7 @@ export interface FilesSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  slug?: T;
   title?: T;
   description?: T;
   coverImage?: T;
@@ -753,6 +756,7 @@ export interface ProjectsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,20 +1,40 @@
-import { anyone } from '@/access/anyone'
-import { TwoColumnBlock } from '@/blocks/Project/TwoColumn'
+
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPubished'
 import type { CollectionConfig } from 'payload'
+import { Hero } from '@/blocks/Project/Hero'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
   access: {
-    read: anyone,
+    read: authenticatedOrPublished,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
+  },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'subtitle', 'updatedAt'],
+  },
+  versions: {
+    drafts: true, // Enables save-as-draft capability
   },
   fields: [
+    {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
     {
       name: 'title',
       type: 'text',
       required: true,
     },
     {
-      name: 'description',
+      name: 'subtitle',
       type: 'text',
       required: true,
     },
@@ -25,7 +45,7 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
-      name: 'frameworks',
+      name: 'frameworks', // Tags
       type: 'array',
       fields: [
         {
@@ -39,8 +59,8 @@ export const Projects: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [TwoColumnBlock], // TODO: add blocks for building
+      blocks: [Hero], // TODO: add blocks for building
       required: true,
-    }
+    },
   ],
 }

@@ -1,11 +1,12 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { betterAuthPlugin } from 'payload-auth'
+import { payloadIconPicker } from 'payload-icon-picker'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -16,14 +17,14 @@ import { Frameworks } from './collections/Frameworks'
 import { Categories } from './collections/Categories'
 import { Posts } from './collections/Posts'
 import { PostsPage } from './globals/PostsPage'
-import { ContactPage } from './globals/ContactPage'
-import { ProjectsPage } from './globals/ProjectsPage'
+import { AboutPage } from './globals/AboutPage'
 import { Header } from './globals/shared/Header'
 import { Footer } from './globals/shared/Footer'
 import { magicLink } from 'better-auth/plugins/magic-link'
 import { nextCookies } from 'better-auth/next-js'
 import { emailOTP } from 'better-auth/plugins/email-otp'
 import { Comments } from './collections/Comments'
+
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +37,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories, Comments],
-  globals: [Header, Footer, HomePage, ContactPage, PostsPage, ProjectsPage],
+  globals: [Header, Footer, HomePage, AboutPage, PostsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -76,7 +77,7 @@ export default buildConfig({
         emailAndPassword: {
           enabled: true,
           autoSignIn: true,
-          requireEmailVerification: true,
+          requireEmailVerification: false,
           sendResetPassword: async ({ token, url, user }) => {},
         },
         plugins: [
@@ -96,6 +97,10 @@ export default buildConfig({
           }),
         ],
       },
+    }),
+    payloadIconPicker({
+      iconPackProviderPath: './lib/lucide/components/IconPackProvider#IconPackProvider',
+
     }),
   ],
 })

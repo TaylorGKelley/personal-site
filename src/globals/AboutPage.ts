@@ -1,11 +1,11 @@
 import type { GlobalConfig } from "payload";
 
-export const ProjectsPage: GlobalConfig = {
-  slug: 'projects-page',
+export const AboutPage: GlobalConfig = {
+  slug: 'about-page',
   admin: {
       group: 'Navigation & Pages',
       livePreview: {
-        url: ({ locale }) => {
+        url: () => {
           const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
           return `${baseUrl}?preview=true`
         },
@@ -13,15 +13,23 @@ export const ProjectsPage: GlobalConfig = {
     },
   fields: [
     {
-      name: 'title',
+      name: 'heading',
       type: 'text',
-      defaultValue: 'Project Case Studies',
       required: true,
     },
     {
-      name: 'subtitle',
+      name: 'subheading',
       type: 'text',
-      required: true,
     },
+    {
+      name: 'portrait',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'content',
+      type: 'blocks',
+      blocks: [], // TODO: Add about section blocks
+    }
   ]
 }
