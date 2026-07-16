@@ -2,7 +2,6 @@
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPubished'
 import type { CollectionConfig } from 'payload'
-import { Hero } from '@/blocks/Project/Hero'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -59,7 +58,7 @@ export const Projects: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [Hero], // TODO: add blocks for building
+      blocks: [], // TODO: add blocks for building
       required: true,
     },
   ],

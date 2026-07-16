@@ -36,6 +36,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+
   collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories, Comments],
   globals: [Header, Footer, HomePage, AboutPage, PostsPage],
   editor: lexicalEditor(),

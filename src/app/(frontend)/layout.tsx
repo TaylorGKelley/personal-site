@@ -1,25 +1,35 @@
 import React from 'react'
-import '../global.css'
-import { HeaderComponent } from '@/components/globals/Header'
-import { FooterComponent } from '@/components/globals/Footer'
 import type { Metadata } from 'next'
+import { Header } from '@/components/globals/Header'
+import { Footer } from '@/components/globals/Footer'
+import { Fira_Code } from 'next/font/google';
+import localFont from 'next/font/local';
+import { cn } from '@/lib/utils'
+import '../global.css'
+
+const satoshi = localFont({
+  src: '../../fonts/Satoshi-Variable.ttf',
+  variable: '--font-satoshi',
+})
+
+const firaCode = Fira_Code({
+  variable: '--font-fira-code',
+})
 
 export const metadata: Metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: '',
+  title: 'Portfolio and Blog of Taylor Kelley',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
-
+export default function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <HeaderComponent />
+      <body className={cn('font-sans flex flex-col min-h-screen', satoshi.variable, firaCode.variable)}>
+        <Header />
 
-        <main>{children}</main>
+        <main className='flex-1'>{children}</main>
 
-        <FooterComponent />
+        <Footer />
       </body>
     </html>
   )
