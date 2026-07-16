@@ -119,17 +119,15 @@ export interface Config {
     header: Header;
     footer: Footer;
     'home-page': HomePage;
-    'contact-page': ContactPage;
+    'about-page': AboutPage;
     'posts-page': PostsPage;
-    'projects-page': ProjectsPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
-    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
     'posts-page': PostsPageSelect<false> | PostsPageSelect<true>;
-    'projects-page': ProjectsPageSelect<false> | ProjectsPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -380,7 +378,7 @@ export interface Project {
   id: number;
   slug: string;
   title: string;
-  description: string;
+  subtitle: string;
   coverImage: number | Media;
   frameworks?:
     | {
@@ -388,26 +386,7 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
-  layout: {
-    content: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'two-column';
-  }[];
+  layout: unknown[];
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -735,7 +714,7 @@ export interface FilesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
-  description?: T;
+  subtitle?: T;
   coverImage?: T;
   frameworks?:
     | T
@@ -743,17 +722,7 @@ export interface ProjectsSelect<T extends boolean = true> {
         framework?: T;
         id?: T;
       };
-  layout?:
-    | T
-    | {
-        'two-column'?:
-          | T
-          | {
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
+  layout?: T | {};
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -856,7 +825,7 @@ export interface Header {
     url: string;
     id?: string | null;
   }[];
-  resume: number | File;
+  resume?: (number | null) | File;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -869,22 +838,16 @@ export interface Footer {
   title: string;
   subtitle?: string | null;
   copyright: string;
-  navigation: {
-    title: string;
-    links: {
-      name: string;
-      url: string;
-      id?: string | null;
-    }[];
-  };
-  connect: {
-    title: string;
-    links: {
-      name: string;
-      url: string;
-      id?: string | null;
-    }[];
-  };
+  navigationLinks: {
+    name: string;
+    url: string;
+    id?: string | null;
+  }[];
+  connectLinks: {
+    name: string;
+    url: string;
+    id?: string | null;
+  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -894,58 +857,46 @@ export interface Footer {
  */
 export interface HomePage {
   id: number;
-  title: string;
-  layout: (
-    | {
-        heading: string;
-        subheading?: string | null;
-        image?: (number | null) | Media;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'hero';
-      }
-    | {
-        title: string;
-        subtitle?: string | null;
-        viewAll: ProjectViewAllLink;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'recentProjects';
-      }
-    | {
-        title: string;
-        subtitle?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'recentPosts';
-      }
-  )[];
+  content?:
+    | (
+        | {
+            heading: string;
+            subheading?: string | null;
+            actionText?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'projects';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            viewAllText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'recentPosts';
+          }
+      )[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projectViewAllLink".
+ * via the `definition` "about-page".
  */
-export interface ProjectViewAllLink {
-  displayText: string;
-  url: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-page".
- */
-export interface ContactPage {
+export interface AboutPage {
   id: number;
-  title: string;
-  subtitle: string;
-  links?:
-    | {
-        title: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
+  heading: string;
+  subheading?: string | null;
+  portrait?: (number | null) | Media;
+  content?: unknown[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -955,19 +906,6 @@ export interface ContactPage {
  */
 export interface PostsPage {
   id: number;
-  title: string;
-  subtitle: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects-page".
- */
-export interface ProjectsPage {
-  id: number;
-  title: string;
-  subtitle: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -997,29 +935,19 @@ export interface FooterSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   copyright?: T;
-  navigation?:
+  navigationLinks?:
     | T
     | {
-        title?: T;
-        links?:
-          | T
-          | {
-              name?: T;
-              url?: T;
-              id?: T;
-            };
+        name?: T;
+        url?: T;
+        id?: T;
       };
-  connect?:
+  connectLinks?:
     | T
     | {
-        title?: T;
-        links?:
-          | T
-          | {
-              name?: T;
-              url?: T;
-              id?: T;
-            };
+        name?: T;
+        url?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1030,8 +958,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  title?: T;
-  layout?:
+  content?:
     | T
     | {
         hero?:
@@ -1039,16 +966,15 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
-              image?: T;
+              actionText?: T;
               id?: T;
               blockName?: T;
             };
-        recentProjects?:
+        projects?:
           | T
           | {
               title?: T;
               subtitle?: T;
-              viewAll?: T | ProjectViewAllLinkSelect<T>;
               id?: T;
               blockName?: T;
             };
@@ -1057,6 +983,7 @@ export interface HomePageSelect<T extends boolean = true> {
           | {
               title?: T;
               subtitle?: T;
+              viewAllText?: T;
               id?: T;
               blockName?: T;
             };
@@ -1067,26 +994,13 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projectViewAllLink_select".
+ * via the `definition` "about-page_select".
  */
-export interface ProjectViewAllLinkSelect<T extends boolean = true> {
-  displayText?: T;
-  url?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-page_select".
- */
-export interface ContactPageSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  links?:
-    | T
-    | {
-        title?: T;
-        url?: T;
-        id?: T;
-      };
+export interface AboutPageSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  portrait?: T;
+  content?: T | {};
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1096,19 +1010,6 @@ export interface ContactPageSelect<T extends boolean = true> {
  * via the `definition` "posts-page_select".
  */
 export interface PostsPageSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects-page_select".
- */
-export interface ProjectsPageSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
