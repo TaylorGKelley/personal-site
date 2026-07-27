@@ -427,6 +427,7 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -747,6 +748,7 @@ export interface PostsSelect<T extends boolean = true> {
   coverImage?: T;
   category?: T;
   content?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -857,35 +859,49 @@ export interface Footer {
  */
 export interface HomePage {
   id: number;
-  content?:
-    | (
-        | {
-            heading: string;
-            subheading?: string | null;
-            actionText?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'hero';
-          }
-        | {
-            title: string;
-            subtitle?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'projects';
-          }
-        | {
-            title: string;
-            subtitle?: string | null;
-            viewAllText: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'recentPosts';
-          }
-      )[]
-    | null;
+  content?: (HeroBlock | ProjectBlock | RecentPostsBlock)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  heading: string;
+  subheading?: string | null;
+  actionText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectBlock".
+ */
+export interface ProjectBlock {
+  projects?:
+    | {
+        project?: (number | null) | Project;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projects';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecentPostsBlock".
+ */
+export interface RecentPostsBlock {
+  title: string;
+  subtitle?: string | null;
+  viewAllText: string;
+  displayCount: number;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'recent-posts';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -961,36 +977,50 @@ export interface HomePageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        hero?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              actionText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        projects?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        recentPosts?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              viewAllText?: T;
-              id?: T;
-              blockName?: T;
-            };
+        hero?: T | HeroBlockSelect<T>;
+        projects?: T | ProjectBlockSelect<T>;
+        'recent-posts'?: T | RecentPostsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  actionText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectBlock_select".
+ */
+export interface ProjectBlockSelect<T extends boolean = true> {
+  projects?:
+    | T
+    | {
+        project?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecentPostsBlock_select".
+ */
+export interface RecentPostsBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  viewAllText?: T;
+  displayCount?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

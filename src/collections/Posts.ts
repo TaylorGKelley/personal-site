@@ -12,11 +12,29 @@ export const Posts: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-      defaultColumns: ['title', 'slug', 'updatedAt'],
+      defaultColumns: ['title', 'slug', 'publishedAt', 'updatedAt'],
     },
     versions: {
       drafts: true, // Enables save-as-draft capability
     },
+  hooks: {
+    beforeChange: [
+      ({ data, originalDoc }) => {
+        if (data._status === 'published' && !data.publishedAt && !originalDoc?.publishedAt) {
+          data.publishedAt = new Date().toISOString()
+        }
+        return data
+      },
+    ],
+    beforeValidate: [
+      ({ data }) => {
+        if (!data?.slug || data?.slug === '') {
+          data!.slug = data!.title.replace(/[^a-zA-Z\s]/g, '').replace(/\s+/g, '-').toLowerCase();
+        }
+        return data;
+      }
+    ]
+  },
   fields: [
     {
       name: 'title',
@@ -53,6 +71,16 @@ export const Posts: CollectionConfig = {
       name: 'content',
       type: 'richText',
       required: true,
-    }
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
   ],
 }

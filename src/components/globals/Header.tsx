@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { getUser } from "@/actions/auth";
 import { NavLink } from "./NavLink";
+import { File } from "@/payload-types";
 
 export async function Header() {
   const { data } = await getHeader();
@@ -22,8 +23,8 @@ export async function Header() {
         </nav>
 
         {!user ?
-        <Link href="/">
-          <Button size="lg" className='px-6 py-2 rounded-full bg-sidebar-primary cursor-pointer'>
+          <Link href={(data.resume as File).url || "/about"}>
+            <Button size="lg" className='px-6 py-2 rounded-full bg-sidebar-primary cursor-pointer'>
             {/*<DownloadIcon />*/}
             <span>Resume</span>
           </Button>
