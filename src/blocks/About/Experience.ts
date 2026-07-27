@@ -2,6 +2,7 @@ import { type Block } from "payload";
 
 export const Experience: Block = {
   slug: 'experience',
+  interfaceName: 'ExperienceBlock',
   labels: {
     singular: 'Experience Block',
     plural: 'Experience Blocks',

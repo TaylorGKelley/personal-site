@@ -1,7 +1,8 @@
 import { Block } from 'payload'
 
 export const RecentPosts: Block = {
-  slug: 'recentPosts',
+  slug: 'recent-posts',
+  interfaceName: 'RecentPostsBlock',
   labels: {
     singular: 'Recent Posts Section',
     plural: 'Recent Posts Sections',
@@ -22,6 +23,12 @@ export const RecentPosts: Block = {
       type: 'text',
       defaultValue: 'View More',
       required: true,
+    },
+    {
+      name: 'displayCount',
+      type: 'number',
+      required: true,
+      defaultValue: 3,
     }
   ],
 }

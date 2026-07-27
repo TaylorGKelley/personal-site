@@ -2,6 +2,7 @@ import { type Block } from "payload";
 
 export const Values: Block = {
   slug: 'philosophy',
+  interfaceName: 'ValuesBlock',
   labels: {
     singular: 'Philosophy Block',
     plural: 'Philosophy Blocks',

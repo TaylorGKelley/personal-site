@@ -20,25 +20,28 @@ export const HomePage: GlobalConfig = {
       type: 'blocks',
       blocks: [Hero, Projects, RecentPosts],
       defaultValue: [
-        {
-          type: 'hero',
-          data: {
-            heading: 'Taylor Kelley',
-            subheading: 'A full-stack developer specializing in high-performance, clean and maintainable code, and user focused web applications.',
-            actionText: 'Explore Projects',
-          },
-        },
-        {
-          type: 'projects',
-        },
-        {
-          type: 'recent-posts',
-          data: {
-            title: 'Latest Thoughts',
-            subtitle: 'Reflections on design, engineering, and craft.',
-            viewAllText: 'View More',
-          },
-        }
+        // {
+        //   type: 'hero',
+        //   data: {
+        //     heading: 'Taylor Kelley',
+        //     subheading: 'A full-stack developer specializing in high-performance, clean and maintainable code, and user focused web applications.',
+        //     actionText: 'Explore Projects',
+        //   },
+        // },
+        // {
+        //   type: 'projects',
+        //   data: {
+
+        //   }
+        // },
+        // {
+        //   type: 'recent-posts',
+        //   data: {
+        //     title: 'Latest Thoughts',
+        //     subtitle: 'Reflections on design, engineering, and craft.',
+        //     viewAllText: 'View More',
+        //   },
+        // }
       ],
     }
   ],

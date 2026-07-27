@@ -3,6 +3,7 @@ import { iconField } from "payload-icon-picker";
 
 export const Skills: Block = {
   slug: 'skills',
+  interfaceName: 'SkillsBlock',
   labels: {
     singular: 'Skills Block',
     plural: 'Skills Blocks',
