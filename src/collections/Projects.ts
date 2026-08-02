@@ -1,7 +1,15 @@
 
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPubished'
+import { ArchitectureDiagram } from '@/blocks/Project/ArchitectureDiagram'
+import { CodeBlock } from '@/blocks/Project/CodeBlock'
+import { FeatureGrid } from '@/blocks/Project/FeatureGrid'
+import { FeatureListWithMedia } from '@/blocks/Project/FeatureListWithMedia'
+import { Gallery } from '@/blocks/Project/Gallery'
+import { MetricsGrid } from '@/blocks/Project/MetricsGrid'
+import { Overview } from '@/blocks/Project/Overview'
 import type { CollectionConfig } from 'payload'
+import { iconField } from 'payload-icon-picker'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -44,6 +52,50 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
+      name: 'primaryCallToAction',
+      type: 'group',
+      required: true,
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'link',
+          type: 'text',
+          required: true,
+        },
+        iconField({
+          name: 'icon',
+          displayMode: 'select',
+          required: true,
+        })
+      ],
+    },
+    {
+      name: 'secondaryCallToAction',
+      type: 'group',
+      required: true,
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'link',
+          type: 'text',
+          required: true,
+        },
+        iconField({
+          name: 'icon',
+          displayMode: 'select',
+          required: true,
+        })
+      ],
+    },
+    {
       name: 'frameworks', // Tags
       type: 'array',
       fields: [
@@ -58,7 +110,15 @@ export const Projects: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [], // TODO: add blocks for building
+      blocks: [
+        Overview,
+        FeatureGrid,
+        FeatureListWithMedia,
+        Gallery,
+        CodeBlock,
+        ArchitectureDiagram,
+        MetricsGrid,
+        ],
       required: true,
     },
   ],

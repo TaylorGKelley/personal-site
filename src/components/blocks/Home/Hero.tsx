@@ -8,7 +8,7 @@ export const Hero: React.FC<HeroProps> = ({
   heading,
   subheading,
   actionText,
-}: HeroBlock) => {
+}) => {
   return (
     <section
       id="hero-section"

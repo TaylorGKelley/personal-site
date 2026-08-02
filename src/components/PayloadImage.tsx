@@ -1,6 +1,7 @@
+import { cn } from "@/lib/utils";
 import type { Media } from "@/payload-types";
 
-type PayloadImageProps = {
+type PayloadImageProps = React.HTMLAttributes<HTMLImageElement> & {
   media: number | Media | null | undefined;
   altFallback?: string;
   className?: string;
@@ -9,7 +10,8 @@ type PayloadImageProps = {
 export const PayloadImage: React.FC<PayloadImageProps> = ({
   media,
   altFallback = '',
-  className = '',
+  className,
+  ...props
 }) => {
   if (!media || typeof media === 'number') {
     return (
@@ -29,8 +31,9 @@ export const PayloadImage: React.FC<PayloadImageProps> = ({
       alt={media.alt || altFallback}
       width={media.sizes?.hero?.width || media.width || undefined}
       height={media.sizes?.hero?.height || media.height || undefined}
-      className={className}
+      className={cn('object-cover w-full h-full',className)}
       loading="lazy"
+      {...props}
     />
   );
 };

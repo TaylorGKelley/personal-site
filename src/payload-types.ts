@@ -68,44 +68,26 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
-    sessions: Session;
-    accounts: Account;
-    verifications: Verification;
-    'admin-invitations': AdminInvitation;
     media: Media;
     files: File;
     projects: Project;
     frameworks: Framework;
     posts: Post;
     categories: Category;
-    comments: Comment;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    users: {
-      account: 'accounts';
-      session: 'sessions';
-    };
-    comments: {
-      replies: 'comments';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    sessions: SessionsSelect<false> | SessionsSelect<true>;
-    accounts: AccountsSelect<false> | AccountsSelect<true>;
-    verifications: VerificationsSelect<false> | VerificationsSelect<true>;
-    'admin-invitations': AdminInvitationsSelect<false> | AdminInvitationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     files: FilesSelect<false> | FilesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     frameworks: FrameworksSelect<false> | FrameworksSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -163,156 +145,27 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  /**
-   * Users chosen display name
-   */
   name: string;
-  /**
-   * The email of the user
-   */
+  avatar?: (number | null) | Media;
+  title?: string | null;
+  updatedAt: string;
+  createdAt: string;
   email: string;
-  /**
-   * Whether the email of the user has been verified
-   */
-  emailVerified: boolean;
-  /**
-   * The image of the user
-   */
-  image?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  /**
-   * The role/ roles of the user
-   */
-  role?: ('admin' | 'user')[] | null;
-  account?: {
-    docs?: (number | Account)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  session?: {
-    docs?: (number | Session)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  collection: 'users';
-}
-/**
- * Accounts are used to store user accounts for authentication providers
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "accounts".
- */
-export interface Account {
-  id: number;
-  /**
-   * The id of the account as provided by the SSO or equal to userId for credential accounts
-   */
-  accountId: string;
-  /**
-   * The id of the provider as provided by the SSO
-   */
-  providerId: string;
-  /**
-   * The user that the account belongs to
-   */
-  user: number | User;
-  /**
-   * The access token of the account. Returned by the provider
-   */
-  accessToken?: string | null;
-  /**
-   * The refresh token of the account. Returned by the provider
-   */
-  refreshToken?: string | null;
-  /**
-   * The id token for the account. Returned by the provider
-   */
-  idToken?: string | null;
-  /**
-   * The date and time when the access token will expire
-   */
-  accessTokenExpiresAt?: string | null;
-  /**
-   * The date and time when the refresh token will expire
-   */
-  refreshTokenExpiresAt?: string | null;
-  /**
-   * The scope of the account. Returned by the provider
-   */
-  scope?: string | null;
-  /**
-   * The hashed password of the account. Mainly used for email and password authentication
-   */
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-/**
- * Sessions are active sessions for users. They are used to authenticate users with a session token
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sessions".
- */
-export interface Session {
-  id: number;
-  /**
-   * The date and time when the session will expire
-   */
-  expiresAt: string;
-  /**
-   * The unique session token
-   */
-  token: string;
-  createdAt: string;
-  updatedAt: string;
-  /**
-   * The IP address of the device
-   */
-  ipAddress?: string | null;
-  /**
-   * The user agent information of the device
-   */
-  userAgent?: string | null;
-  /**
-   * The user that the session belongs to
-   */
-  user: number | User;
-}
-/**
- * Verifications are used to verify authentication requests
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "verifications".
- */
-export interface Verification {
-  id: number;
-  /**
-   * The identifier of the verification request
-   */
-  identifier: string;
-  /**
-   * The value to be verified
-   */
-  value: string;
-  /**
-   * The date and time when the verification request will expire
-   */
-  expiresAt: string;
-  createdAt: string;
-  updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "admin-invitations".
- */
-export interface AdminInvitation {
-  id: number;
-  role: 'admin' | 'user';
-  token: string;
-  url?: string | null;
-  updatedAt: string;
-  createdAt: string;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -380,6 +233,14 @@ export interface Project {
   title: string;
   subtitle: string;
   coverImage: number | Media;
+  primaryCallToAction: {
+    text: string;
+    link: string;
+    icon: {
+      name: string;
+      svg: string;
+    };
+  };
   frameworks?:
     | {
         framework: number | Framework;
@@ -409,8 +270,11 @@ export interface Post {
   id: number;
   title: string;
   slug: string;
+  author: number | User;
   excerpt: string;
   coverImage: number | Media;
+  youtubeUrl?: string | null;
+  xUrl?: string | null;
   category: number | Category;
   content: {
     root: {
@@ -444,30 +308,6 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "comments".
- */
-export interface Comment {
-  id: number;
-  content: string;
-  post: number | Post;
-  user: number | User;
-  /**
-   * Leave blank if this is a top-level comment.
-   */
-  parent?: (number | null) | Comment;
-  /**
-   * Replies attached to this comment.
-   */
-  replies?: {
-    docs?: (number | Comment)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -495,22 +335,6 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'sessions';
-        value: number | Session;
-      } | null)
-    | ({
-        relationTo: 'accounts';
-        value: number | Account;
-      } | null)
-    | ({
-        relationTo: 'verifications';
-        value: number | Verification;
-      } | null)
-    | ({
-        relationTo: 'admin-invitations';
-        value: number | AdminInvitation;
-      } | null)
-    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -533,10 +357,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
-      } | null)
-    | ({
-        relationTo: 'comments';
-        value: number | Comment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -586,67 +406,24 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  avatar?: T;
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
   email?: T;
-  emailVerified?: T;
-  image?: T;
-  createdAt?: T;
-  updatedAt?: T;
-  role?: T;
-  account?: T;
-  session?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sessions_select".
- */
-export interface SessionsSelect<T extends boolean = true> {
-  expiresAt?: T;
-  token?: T;
-  createdAt?: T;
-  updatedAt?: T;
-  ipAddress?: T;
-  userAgent?: T;
-  user?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "accounts_select".
- */
-export interface AccountsSelect<T extends boolean = true> {
-  accountId?: T;
-  providerId?: T;
-  user?: T;
-  accessToken?: T;
-  refreshToken?: T;
-  idToken?: T;
-  accessTokenExpiresAt?: T;
-  refreshTokenExpiresAt?: T;
-  scope?: T;
-  password?: T;
-  createdAt?: T;
-  updatedAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "verifications_select".
- */
-export interface VerificationsSelect<T extends boolean = true> {
-  identifier?: T;
-  value?: T;
-  expiresAt?: T;
-  createdAt?: T;
-  updatedAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "admin-invitations_select".
- */
-export interface AdminInvitationsSelect<T extends boolean = true> {
-  role?: T;
-  token?: T;
-  url?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -717,6 +494,13 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   coverImage?: T;
+  primaryCallToAction?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        icon?: T;
+      };
   frameworks?:
     | T
     | {
@@ -744,8 +528,11 @@ export interface FrameworksSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  author?: T;
   excerpt?: T;
   coverImage?: T;
+  youtubeUrl?: T;
+  xUrl?: T;
   category?: T;
   content?: T;
   publishedAt?: T;
@@ -759,19 +546,6 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "comments_select".
- */
-export interface CommentsSelect<T extends boolean = true> {
-  content?: T;
-  post?: T;
-  user?: T;
-  parent?: T;
-  replies?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -912,9 +686,92 @@ export interface AboutPage {
   heading: string;
   subheading?: string | null;
   portrait?: (number | null) | Media;
-  content?: unknown[] | null;
+  content?: (ValuesBlock | SkillsBlock | ExperienceBlock | HobbiesBlock)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock".
+ */
+export interface ValuesBlock {
+  title: string;
+  heading: string;
+  description: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'values';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SkillsBlock".
+ */
+export interface SkillsBlock {
+  title: string;
+  heading: string;
+  skills?:
+    | {
+        icon: {
+          name: string;
+          svg: string;
+        };
+        title: string;
+        technologies: {
+          name: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'skills';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ExperienceBlock".
+ */
+export interface ExperienceBlock {
+  title: string;
+  heading: string;
+  jobs?:
+    | {
+        title: string;
+        company: string;
+        description: string;
+        startDate: string;
+        endDate?: string | null;
+        current?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'experience';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HobbiesBlock".
+ */
+export interface HobbiesBlock {
+  title: string;
+  heading: string;
+  description: string;
+  tags?:
+    | {
+        icon: {
+          name: string;
+          svg: string;
+        };
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  firstImage: number | Media;
+  secondImage: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hobbies';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -922,6 +779,10 @@ export interface AboutPage {
  */
 export interface PostsPage {
   id: number;
+  title: string;
+  subtitle?: string | null;
+  featured?: (number | null) | Post;
+  postCount: number;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1030,16 +891,102 @@ export interface AboutPageSelect<T extends boolean = true> {
   heading?: T;
   subheading?: T;
   portrait?: T;
-  content?: T | {};
+  content?:
+    | T
+    | {
+        values?: T | ValuesBlockSelect<T>;
+        skills?: T | SkillsBlockSelect<T>;
+        experience?: T | ExperienceBlockSelect<T>;
+        hobbies?: T | HobbiesBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesBlock_select".
+ */
+export interface ValuesBlockSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SkillsBlock_select".
+ */
+export interface SkillsBlockSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  skills?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        technologies?:
+          | T
+          | {
+              name?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ExperienceBlock_select".
+ */
+export interface ExperienceBlockSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  jobs?:
+    | T
+    | {
+        title?: T;
+        company?: T;
+        description?: T;
+        startDate?: T;
+        endDate?: T;
+        current?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HobbiesBlock_select".
+ */
+export interface HobbiesBlockSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  description?: T;
+  tags?:
+    | T
+    | {
+        icon?: T;
+        description?: T;
+        id?: T;
+      };
+  firstImage?: T;
+  secondImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts-page_select".
  */
 export interface PostsPageSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  featured?: T;
+  postCount?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
