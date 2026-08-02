@@ -1,0 +1,22 @@
+import type { Block } from "payload";
+
+export const MetricCard: Block = {
+  slug: 'metric-card',
+  interfaceName: 'MetricFeatureCardBlock',
+  labels: {
+    singular: 'Metric Card Block',
+    plural: 'Metric Card Blocks',
+  },
+  fields: [
+    {
+      name: 'amount',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'label',
+      type: 'text',
+      required: true,
+    },
+  ],
+}

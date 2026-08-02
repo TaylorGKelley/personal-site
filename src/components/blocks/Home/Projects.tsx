@@ -29,6 +29,11 @@ function ProjectCard({ project }: { project: Project }) {
     <motion.a
       ref={ref}
       style={{ scale }}
+      transition={{
+        type: 'decay',
+        stiffness: 10,
+        damping: 10,
+      }}
       href={projectUrl}
       area-label={`View ${project.title}`}
       className="group flex flex-col gap-6"

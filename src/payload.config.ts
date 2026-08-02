@@ -1,11 +1,10 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
-import { betterAuthPlugin } from 'payload-auth'
 import { payloadIconPicker } from 'payload-icon-picker'
 
 import { Users } from './collections/Users'
@@ -20,10 +19,7 @@ import { PostsPage } from './globals/PostsPage'
 import { AboutPage } from './globals/AboutPage'
 import { Header } from './globals/shared/Header'
 import { Footer } from './globals/shared/Footer'
-import { magicLink } from 'better-auth/plugins/magic-link'
-import { nextCookies } from 'better-auth/next-js'
-import { emailOTP } from 'better-auth/plugins/email-otp'
-import { Comments } from './collections/Comments'
+import { CodeBlock } from './blocks/utils/CodeBlock'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -36,10 +32,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-
-  collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories, Comments],
+  collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories],
   globals: [Header, Footer, HomePage, AboutPage, PostsPage],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      BlocksFeature({
+        blocks: [CodeBlock],
+      })]
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -71,37 +72,8 @@ export default buildConfig({
         forcePathStyle: true,
       },
     }),
-    betterAuthPlugin({
-      betterAuthOptions: {
-        secret: process.env.BETTER_AUTH_SECRET || '',
-        baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
-        emailAndPassword: {
-          enabled: true,
-          autoSignIn: true,
-          requireEmailVerification: false,
-          sendResetPassword: async ({ token, url, user }) => {},
-        },
-        plugins: [
-          nextCookies(),
-          magicLink({
-            sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
-              // TODO: send magic link email
-            },
-          }),
-          emailOTP({
-            sendVerificationOTP: async ({ email, otp, type }) => {
-              if (type === 'sign-in') {
-                // send the otp for sign in
-              }
-              // else if (type === 'email-verification') { }
-            },
-          }),
-        ],
-      },
-    }),
     payloadIconPicker({
       iconPackProviderPath: './lib/lucide/components/IconPackProvider#IconPackProvider',
-
     }),
   ],
 })

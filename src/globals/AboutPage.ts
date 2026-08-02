@@ -1,3 +1,7 @@
+import { Experience } from "@/blocks/About/Experience";
+import { Hobbies } from "@/blocks/About/Hobbies";
+import { Skills } from "@/blocks/About/Skills";
+import { Values } from "@/blocks/About/Values";
 import type { GlobalConfig } from "payload";
 
 export const AboutPage: GlobalConfig = {
@@ -19,7 +23,7 @@ export const AboutPage: GlobalConfig = {
     },
     {
       name: 'subheading',
-      type: 'text',
+      type: 'textarea',
     },
     {
       name: 'portrait',
@@ -29,7 +33,8 @@ export const AboutPage: GlobalConfig = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [], // TODO: Add about section blocks
+      unique: true,
+      blocks: [Values, Skills, Experience, Hobbies],
     }
   ]
 }

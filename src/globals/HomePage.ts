@@ -18,6 +18,7 @@ export const HomePage: GlobalConfig = {
     {
       name: 'content',
       type: 'blocks',
+      unique: true,
       blocks: [Hero, Projects, RecentPosts],
       defaultValue: [
         // {

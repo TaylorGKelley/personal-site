@@ -6,12 +6,12 @@ import { ArrowUpRightIcon } from 'lucide-react';
 
 export type RecentPostsProps = RecentPostsBlock;
 
-export async function RecentPosts({
+export const RecentPosts: React.FC<RecentPostsProps> = async ({
   title,
   subtitle,
   viewAllText,
   displayCount,
-}: RecentPostsProps) {
+}) => {
   const payload = await getPayload({ config: configPromise });
   const now = new Date().toISOString()
   const { docs: posts } = await payload.find({

@@ -1,13 +1,11 @@
 import { getHeader } from "@/actions/globals";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { getUser } from "@/actions/auth";
 import { NavLink } from "./NavLink";
 import { File } from "@/payload-types";
 
 export async function Header() {
   const { data } = await getHeader();
-  const { data: user } = await getUser();
 
   if (!data) return <></>; // Just don't render the header if there is not data filled out
 
@@ -22,7 +20,7 @@ export async function Header() {
           ))}
         </nav>
 
-        {!user ?
+        {data.resume ?
           <Link href={(data.resume as File).url || "/about"}>
             <Button size="lg" className='px-6 py-2 rounded-full bg-sidebar-primary cursor-pointer'>
             {/*<DownloadIcon />*/}

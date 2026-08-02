@@ -32,7 +32,13 @@ export const Posts: CollectionConfig = {
           data!.slug = data!.title.replace(/[^a-zA-Z\s]/g, '').replace(/\s+/g, '-').toLowerCase();
         }
         return data;
-      }
+      },
+      // ({ data, req: { user } }) => {
+      //   if (!data?.author) {
+      //     data!.author = user?.id;
+      //   }
+      //   return data;
+      // }
     ]
   },
   fields: [
@@ -51,6 +57,17 @@ export const Posts: CollectionConfig = {
       },
     },
     {
+      name: 'author',
+      type: 'relationship',
+      relationTo: 'users',
+      required: true,
+      defaultValue: ({ user }) => user?.id,
+      admin: {
+        // readOnly: true,
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'excerpt',
       type: 'textarea',
       required: true,
@@ -60,6 +77,24 @@ export const Posts: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'youtubeUrl',
+      type: 'text',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        placeholder: 'https://www.youtube.com/watch?v=XXXXXX'
+      }
+    },
+    {
+      name: 'xUrl',
+      type: 'text',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        placeholder: 'https://x.com/username/status/13412341234'
+      }
     },
     {
       name: 'category',

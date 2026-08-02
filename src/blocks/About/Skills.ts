@@ -41,10 +41,6 @@ export const Skills: Block = {
           type: 'array',
           required: true,
           fields: [
-            iconField({
-              name: 'icon',
-              displayMode: 'drawer',
-            }),
             {
               name: 'name',
               type: 'text',

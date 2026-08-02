@@ -1,81 +1,127 @@
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import { notFound } from 'next/navigation'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { Category, Media } from '@/payload-types'
-import Image from 'next/image'
+import Link from 'next/link';
+import { ArrowLeftIcon } from 'lucide-react';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
-export default async function PostPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>
-  searchParams: Promise<{ preview?: string }>
-}) {
-  const { slug } = await params
-  const { preview } = await searchParams
+import type { Media, Post, User } from '@/payload-types';
+import { lexicalToMarkdownAsync, extractHeadingsFromMarkdown, calculateReadTimeAsync } from '@/utils/posts';
+import { customConverters } from '@/components/rich-text';
+import { ActionButtons } from './components/ActionButtons';
+import { TableOfContents } from './components/TableOfContents';
+import { getPayload } from '@/lib/payload';
+import { PayloadImage } from '@/components/PayloadImage';
+import { Button } from '@/components/ui/button';
+import { VideoEmbed } from '@/components/VideoEmbed';
 
-  const payload = await getPayload({ config: configPromise })
-  const now = new Date().toISOString()
+type BlogPostPage = {
+  params: Promise<{ slug: string }>;
+}
 
-  const { docs: posts } = await payload.find({
+export default async function BlogPostPage({params}: BlogPostPage) {
+  const { slug } = await params;
+
+  const payload = await getPayload();
+  const { docs: allPosts } = await payload.find({
     collection: 'posts',
-    limit: 1,
+    sort: '-publishedAt',
     draft: false,
     depth: 2,
     where: {
-      _status: { equals: 'published' },
-      publishedAt: { less_than_equal: now },
       slug: { equals: slug },
+      _status: { equals: 'published' },
+      publishedAt: { less_than_equal: new Date().toISOString() },
     },
   })
 
-  const post = posts[0]
-  if (!post) notFound()
+  const post: Post = allPosts[0];
+  const categoryName = typeof post.category === 'object' ? post.category.name : 'Article';
 
-  const formattedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      })
-    : ''
-
-  const coverImage = post.coverImage as Media
+  // Format content for markdown & table of contents
+  const markdownText = await lexicalToMarkdownAsync(post.content);
+  const headings = extractHeadingsFromMarkdown(markdownText);
 
   return (
-    <article className="w-full max-w-3xl mx-auto px-6 py-16">
-      <div className="mb-8">
-        <div className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-3">
-          {(post.category as Category).name}
-          {formattedDate && <span> — {formattedDate}</span>}
+    <main className="min-h-screen bg-neutral-50/50 py-12 text-neutral-900 antialiased">
+      <div className="container mx-auto max-w-6xl px-6 sm:px-8">
+        {/* Back Link */}
+        <Link
+          href="/posts"
+          className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-neutral-500 hover:text-neutral-900 transition-colors mb-8"
+        >
+          <ArrowLeftIcon className="h-3.5 w-3.5" />
+          Back to Blog
+        </Link>
+
+        {/* Post Metadata & Header */}
+        <header className="mb-10">
+          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-neutral-400 mb-4">
+            <span className="rounded bg-neutral-200/60 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">
+              {categoryName}
+            </span>
+            <span>•</span>
+            <time>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</time>
+            <span>•</span>
+            <span>{await calculateReadTimeAsync(post.content)} min read</span>
+          </div>
+
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-neutral-900 sm:text-5xl leading-[1.15] mb-8">
+            {post.title}
+          </h1>
+
+          {/* Author Block */}
+          <div className="flex items-center justify-between border-t border-b border-neutral-200/60 py-4">
+            <div className="flex items-center gap-3">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full bg-neutral-200">
+                {(post.author as User).avatar && <PayloadImage media={(post.author as User).avatar as Media} />}
+              </div>
+              <div>
+                <p className="font-sans text-sm font-medium text-neutral-900">{(post.author as User).name}</p>
+                {(post.author as User).title && <p className="font-mono text-xs text-neutral-400">{(post.author as User).title}</p>}
+              </div>
+            </div>
+
+            <ActionButtons markdownContent={markdownText} />
+          </div>
+        </header>
+
+        {/* Article Body + Sidebar Layout */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+
+          {/* Table of Contents Sidebar */}
+          <aside className="hidden lg:col-span-3 lg:block">
+            <TableOfContents headings={headings} />
+          </aside>
+
+          {/* Main Article Content */}
+          <article className="lg:col-span-9 max-w-none">
+            <VideoEmbed youtubeUrl={post.youtubeUrl || null} />
+
+            <RichText
+              data={post.content}
+              converters={customConverters}
+            />
+
+            {post.xUrl && post.xUrl !== '' &&
+            <div className="mt-12 text-center">
+              <Link
+                href={`https://x.com/intent/tweet?text=${encodeURIComponent(`"${post.title}" by ${(post.author as User).name}`)}&url=${encodeURIComponent(`https://taylorgkelley.com/posts/${slug}`)}`}
+                target="_blank"
+                rel="noopener noreferrer">
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-2.5 px-6 py-3 h-auto border-neutral-400 hover:border-neutral-600"
+              >
+                Discuss this post on
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </Button>
+              </Link>
+            </div>
+            }
+          </article>
         </div>
-
-        <h1 className="text-4xl md:text-5xl font-serif font-medium tracking-tight mb-4">
-          {post.title}
-        </h1>
-
-        {post.excerpt && (
-          <p className="text-gray-600 text-lg leading-relaxed">
-            {post.excerpt}
-          </p>
-        )}
       </div>
-
-      {coverImage?.url && (
-        <div className="relative aspect-video mb-12 overflow-hidden rounded-lg">
-          <Image
-            src={coverImage.url}
-            alt={coverImage.alt || post.title}
-            fill
-            className="object-cover"
-          />
-        </div>
-      )}
-
-      <div className="prose prose-gray max-w-none">
-        <RichText data={post.content} />
-      </div>
-    </article>
-  )
+    </main>
+  );
 }

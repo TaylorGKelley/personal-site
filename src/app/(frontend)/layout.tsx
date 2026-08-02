@@ -6,6 +6,7 @@ import { Fira_Code } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cn } from '@/lib/utils'
 import '../global.css'
+import { Toaster } from '@/components/ui/sonner';
 
 const satoshi = localFont({
   src: '../../fonts/Satoshi-Variable.ttf',
@@ -28,6 +29,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <Header />
 
         <main className='flex-1'>{children}</main>
+        <Toaster position='bottom-right' />
 
         <Footer />
       </body>

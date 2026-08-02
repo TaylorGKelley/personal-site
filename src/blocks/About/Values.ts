@@ -1,11 +1,11 @@
 import { type Block } from "payload";
 
 export const Values: Block = {
-  slug: 'philosophy',
+  slug: 'values',
   interfaceName: 'ValuesBlock',
   labels: {
-    singular: 'Philosophy Block',
-    plural: 'Philosophy Blocks',
+    singular: 'Values Block',
+    plural: 'Values Blocks',
   },
   fields: [
     {
@@ -20,7 +20,7 @@ export const Values: Block = {
     },
     {
       name: 'description',
-      type: 'text',
+      type: 'textarea',
       required: true,
     },
   ],
