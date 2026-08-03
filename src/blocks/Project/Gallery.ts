@@ -31,6 +31,7 @@ export const Gallery: Block = {
     {
       name: 'content',
       type: 'array',
+      required: true,
       fields: [
         {
           name: 'media',

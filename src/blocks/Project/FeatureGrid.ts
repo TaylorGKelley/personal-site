@@ -1,6 +1,6 @@
 import type { Block } from "payload";
 import { TechStackCard } from "./FeatureGridCards/TechStack.Card";
-import { InformationCard } from "./FeatureGridCards/Inormation.Card";
+import { InformationCard } from "./FeatureGridCards/Information.Card";
 import { MetricCard } from "./FeatureGridCards/Metric.Card";
 
 export const FeatureGrid: Block = {

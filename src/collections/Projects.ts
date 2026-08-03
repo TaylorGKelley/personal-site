@@ -4,7 +4,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPubished'
 import { ArchitectureDiagram } from '@/blocks/Project/ArchitectureDiagram'
 import { CodeBlock } from '@/blocks/Project/CodeBlock'
 import { FeatureGrid } from '@/blocks/Project/FeatureGrid'
-import { FeatureListWithMedia } from '@/blocks/Project/FeatureListWithMedia'
+import { Solution } from '@/blocks/Project/Solution'
 import { Gallery } from '@/blocks/Project/Gallery'
 import { MetricsGrid } from '@/blocks/Project/MetricsGrid'
 import { Overview } from '@/blocks/Project/Overview'
@@ -37,11 +37,6 @@ export const Projects: CollectionConfig = {
     },
     {
       name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'subtitle',
       type: 'text',
       required: true,
     },
@@ -113,11 +108,10 @@ export const Projects: CollectionConfig = {
       blocks: [
         Overview,
         FeatureGrid,
-        FeatureListWithMedia,
+        Solution,
         Gallery,
         CodeBlock,
         ArchitectureDiagram,
-        MetricsGrid,
         ],
       required: true,
     },

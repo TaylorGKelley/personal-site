@@ -9,6 +9,17 @@ export const MetricCard: Block = {
   },
   fields: [
     {
+      name: 'columns',
+      type: 'select',
+      options: [
+        {label: '1 Column', value: '1'},
+        {label: '2 Columns', value: '2'},
+        {label: '3 Columns', value: '3'},
+      ],
+      defaultValue: '1',
+      required: true,
+    },
+    {
       name: 'amount',
       type: 'text',
       required: true,

@@ -21,7 +21,7 @@ export const Overview: Block = {
     },
     {
       name: 'summaryText',
-      type: 'text',
+      type: 'textarea',
       required: true,
     },
     {

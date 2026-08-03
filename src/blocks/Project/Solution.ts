@@ -1,12 +1,12 @@
 import type { Block } from "payload";
 import { iconField } from "payload-icon-picker";
 
-export const FeatureListWithMedia: Block = {
-  slug: 'feature-list-with-media',
-  interfaceName: 'FeatureListWithMediaBlock',
+export const Solution: Block = {
+  slug: 'solution',
+  interfaceName: 'SolutionBlock',
   labels: {
-    singular: 'Feature List With Media Block',
-    plural: 'Feature List With Media Blocks',
+    singular: 'Solution Block',
+    plural: 'Solution Blocks',
   },
   fields: [
     {
@@ -39,12 +39,13 @@ export const FeatureListWithMedia: Block = {
           type: 'text',
           required: true,
         },
-        {
-          name: 'media',
-          type: 'relationship',
-          relationTo: 'media',
-        }
       ],
+    },
+    {
+      name: 'media',
+      type: 'relationship',
+      relationTo: 'media',
+      required: true,
     }
   ],
 }
