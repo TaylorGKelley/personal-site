@@ -231,9 +231,16 @@ export interface Project {
   id: number;
   slug: string;
   title: string;
-  subtitle: string;
   coverImage: number | Media;
   primaryCallToAction: {
+    text: string;
+    link: string;
+    icon: {
+      name: string;
+      svg: string;
+    };
+  };
+  secondaryCallToAction: {
     text: string;
     link: string;
     icon: {
@@ -247,7 +254,9 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
-  layout: unknown[];
+  layout: (
+    OverviewBlock | FeatureGridBlock | SolutionBlock | GalleryBlock | ProjectCodeBlock | ArchitectureDiagramBlock
+  )[];
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -261,6 +270,140 @@ export interface Framework {
   name: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OverviewBlock".
+ */
+export interface OverviewBlock {
+  eyebrow: string;
+  summaryTitle: string;
+  summaryText: string;
+  metadata: {
+    heading: string;
+    value: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'overview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureGridBlock".
+ */
+export interface FeatureGridBlock {
+  eyebrow: string;
+  summaryTitle: string;
+  cards?: (TechStackFeatureCardBlock | MetricFeatureCardBlock | InformationFeatureCardBlock)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'feature-grid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TechStackFeatureCardBlock".
+ */
+export interface TechStackFeatureCardBlock {
+  columns: '1' | '2' | '3';
+  frameworks?: (number | Framework)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tech-stack-card';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetricFeatureCardBlock".
+ */
+export interface MetricFeatureCardBlock {
+  columns: '1' | '2' | '3';
+  amount: string;
+  label: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'metric-card';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InformationFeatureCardBlock".
+ */
+export interface InformationFeatureCardBlock {
+  columns: '1' | '2' | '3';
+  heading: string;
+  description: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'information-card';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SolutionBlock".
+ */
+export interface SolutionBlock {
+  eyebrow: string;
+  heading: string;
+  features?:
+    | {
+        icon: {
+          name: string;
+          svg: string;
+        };
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'solution';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock".
+ */
+export interface GalleryBlock {
+  eyebrow: string;
+  heading: string;
+  layout: '2-column' | '3-column';
+  content: {
+    media: number | Media;
+    captionHeading: string;
+    captionText: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectCodeBlock".
+ */
+export interface ProjectCodeBlock {
+  fileLabel: string;
+  language: 'typescript' | 'tsx' | 'javascript' | 'jsx' | 'python' | 'rust' | 'html' | 'css' | 'json' | 'bash' | 'sql';
+  code: string;
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'code-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchitectureDiagramBlock".
+ */
+export interface ArchitectureDiagramBlock {
+  diagram: number | Media;
+  callouts?:
+    | {
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'architecture-diagram';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -492,9 +635,15 @@ export interface FilesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
-  subtitle?: T;
   coverImage?: T;
   primaryCallToAction?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        icon?: T;
+      };
+  secondaryCallToAction?:
     | T
     | {
         text?: T;
@@ -507,10 +656,151 @@ export interface ProjectsSelect<T extends boolean = true> {
         framework?: T;
         id?: T;
       };
-  layout?: T | {};
+  layout?:
+    | T
+    | {
+        overview?: T | OverviewBlockSelect<T>;
+        'feature-grid'?: T | FeatureGridBlockSelect<T>;
+        solution?: T | SolutionBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        'code-block'?: T | ProjectCodeBlockSelect<T>;
+        'architecture-diagram'?: T | ArchitectureDiagramBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OverviewBlock_select".
+ */
+export interface OverviewBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  summaryTitle?: T;
+  summaryText?: T;
+  metadata?:
+    | T
+    | {
+        heading?: T;
+        value?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureGridBlock_select".
+ */
+export interface FeatureGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  summaryTitle?: T;
+  cards?:
+    | T
+    | {
+        'tech-stack-card'?: T | TechStackFeatureCardBlockSelect<T>;
+        'metric-card'?: T | MetricFeatureCardBlockSelect<T>;
+        'information-card'?: T | InformationFeatureCardBlockSelect<T>;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TechStackFeatureCardBlock_select".
+ */
+export interface TechStackFeatureCardBlockSelect<T extends boolean = true> {
+  columns?: T;
+  frameworks?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetricFeatureCardBlock_select".
+ */
+export interface MetricFeatureCardBlockSelect<T extends boolean = true> {
+  columns?: T;
+  amount?: T;
+  label?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InformationFeatureCardBlock_select".
+ */
+export interface InformationFeatureCardBlockSelect<T extends boolean = true> {
+  columns?: T;
+  heading?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SolutionBlock_select".
+ */
+export interface SolutionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  layout?: T;
+  content?:
+    | T
+    | {
+        media?: T;
+        captionHeading?: T;
+        captionText?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectCodeBlock_select".
+ */
+export interface ProjectCodeBlockSelect<T extends boolean = true> {
+  fileLabel?: T;
+  language?: T;
+  code?: T;
+  caption?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchitectureDiagramBlock_select".
+ */
+export interface ArchitectureDiagramBlockSelect<T extends boolean = true> {
+  diagram?: T;
+  callouts?:
+    | T
+    | {
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

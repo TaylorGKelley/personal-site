@@ -66,8 +66,6 @@ export function CodeBlock({
             <span className="sr-only">Copy code</span>
           </Button>
         </div>
-
-        {/* Code Area */}
         <ScrollArea className="w-full">
           <div
             className="p-4 text-sm font-mono [&>pre]:!bg-transparent [&>pre]:!p-0 [&_code]:font-mono"

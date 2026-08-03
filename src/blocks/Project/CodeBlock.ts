@@ -2,7 +2,7 @@ import type { Block } from "payload";
 
 export const CodeBlock: Block = {
   slug: 'code-block',
-  interfaceName: 'CodeBlock',
+  interfaceName: 'ProjectCodeBlock',
   labels: {
     singular: 'Code Block',
     plural: 'Code Blocks',
