@@ -21,7 +21,7 @@ export async function Header() {
         </nav>
 
         {data.resume ?
-          <Link href={(data.resume as File).url || "/about"}>
+          <Link href={(data.resume as File).url || "/about"} target="_blank">
             <Button size="lg" className='px-6 py-2 rounded-full bg-sidebar-primary cursor-pointer'>
             {/*<DownloadIcon />*/}
             <span>Resume</span>

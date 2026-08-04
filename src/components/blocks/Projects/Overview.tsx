@@ -1,4 +1,4 @@
-import { OverviewBlock } from "@/payload-types";
+import type { OverviewBlock } from "@/payload-types";
 
 type OverviewProps = OverviewBlock;
 
@@ -16,9 +16,6 @@ export const Overview = ({ summaryTitle, summaryText, metadata }: OverviewProps)
         </div>
 
         <div className="lg:col-span-6 space-y-8">
-          <div className="text-neutral-600 font-light text-lg leading-relaxed">
-            {summaryText}
-          </div>
           {metadata && metadata.length > 0 && (
             <div className="grid grid-cols-2 gap-6 pt-6 border-t border-neutral-100">
               {metadata.map((item) => (
@@ -33,6 +30,9 @@ export const Overview = ({ summaryTitle, summaryText, metadata }: OverviewProps)
               ))}
             </div>
           )}
+          <div className="text-neutral-600 font-light text-lg leading-relaxed">
+            {summaryText}
+          </div>
         </div>
       </div>
     </section>

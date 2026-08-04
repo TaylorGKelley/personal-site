@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { codeToHtml } from "shiki";
 
@@ -22,8 +22,7 @@ export function CodeBlock({
   const [html, setHtml] = useState<string>("");
     const [hasCopied, setHasCopied] = useState(false);
 
-    // Generate highlighted HTML via Shiki
-    useEffect(() => {
+    useLayoutEffect(() => {
       async function highlight() {
         const out = await codeToHtml(code, {
           lang: language,
@@ -34,7 +33,6 @@ export function CodeBlock({
       highlight();
     }, [code, language]);
 
-    // Handle Copy to Clipboard
     const copyToClipboard = useCallback(() => {
       navigator.clipboard.writeText(code);
       setHasCopied(true);
@@ -49,7 +47,6 @@ export function CodeBlock({
         )}
         {...props}
       >
-        {/* Top Header / Copy Button */}
         <div className="flex items-center justify-between px-4 py-1.5 border-b border-black bg-primary/50">
           <span className="text-xs font-mono">{language}</span>
           <Button

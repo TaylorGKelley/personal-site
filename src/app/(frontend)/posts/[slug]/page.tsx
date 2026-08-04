@@ -42,7 +42,6 @@ export default async function BlogPostPage({params}: BlogPostPage) {
   return (
     <main className="min-h-screen bg-neutral-50/50 py-12 text-neutral-900 antialiased">
       <div className="container mx-auto max-w-6xl px-6 sm:px-8">
-        {/* Back Link */}
         <Link
           href="/posts"
           className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-neutral-500 hover:text-neutral-900 transition-colors mb-8"
@@ -51,7 +50,6 @@ export default async function BlogPostPage({params}: BlogPostPage) {
           Back to Blog
         </Link>
 
-        {/* Post Metadata & Header */}
         <header className="mb-10">
           <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-neutral-400 mb-4">
             <span className="rounded bg-neutral-200/60 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">

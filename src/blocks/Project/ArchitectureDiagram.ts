@@ -9,21 +9,31 @@ export const ArchitectureDiagram: Block = {
   },
   fields: [
     {
+      name: 'title',
+      type: 'group',
+      fields: [
+        {
+          name: 'eyebrow',
+          type: 'text',
+          defaultValue: 'Implementation',
+          required: true,
+        },
+        {
+          name: 'heading',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'diagram',
       type: 'relationship',
       relationTo: 'media',
       required: true,
     },
     {
-      name: 'callouts',
-      type: 'array',
-      fields: [
-        {
-          name: 'description',
-          type: 'text',
-          required: true,
-        },
-      ],
-    },
+      name: 'caption',
+      type: 'text',
+    }
   ],
 }

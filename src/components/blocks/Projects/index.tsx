@@ -1,10 +1,11 @@
-import type { ArchitectureDiagramBlock, ProjectCodeBlock, FeatureGridBlock, SolutionBlock, GalleryBlock, OverviewBlock } from "@/payload-types";
+import type { ArchitectureDiagramBlock, ProjectCodeBlock, FeatureGridBlock, SolutionBlock, GalleryBlock, OverviewBlock, RichTextBlock } from "@/payload-types";
 import { ArchitectureDiagram } from "./ArchitectureDiagram";
 import { CodeBlock } from "./CodeBlock";
 import { FeatureGrid } from "./FeatureGrid";
 import { Solution } from "./Solution";
 import { Gallery } from "./Gallery";
 import { Overview } from "./Overview";
+import { RichText } from "./RichText";
 
 
 const ComponentBlocks = {
@@ -14,10 +15,11 @@ const ComponentBlocks = {
   'solution': Solution,
   'gallery': Gallery,
   'overview': Overview,
+  'rich-text': RichText,
 }
 
 export interface RenderBlocksProps {
-  blocks?: (OverviewBlock | GalleryBlock | SolutionBlock | FeatureGridBlock | ProjectCodeBlock | ArchitectureDiagramBlock)[] | null;
+  blocks?: (OverviewBlock | GalleryBlock | SolutionBlock | FeatureGridBlock | ProjectCodeBlock | ArchitectureDiagramBlock | RichTextBlock)[] | null;
 }
 
 export function RenderBlocks({ blocks }: RenderBlocksProps) {
