@@ -5,14 +5,14 @@ export async function Footer() {
   const { data } = await getFooter()
 
   return (
-    <footer className="bg-background text-foreground py-16 border-t border-t-sidebar-border/10">
-      <div className="container px-4 mx-auto flex flex-col-reverse md:flex-row md:justify-between items-center gap-4">
+    <footer className="bg-background text-foreground py-16 border-t border-t-sidebar-border/10 max-sm: text-center">
+      <div className="container px-4 mx-auto flex flex-col md:flex-row md:justify-between items-center gap-8">
         <div className='grid gap-6 max-w-sm'>
           <h4 className="text-2xl">{data?.title}</h4>
           {data?.subtitle && <p className='text-muted-foreground'>{data.subtitle}</p>}
           {data?.copyright && <p className='text-muted-foreground'>{data.copyright}</p>}
         </div>
-        <div className='grid grid-cols-2 gap-12 md:gap-24'>
+        <div className='grid md:grid-cols-2 gap-5 md:gap-24'>
           <div className='grid gap-4'>
             <h5 className='uppercase font-mono font-semibold text-sm tracking-wide'>Navigation</h5>
             <ul className='grid gap-2'>
@@ -23,7 +23,7 @@ export async function Footer() {
             </ul>
           </div>
           <div className='grid gap-4'>
-            <h5 className='uppercase font-mono font-semibold text-sm tracking-wide'>Connect</h5>
+            <h5 className='uppercase font-mono font-semibold text-sm{ $} tracking-wide'>Connect</h5>
             <ul className='grid gap-2'>
               {data?.connectLinks.map((link) => (
                 <li key={link.id}>

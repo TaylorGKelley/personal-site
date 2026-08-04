@@ -10,6 +10,7 @@ import { MetricsGrid } from '@/blocks/Project/MetricsGrid'
 import { Overview } from '@/blocks/Project/Overview'
 import type { CollectionConfig } from 'payload'
 import { iconField } from 'payload-icon-picker'
+import { RichText } from '@/blocks/Project/RichText'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -112,6 +113,7 @@ export const Projects: CollectionConfig = {
         Gallery,
         CodeBlock,
         ArchitectureDiagram,
+        RichText,
         ],
       required: true,
     },

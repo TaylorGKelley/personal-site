@@ -255,7 +255,13 @@ export interface Project {
       }[]
     | null;
   layout: (
-    OverviewBlock | FeatureGridBlock | SolutionBlock | GalleryBlock | ProjectCodeBlock | ArchitectureDiagramBlock
+    | OverviewBlock
+    | FeatureGridBlock
+    | SolutionBlock
+    | GalleryBlock
+    | ProjectCodeBlock
+    | ArchitectureDiagramBlock
+    | RichTextBlock
   )[];
   updatedAt: string;
   createdAt: string;
@@ -381,10 +387,17 @@ export interface GalleryBlock {
  * via the `definition` "ProjectCodeBlock".
  */
 export interface ProjectCodeBlock {
-  fileLabel: string;
-  language: 'typescript' | 'tsx' | 'javascript' | 'jsx' | 'python' | 'rust' | 'html' | 'css' | 'json' | 'bash' | 'sql';
-  code: string;
-  caption?: string | null;
+  title: {
+    eyebrow: string;
+    heading: string;
+  };
+  description: string;
+  code: {
+    fileLabel: string;
+    language:
+      'typescript' | 'tsx' | 'javascript' | 'jsx' | 'python' | 'rust' | 'html' | 'css' | 'json' | 'bash' | 'sql';
+    code: string;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'code-block';
@@ -394,16 +407,41 @@ export interface ProjectCodeBlock {
  * via the `definition` "ArchitectureDiagramBlock".
  */
 export interface ArchitectureDiagramBlock {
+  title: {
+    eyebrow: string;
+    heading: string;
+  };
   diagram: number | Media;
-  callouts?:
-    | {
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
+  caption?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'architecture-diagram';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  eyebrow?: string | null;
+  heading: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'rich-text';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -665,6 +703,7 @@ export interface ProjectsSelect<T extends boolean = true> {
         gallery?: T | GalleryBlockSelect<T>;
         'code-block'?: T | ProjectCodeBlockSelect<T>;
         'architecture-diagram'?: T | ArchitectureDiagramBlockSelect<T>;
+        'rich-text'?: T | RichTextBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -780,10 +819,20 @@ export interface GalleryBlockSelect<T extends boolean = true> {
  * via the `definition` "ProjectCodeBlock_select".
  */
 export interface ProjectCodeBlockSelect<T extends boolean = true> {
-  fileLabel?: T;
-  language?: T;
-  code?: T;
-  caption?: T;
+  title?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+      };
+  description?: T;
+  code?:
+    | T
+    | {
+        fileLabel?: T;
+        language?: T;
+        code?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -792,13 +841,25 @@ export interface ProjectCodeBlockSelect<T extends boolean = true> {
  * via the `definition` "ArchitectureDiagramBlock_select".
  */
 export interface ArchitectureDiagramBlockSelect<T extends boolean = true> {
-  diagram?: T;
-  callouts?:
+  title?:
     | T
     | {
-        description?: T;
-        id?: T;
+        eyebrow?: T;
+        heading?: T;
       };
+  diagram?: T;
+  caption?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  content?: T;
   id?: T;
   blockName?: T;
 }

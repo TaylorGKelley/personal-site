@@ -42,7 +42,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {(project.primaryCallToAction || project.secondaryCallToAction) && (
               <div className="flex flex-wrap items-center justify-center gap-4">
                 {project.primaryCallToAction && (
-                  <Link href={project.primaryCallToAction.link}>
+                  <Link href={project.primaryCallToAction.link} target="_blank" className="cursor-pointer">
                     <Button className='px-8 py-6 rounded-full bg-neutral-950 text-white font-medium text-sm'>
                       <PayloadIcon name={project.primaryCallToAction.icon.name} />
                       {project.primaryCallToAction.text}
@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   </Link>
                 )}
                 {project.secondaryCallToAction && (
-                  <Link href={project.secondaryCallToAction.link}>
+                  <Link href={project.secondaryCallToAction.link} target="_blank" className="cursor-pointer">
                     <Button className='px-8 py-6 rounded-full bg-neutral-100 text-neutral-800 border border-neutral-200 font-medium text-sm transition-colors hover:bg-neutral-200'>
                       <PayloadIcon name={project.secondaryCallToAction.icon.name} />
                       {project.secondaryCallToAction.text}
