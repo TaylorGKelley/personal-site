@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { ArrowLeftIcon } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
-import type { Media, Post, User } from '@/payload-types';
+import type { Media, User } from '@/payload-types';
 import { lexicalToMarkdownAsync, extractHeadingsFromMarkdown, calculateReadTimeAsync } from '@/utils/posts';
 import { customConverters } from '@/components/rich-text';
 import { ActionButtons } from './components/ActionButtons';
@@ -52,7 +53,8 @@ export default async function BlogPostPage({params}: BlogPostPage) {
         },
   })
 
-  const post: Post = allPosts[0];
+  const post = allPosts[0];
+  if (!post) notFound();
   const categoryName = typeof post.category === 'object' ? post.category.name : 'Article';
 
   const markdownText = await lexicalToMarkdownAsync(post.content);
