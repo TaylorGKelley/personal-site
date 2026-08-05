@@ -1,5 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import { Header } from '@/components/globals/Header'
 import { Footer } from '@/components/globals/Footer'
 import { Fira_Code } from 'next/font/google';
@@ -32,6 +34,9 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <Toaster position='bottom-right' />
 
         <Footer />
+
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
