@@ -1,9 +1,9 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig, type SharpDependency } from 'payload'
+import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import sharp, { Sharp } from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { payloadIconPicker } from 'payload-icon-picker'
 
@@ -50,7 +50,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  sharp: (sharp as SharpDependency),
+  sharp,
   plugins: [
     s3Storage({
       collections: {
