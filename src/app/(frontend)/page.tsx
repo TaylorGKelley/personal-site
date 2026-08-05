@@ -1,13 +1,15 @@
 import { getHomePage } from "@/actions/pages.globals"
 import { RenderBlocks } from "@/components/blocks/Home";
 
+type HomePageProps = {
+  searchParams: Promise<{ preview?: string }>
+};
+
 export default async function HomePage({
   searchParams,
-}: {
-  searchParams: Promise<{ preview?: string }>
-}) {
-  const { preview } = await searchParams
-  const { data } = await getHomePage();
+}: HomePageProps) {
+  const { preview } = await searchParams;
+  const { data } = await getHomePage({ preview });
 
   return <main>
     {data && <RenderBlocks blocks={data.content} />}

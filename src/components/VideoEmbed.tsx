@@ -22,8 +22,8 @@ export function VideoEmbed({ youtubeUrl }: VideoEmbedProps) {
   if (!videoId) return <></>;
 
   return (
-    <div className='rounded-2xl overflow-clip mx-auto relative shadow mb-8'>
-      <YouTube videoId={videoId} loading='eager' iframeClassName='w-full aspect-video' className='w-full' />
+    <div className='rounded-2xl overflow-clip mx-auto relative shadow mb-8 aspect-video'>
+      <YouTube videoId={videoId} loading='eager' opts={{ outerWidth: '100%', outerHeight: '100%' }} iframeClassName='w-full h-full' className='w-full h-full' />
     </div>
   );
 }

@@ -7,12 +7,14 @@ import Link from "next/link";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
+export default async function ProjectPage({ params, searchParams }: ProjectPageProps) {
   const { slug } = await params;
+  const { preview } = await searchParams;
 
-  const { data: project, error } = await getProject(slug);
+  const { data: project, error } = await getProject(slug, { preview });
 
   if (!project) {
     return (

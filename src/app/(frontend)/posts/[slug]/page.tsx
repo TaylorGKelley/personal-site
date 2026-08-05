@@ -14,16 +14,18 @@ import { VideoEmbed } from '@/components/VideoEmbed';
 
 type BlogPostPage = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
-export default async function BlogPostPage({params}: BlogPostPage) {
+export default async function BlogPostPage({params, searchParams}: BlogPostPage) {
   const { slug } = await params;
+  const { preview } = await searchParams;
 
   const payload = await getPayload();
   const { docs: allPosts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
-    draft: false,
+    draft: preview === 'true',
     depth: 2,
     where: {
       slug: { equals: slug },
@@ -35,7 +37,6 @@ export default async function BlogPostPage({params}: BlogPostPage) {
   const post: Post = allPosts[0];
   const categoryName = typeof post.category === 'object' ? post.category.name : 'Article';
 
-  // Format content for markdown & table of contents
   const markdownText = await lexicalToMarkdownAsync(post.content);
   const headings = extractHeadingsFromMarkdown(markdownText);
 
@@ -60,12 +61,9 @@ export default async function BlogPostPage({params}: BlogPostPage) {
             <span>•</span>
             <span>{await calculateReadTimeAsync(post.content)} min read</span>
           </div>
-
           <h1 className="font-serif text-3xl font-bold tracking-tight text-neutral-900 sm:text-5xl leading-[1.15] mb-8">
             {post.title}
           </h1>
-
-          {/* Author Block */}
           <div className="flex items-center justify-between border-t border-b border-neutral-200/60 py-4">
             <div className="flex items-center gap-3">
               <div className="relative h-10 w-10 overflow-hidden rounded-full bg-neutral-200">
@@ -81,15 +79,10 @@ export default async function BlogPostPage({params}: BlogPostPage) {
           </div>
         </header>
 
-        {/* Article Body + Sidebar Layout */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-
-          {/* Table of Contents Sidebar */}
           <aside className="hidden lg:col-span-3 lg:block">
             <TableOfContents headings={headings} />
           </aside>
-
-          {/* Main Article Content */}
           <article className="lg:col-span-9 max-w-none">
             <VideoEmbed youtubeUrl={post.youtubeUrl || null} />
 

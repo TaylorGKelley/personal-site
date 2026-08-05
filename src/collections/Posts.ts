@@ -12,11 +12,17 @@ export const Posts: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-      defaultColumns: ['title', 'slug', 'publishedAt', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'publishedAt', 'updatedAt'],
+    livePreview: {
+      url: ({ data }) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        return `${baseUrl}/posts/${data?.slug}?preview=true`
+      },
     },
-    versions: {
-      drafts: true, // Enables save-as-draft capability
-    },
+  },
+  versions: {
+    drafts: true, // Enables save-as-draft capability
+  },
   hooks: {
     beforeChange: [
       ({ data, originalDoc }) => {

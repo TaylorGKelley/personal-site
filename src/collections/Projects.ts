@@ -23,6 +23,12 @@ export const Projects: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'subtitle', 'updatedAt'],
+    livePreview: {
+      url: ({ data }) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        return `${baseUrl}/projects/${data?.slug}?preview=true`
+      },
+    },
   },
   versions: {
     drafts: true, // Enables save-as-draft capability
