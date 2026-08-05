@@ -4,17 +4,15 @@ import { getPayload } from "@/lib/payload";
 import { type FetchAction } from "./types";
 import type { Project } from "@/payload-types";
 
-export const getProject: (slug: string) => ReturnType<FetchAction<Project>> = async (slug: string) => {
+export const getProject: (slug: string, options?: { preview: string }) => ReturnType<FetchAction<Project>> = async (slug: string, options?: { preview: string }) => {
   try {
     const payload = await getPayload();
     const { docs: [data] } = await payload.find({
       collection: 'projects',
+      draft: options?.preview === 'true',
       where: {
         slug: {
           equals: slug,
-        },
-        _status: {
-          equals: 'published',
         },
       },
     })

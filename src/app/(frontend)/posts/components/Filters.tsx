@@ -1,10 +1,9 @@
 'use client'
 
 import { useDebounce } from '@/hooks/useDebounce'
-import { cn } from '@/lib/utils'
 import { SearchIcon } from 'lucide-react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useTransition, useCallback } from 'react'
+import { useCallback } from 'react'
 
 interface BlogFiltersProps {
   allCategories: string[]
@@ -20,26 +19,20 @@ export function BlogFilters({
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
 
   const updateParams = useCallback(
-    (updates: Record<string, string | string[] | null>) => {
+    (updates: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString())
 
       for (const [key, value] of Object.entries(updates)) {
-        if (value === null || (Array.isArray(value) && value.length === 0)) {
+        if (value === null || value === '') {
           params.delete(key)
-        } else if (Array.isArray(value)) {
-          params.delete(key)
-          value.forEach((v) => params.append(key, v))
         } else {
           params.set(key, value)
         }
       }
 
-      startTransition(() => {
-        router.push(`${pathname}?${params.toString()}`, { scroll: false })
-      })
+      router.push(`${pathname}?${params.toString()}`, { scroll: false })
     },
     [router, pathname, searchParams],
   )
@@ -63,15 +56,13 @@ export function BlogFilters({
       next = [...next, category]
     }
 
-    updateParams({ category: next.length > 0 ? next : null, page: null })
+    updateParams({ category: next.length > 0 ? next.join(',') : null, page: null })
   }
 
   const allSelected = selectedCategories.length === 0
 
   return (
-    <div className={cn('max-w-2xl transition-opacity duration-200', {
-      'opacity-60': isPending,
-    })}>
+    <div className="max-w-2xl">
       {/* Search */}
       <div className="relative mb-6">
         <SearchIcon className="size-4 absolute top-3 left-4" />

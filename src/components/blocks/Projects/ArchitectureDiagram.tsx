@@ -9,7 +9,7 @@ export const ArchitectureDiagram = ({
   caption,
 }: ArchitectureDiagramProps) => {
   return (
-    <section className="w-full max-w-5xl mx-auto px-6 py-16">
+    <section className="w-full max-w-6xl mx-auto px-6 py-16">
       {title && (
         <>
           <div className="mb-8 space-y-3">

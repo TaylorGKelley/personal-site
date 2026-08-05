@@ -1,11 +1,15 @@
 import type { Post } from '@/payload-types'
 import { BlogFilters } from './components/Filters'
+import { LoadMoreButton } from './components/LoadMoreButton'
 import { getCategoryName } from '@/utils/categories'
 import { getPayload } from '@/lib/payload'
 import { ArrowRightIcon, PlayCircleIcon } from 'lucide-react'
 import { calculateReadTimeAsync } from '@/utils/posts'
 import Link from 'next/link'
 import { getPostsPage } from '@/actions/pages.globals'
+import type { Where } from 'payload'
+
+const PER_PAGE = 6
 
 function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -15,78 +19,122 @@ function formatDate(dateString: string): string {
   })
 }
 
-interface SearchParams {
+type PaginationSearchParams = {
   q?: string
-  category?: string | string[]
+  category?: string
   page?: string
+}
+
+type BlogPageProps = {
+  searchParams: Promise<PaginationSearchParams & { preview?: string }>
 }
 
 export default async function BlogPage({
   searchParams,
-}: {
-  searchParams: Promise<SearchParams>
-}) {
-  const { q = '', category, page: pageParam } = await searchParams
+}: BlogPageProps) {
+  const { q = '', category, page: pageParam, preview } = await searchParams
 
-  const { data: page } = await getPostsPage();
+  const { data: page } = await getPostsPage({ preview });
 
   const payload = await getPayload();
-  const { docs: allPosts } = await payload.find({
-    collection: 'posts',
-    sort: '-publishedAt',
-    draft: false,
-    depth: 2,
-    where: {
-      _status: { equals: 'published' },
-      publishedAt: { less_than_equal: new Date().toISOString() },
-    },
-  })
-
-  const allCategoryNames: string[] = Array.from(
-    new Set(allPosts.map((p) => getCategoryName(p.category)).filter(Boolean)),
-  )
 
   const selectedCategories: string[] =
     category == null
       ? []
-      : Array.isArray(category)
-        ? category
-        : [category]
+      : (Array.isArray(category) ? category : category.split(','))
+          .map((c) => c.trim())
+          .filter(Boolean)
 
   const isFiltered = q.trim() !== '' || selectedCategories.length > 0
 
-  const featuredPost =
-    !isFiltered ?(page.featured && typeof page.featured === 'object'
-      ? page.featured
-      : allPosts.at(0)) : null
+  const currentPage = Math.max(1, Number(pageParam) || 1)
 
-  const filteredPosts = allPosts.filter((post) => post.id !== featuredPost?.id).filter((post) => {
-    const matchesSearch =
-      q.trim() === '' ||
-      post.title.toLowerCase().includes(q.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(q.toLowerCase())
+  const publishedConditions: Where[] = [
+    { _status: { equals: 'published' } },
+    { publishedAt: { less_than_equal: new Date().toISOString() } },
+  ]
 
-    const matchesCategory =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(getCategoryName(post.category))
+  let featuredPost: Post | null = null
+  let featuredId: number | null = null
 
-    return matchesSearch && matchesCategory
+  if (!isFiltered) {
+    if (page?.featured && typeof page.featured === 'object') {
+      featuredPost = page.featured
+      featuredId = featuredPost.id
+    } else {
+      const { docs: featuredDocs } = await payload.find({
+        collection: 'posts',
+        sort: '-publishedAt',
+        draft: preview === 'true',
+        depth: 2,
+        limit: 1,
+        where: { and: publishedConditions },
+      })
+      featuredPost = featuredDocs[0] ?? null
+      featuredId = featuredPost?.id ?? null
+    }
+  }
+
+  const conditions: Where[] = [...publishedConditions]
+
+  if (q.trim() !== '') {
+    conditions.push({
+      or: [
+        { title: { contains: q } },
+        { excerpt: { contains: q } },
+      ],
+    })
+  }
+
+  if (selectedCategories.length > 0) {
+    conditions.push({
+      or: selectedCategories.map((cat) => ({ 'category.name': { equals: cat } })),
+    })
+  }
+
+  if (featuredId != null) {
+    conditions.push({ id: { not_equals: featuredId } })
+  }
+
+  const { docs: posts, totalDocs } = await payload.find({
+    collection: 'posts',
+    sort: '-publishedAt',
+    draft: preview === 'true',
+    depth: 2,
+    limit: PER_PAGE * currentPage,
+    page: 1,
+    where: { and: conditions },
   })
 
+  const hasNext = currentPage * PER_PAGE < totalDocs
+
+  const { docs: categories } = await payload.find({
+    collection: 'categories',
+    limit: 0,
+    sort: 'name',
+  })
+  const allCategoryNames: string[] = categories.map((c) => c.name)
+
+  const nextPageHref = `?${new URLSearchParams({
+    ...(q ? { q } : {}),
+    ...(selectedCategories.length
+      ? { category: selectedCategories.join(',') }
+      : {}),
+    page: String(currentPage + 1),
+  }).toString()}`
 
   return (
     <main className="mx-auto container max-w-6xl px-5 pt-12 pb-24">
       {/* Page header */}
       <header className="mb-12">
         <h1 className="mb-3 font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-          {page.title}
+          {page?.title}
         </h1>
         <p className="max-w-[52ch] text-base leading-relaxed text-gray-500">
-          {page.subtitle}
+          {page?.subtitle}
         </p>
       </header>
 
-      {/* Filters — client island */}
       <div className="mb-12">
         <BlogFilters
           allCategories={allCategoryNames}
@@ -95,20 +143,17 @@ export default async function BlogPage({
         />
       </div>
 
-      {/* Featured article */}
       {featuredPost && <FeaturedPost post={featuredPost} />}
 
-      {/* Section label */}
       <p className="mb-8 text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400">
         {isFiltered ? 'Results' : 'Recent Posts'}
       </p>
 
-      {/* Post list */}
-      {filteredPosts.length > 0 ? (
+      {posts.length > 0 ? (
         <ol className="m-0 list-none p-0">
-          {filteredPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <li key={post.id}>
-              <PostCard post={post} isLast={i === filteredPosts.length - 1} />
+              <PostCard post={post} isLast={i === posts.length - 1} />
             </li>
           ))}
         </ol>
@@ -118,25 +163,18 @@ export default async function BlogPage({
           <Link href="/posts" className="text-xs text-gray-900 underline">
             Clear filters
           </Link>
-          </div>
-
+        </div>
       )}
 
-      {/* Load more */}
-      {filteredPosts.length > 0 && (
+      {posts.length > 0 && (
         <div className="mt-16 text-center">
-          <Link
-            href={`?${new URLSearchParams({
-              ...(q ? { q } : {}),
-              ...(selectedCategories.length
-                ? Object.fromEntries(selectedCategories.map((c) => ['category', c]))
-                : {}),
-              page: String(Number(pageParam ?? '1') + 1),
-            }).toString()}`}
-            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-6 py-3 text-xs font-semibold uppercase tracking-widest text-gray-700 no-underline transition-colors hover:border-gray-400"
-          >
-            Load older thoughts ↓
-          </Link>
+          {hasNext ? (
+            <LoadMoreButton href={nextPageHref} />
+          ) : (
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+              You&rsquo;ve reached the end of posts
+            </p>
+          )}
         </div>
       )}
     </main>
