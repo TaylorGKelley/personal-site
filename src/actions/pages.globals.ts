@@ -9,7 +9,7 @@ export const getHomePage: FetchAction<HomePage> = async (options) => {
     const payload = await getPayload();
     const data = await payload.findGlobal({
       slug: 'home-page',
-      draft: options?.preview === 'true'
+      draft: options?.draft
     })
 
     return { data }
@@ -26,7 +26,7 @@ export const getAboutPage: FetchAction<AboutPage> = async (options) => {
     const payload = await getPayload();
     const data = await payload.findGlobal({
       slug: 'about-page',
-      draft: options?.preview === 'true'
+      draft: options?.draft
     })
 
     return { data }
@@ -43,7 +43,7 @@ export const getPostsPage: FetchAction<PostsPage> = async (options) => {
     const payload = await getPayload();
     const data = await payload.findGlobal({
       slug: 'posts-page',
-      draft: options?.preview === 'true'
+      draft: options?.draft
     });
 
     return { data }

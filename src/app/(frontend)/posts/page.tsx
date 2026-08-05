@@ -7,6 +7,7 @@ import { ArrowRightIcon, PlayCircleIcon } from 'lucide-react'
 import { calculateReadTimeAsync } from '@/utils/posts'
 import Link from 'next/link'
 import { getPostsPage } from '@/actions/pages.globals'
+import { draftMode } from 'next/headers'
 import type { Where } from 'payload'
 
 const PER_PAGE = 6
@@ -26,15 +27,16 @@ type PaginationSearchParams = {
 }
 
 type BlogPageProps = {
-  searchParams: Promise<PaginationSearchParams & { preview?: string }>
+  searchParams: Promise<PaginationSearchParams>
 }
 
 export default async function BlogPage({
   searchParams,
 }: BlogPageProps) {
-  const { q = '', category, page: pageParam, preview } = await searchParams
+  const { q = '', category, page: pageParam } = await searchParams
+  const { isEnabled: preview } = await draftMode();
 
-  const { data: page } = await getPostsPage({ preview });
+  const { data: page } = await getPostsPage({ draft: preview });
 
   const payload = await getPayload();
 
@@ -65,7 +67,7 @@ export default async function BlogPage({
       const { docs: featuredDocs } = await payload.find({
         collection: 'posts',
         sort: '-publishedAt',
-        draft: preview === 'true',
+        draft: preview,
         depth: 2,
         limit: 1,
         where: { and: publishedConditions },
@@ -99,7 +101,7 @@ export default async function BlogPage({
   const { docs: posts, totalDocs } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
-    draft: preview === 'true',
+    draft: preview,
     depth: 2,
     limit: PER_PAGE * currentPage,
     page: 1,

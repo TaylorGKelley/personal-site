@@ -12,5 +12,5 @@ export function formatDate(
     return '';
   }
 
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  return new Intl.DateTimeFormat('en-US', options).format(date || undefined);
 }

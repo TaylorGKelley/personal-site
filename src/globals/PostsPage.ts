@@ -1,13 +1,17 @@
+import { revalidateGlobal } from '@/lib/revalidate'
 import type { GlobalConfig } from 'payload'
 
 export const PostsPage: GlobalConfig = {
   slug: 'posts-page',
+  hooks: {
+    afterChange: [() => revalidateGlobal('/posts')],
+  },
   admin: {
     group: 'Navigation & Pages',
     livePreview: {
       url: () => {
         const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-        return `${baseUrl}/posts?preview=true`
+        return `${baseUrl}/next/preview?url=${encodeURIComponent('/posts')}`
       },
     },
   },
