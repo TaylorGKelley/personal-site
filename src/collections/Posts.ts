@@ -1,5 +1,6 @@
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPubished'
+import { revalidatePost } from '@/lib/revalidate'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
@@ -16,7 +17,8 @@ export const Posts: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-        return `${baseUrl}/posts/${data?.slug}?preview=true`
+        const url = data?.slug ? `/posts/${data.slug}` : '/posts'
+        return `${baseUrl}/next/preview?url=${encodeURIComponent(url)}`
       },
     },
   },
@@ -24,6 +26,16 @@ export const Posts: CollectionConfig = {
     drafts: true, // Enables save-as-draft capability
   },
   hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePost(doc.slug)
+      },
+    ],
+    afterDelete: [
+      ({ doc }) => {
+        revalidatePost(doc.slug)
+      },
+    ],
     beforeChange: [
       ({ data, originalDoc }) => {
         if (data._status === 'published' && !data.publishedAt && !originalDoc?.publishedAt) {

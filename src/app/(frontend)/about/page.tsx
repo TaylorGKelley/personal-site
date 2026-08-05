@@ -1,14 +1,11 @@
 import { getAboutPage } from "@/actions/pages.globals"
 import { RenderBlocks } from "@/components/blocks/About";
 import { PayloadImage } from "@/components/PayloadImage";
+import { draftMode } from 'next/headers';
 
-export default async function AboutPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ preview?: string }>
-}) {
-  const { preview } = await searchParams
-  const { data } = await getAboutPage();
+export default async function AboutPage() {
+  const { isEnabled } = await draftMode();
+  const { data } = await getAboutPage({ draft: isEnabled });
 
   return (<main className="max-w-6xl mx-auto px-6 font-sans text-slate-900">
     <section className="py-16 md:py-24">

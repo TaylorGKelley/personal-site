@@ -1,15 +1,10 @@
 import { getHomePage } from "@/actions/pages.globals"
 import { RenderBlocks } from "@/components/blocks/Home";
+import { draftMode } from 'next/headers';
 
-type HomePageProps = {
-  searchParams: Promise<{ preview?: string }>
-};
-
-export default async function HomePage({
-  searchParams,
-}: HomePageProps) {
-  const { preview } = await searchParams;
-  const { data } = await getHomePage({ preview });
+export default async function HomePage() {
+  const { isEnabled } = await draftMode();
+  const { data } = await getHomePage({ draft: isEnabled });
 
   return <main>
     {data && <RenderBlocks blocks={data.content} />}

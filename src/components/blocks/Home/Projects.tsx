@@ -70,11 +70,9 @@ function ProjectCard({ project }: { project: Project }) {
             {project.title}
           </h3>
 
-          {project.subtitle && (
-            <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
-              {project.subtitle}
-            </p>
-          )}
+          <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
+            {project.subtitle}
+          </p>
         </div>
 
         {projectUrl && (

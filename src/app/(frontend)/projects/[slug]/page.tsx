@@ -3,18 +3,31 @@ import { RenderBlocks } from "@/components/blocks/Projects";
 import { PayloadIcon } from "@/components/PayloadIcon";
 import { PayloadImage } from "@/components/PayloadImage";
 import { Button } from "@/components/ui/button";
+import { getPayload } from '@/lib/payload';
+import { draftMode } from 'next/headers';
 import Link from "next/link";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ preview?: string }>;
 }
 
-export default async function ProjectPage({ params, searchParams }: ProjectPageProps) {
-  const { slug } = await params;
-  const { preview } = await searchParams;
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const payload = await getPayload();
+  const { docs } = await payload.find({
+    collection: 'projects',
+    draft: false,
+    limit: 1000,
+    select: { slug: true },
+  })
 
-  const { data: project, error } = await getProject(slug, { preview });
+  return docs.map((doc) => ({ slug: doc.slug }))
+}
+
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const { isEnabled: preview } = await draftMode();
+
+  const { data: project, error } = await getProject(slug, { draft: preview });
 
   if (!project) {
     return (

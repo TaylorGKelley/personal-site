@@ -1,7 +1,11 @@
+import { revalidateLayout } from '@/lib/revalidate'
 import type { GlobalConfig } from "payload";
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  hooks: {
+    afterChange: [() => revalidateLayout()],
+  },
   fields: [
     {
       name: 'logo',

@@ -1,7 +1,11 @@
+import { revalidateLayout } from '@/lib/revalidate'
 import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  hooks: {
+    afterChange: [() => revalidateLayout()],
+  },
   fields: [
     {
       name: 'title',

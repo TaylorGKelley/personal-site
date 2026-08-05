@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { draftMode } from 'next/headers';
 import { ArrowLeftIcon } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
@@ -14,24 +15,41 @@ import { VideoEmbed } from '@/components/VideoEmbed';
 
 type BlogPostPage = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ preview?: string }>;
 }
 
-export default async function BlogPostPage({params, searchParams}: BlogPostPage) {
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const payload = await getPayload();
+  const { docs } = await payload.find({
+    collection: 'posts',
+    draft: false,
+    limit: 1000,
+    where: {
+      _status: { equals: 'published' },
+      publishedAt: { less_than_equal: new Date().toISOString() },
+    },
+    select: { slug: true },
+  })
+
+  return docs.map((doc) => ({ slug: doc.slug }))
+}
+
+export default async function BlogPostPage({params}: BlogPostPage) {
   const { slug } = await params;
-  const { preview } = await searchParams;
+  const { isEnabled: preview } = await draftMode();
 
   const payload = await getPayload();
   const { docs: allPosts } = await payload.find({
     collection: 'posts',
     sort: '-publishedAt',
-    draft: preview === 'true',
+    draft: preview,
     depth: 2,
-    where: {
-      slug: { equals: slug },
-      _status: { equals: 'published' },
-      publishedAt: { less_than_equal: new Date().toISOString() },
-    },
+    where: preview
+      ? { slug: { equals: slug } }
+      : {
+          slug: { equals: slug },
+          _status: { equals: 'published' },
+          publishedAt: { less_than_equal: new Date().toISOString() },
+        },
   })
 
   const post: Post = allPosts[0];

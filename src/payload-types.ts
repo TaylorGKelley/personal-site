@@ -231,6 +231,7 @@ export interface Project {
   id: number;
   slug: string;
   title: string;
+  subtitle: string;
   coverImage: number | Media;
   primaryCallToAction: {
     text: string;
@@ -673,6 +674,7 @@ export interface FilesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
+  subtitle?: T;
   coverImage?: T;
   primaryCallToAction?:
     | T
