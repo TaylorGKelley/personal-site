@@ -7,6 +7,7 @@ import { ArrowRightIcon, PlayCircleIcon } from 'lucide-react'
 import { calculateReadTimeAsync } from '@/utils/posts'
 import Link from 'next/link'
 import { getPostsPage } from '@/actions/pages.globals'
+import { ErrorState } from '@/components/ErrorState'
 import { draftMode } from 'next/headers'
 import type { Where } from 'payload'
 
@@ -36,9 +37,27 @@ export default async function BlogPage({
   const { q = '', category, page: pageParam } = await searchParams
   const { isEnabled: preview } = await draftMode();
 
-  const { data: page } = await getPostsPage({ draft: preview });
+  const { data: page, error: pageError } = await getPostsPage({ draft: preview });
+  if (pageError && !page) {
+    return (
+      <main className="mx-auto container max-w-6xl px-5 pt-12 pb-24">
+        <ErrorState message={pageError} />
+      </main>
+    )
+  }
 
-  const payload = await getPayload();
+  let loadError: string | undefined
+  let payload: Awaited<ReturnType<typeof getPayload>>
+  try {
+    payload = await getPayload();
+  } catch (error) {
+    loadError = error instanceof Error ? error.message : String(error)
+    return (
+      <main className="mx-auto container max-w-6xl px-5 pt-12 pb-24">
+        <ErrorState message={loadError} />
+      </main>
+    )
+  }
 
   const selectedCategories: string[] =
     category == null
@@ -64,16 +83,20 @@ export default async function BlogPage({
       featuredPost = page.featured
       featuredId = featuredPost.id
     } else {
-      const { docs: featuredDocs } = await payload.find({
-        collection: 'posts',
-        sort: '-publishedAt',
-        draft: preview,
-        depth: 2,
-        limit: 1,
-        where: { and: publishedConditions },
-      })
-      featuredPost = featuredDocs[0] ?? null
-      featuredId = featuredPost?.id ?? null
+      try {
+        const { docs: featuredDocs } = await payload.find({
+          collection: 'posts',
+          sort: '-publishedAt',
+          draft: preview,
+          depth: 2,
+          limit: 1,
+          where: { and: publishedConditions },
+        })
+        featuredPost = featuredDocs[0] ?? null
+        featuredId = featuredPost?.id ?? null
+      } catch (error) {
+        loadError = error instanceof Error ? error.message : String(error)
+      }
     }
   }
 
@@ -98,24 +121,38 @@ export default async function BlogPage({
     conditions.push({ id: { not_equals: featuredId } })
   }
 
-  const { docs: posts, totalDocs } = await payload.find({
-    collection: 'posts',
-    sort: '-publishedAt',
-    draft: preview,
-    depth: 2,
-    limit: PER_PAGE * currentPage,
-    page: 1,
-    where: { and: conditions },
-  })
+  let posts: Post[] = []
+  let totalDocs = 0
+
+  try {
+    const res = await payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      draft: preview,
+      depth: 2,
+      limit: PER_PAGE * currentPage,
+      page: 1,
+      where: { and: conditions },
+    })
+    posts = res.docs
+    totalDocs = res.totalDocs
+  } catch (error) {
+    loadError = error instanceof Error ? error.message : String(error)
+  }
 
   const hasNext = currentPage * PER_PAGE < totalDocs
 
-  const { docs: categories } = await payload.find({
-    collection: 'categories',
-    limit: 0,
-    sort: 'name',
-  })
-  const allCategoryNames: string[] = categories.map((c) => c.name)
+  let allCategoryNames: string[] = []
+  try {
+    const { docs: categories } = await payload.find({
+      collection: 'categories',
+      limit: 0,
+      sort: 'name',
+    })
+    allCategoryNames = categories.map((c) => c.name)
+  } catch (error) {
+    loadError = error instanceof Error ? error.message : String(error)
+  }
 
   const nextPageHref = `?${new URLSearchParams({
     ...(q ? { q } : {}),
@@ -124,6 +161,14 @@ export default async function BlogPage({
       : {}),
     page: String(currentPage + 1),
   }).toString()}`
+
+  if (loadError) {
+    return (
+      <main className="mx-auto container max-w-6xl px-5 pt-12 pb-24">
+        <ErrorState message={loadError} />
+      </main>
+    )
+  }
 
   return (
     <main className="mx-auto container max-w-6xl px-5 pt-12 pb-24">
@@ -172,11 +217,7 @@ export default async function BlogPage({
         <div className="mt-16 text-center">
           {hasNext ? (
             <LoadMoreButton href={nextPageHref} />
-          ) : (
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-              You&rsquo;ve reached the end of posts
-            </p>
-          )}
+          ) : null}
         </div>
       )}
     </main>

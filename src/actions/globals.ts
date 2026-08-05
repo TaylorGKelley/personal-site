@@ -13,6 +13,7 @@ export const getHeader: FetchAction<Header> = async () => {
 
     return { data }
   } catch (error) {
+    console.error('[getHeader]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),
@@ -29,6 +30,7 @@ export const getFooter: FetchAction<Footer> = async () => {
 
     return { data }
   } catch (error) {
+    console.error('[getFooter]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),

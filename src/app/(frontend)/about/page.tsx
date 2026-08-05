@@ -1,11 +1,20 @@
 import { getAboutPage } from "@/actions/pages.globals"
 import { RenderBlocks } from "@/components/blocks/About";
 import { PayloadImage } from "@/components/PayloadImage";
+import { ErrorState } from "@/components/ErrorState";
 import { draftMode } from 'next/headers';
 
 export default async function AboutPage() {
   const { isEnabled } = await draftMode();
-  const { data } = await getAboutPage({ draft: isEnabled });
+  const { data, error } = await getAboutPage({ draft: isEnabled });
+
+  if (!data) {
+    return (
+      <main className="max-w-6xl mx-auto px-6 font-sans text-slate-900">
+        <ErrorState message={error} />
+      </main>
+    )
+  }
 
   return (<main className="max-w-6xl mx-auto px-6 font-sans text-slate-900">
     <section className="py-16 md:py-24">

@@ -21,6 +21,7 @@ export const getProject: (slug: string, options?: { draft?: boolean }) => Return
 
     return { data }
   } catch (error) {
+    console.error('[getProject]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),

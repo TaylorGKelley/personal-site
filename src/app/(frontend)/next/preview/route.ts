@@ -10,14 +10,19 @@ export async function GET(req: Request): Promise<Response> {
     return new Response('Missing url param', { status: 400 })
   }
 
-  const payload = await getPayload()
-  const { user } = await payload.auth({ headers: req.headers })
+  try {
+    const payload = await getPayload()
+    const { user } = await payload.auth({ headers: req.headers })
 
-  if (!user) {
-    return new Response('Unauthorized', { status: 401 })
+    if (!user) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    ;(await draftMode()).enable()
+  } catch (error) {
+    console.error('[preview]', error)
+    return new Response('Preview unavailable', { status: 500 })
   }
-
-  ;(await draftMode()).enable()
 
   redirect(url)
 }
