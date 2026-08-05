@@ -4,12 +4,13 @@ import { notFound } from 'next/navigation';
 import { ArrowLeftIcon } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
-import type { Media, User } from '@/payload-types';
+import type { Media, Post, User } from '@/payload-types';
 import { lexicalToMarkdownAsync, extractHeadingsFromMarkdown, calculateReadTimeAsync } from '@/utils/posts';
 import { customConverters } from '@/components/rich-text';
 import { ActionButtons } from './components/ActionButtons';
 import { TableOfContents } from './components/TableOfContents';
 import { getPayload } from '@/lib/payload';
+import { ErrorState } from '@/components/ErrorState';
 import { PayloadImage } from '@/components/PayloadImage';
 import { Button } from '@/components/ui/button';
 import { VideoEmbed } from '@/components/VideoEmbed';
@@ -39,19 +40,31 @@ export default async function BlogPostPage({params}: BlogPostPage) {
   const { isEnabled: preview } = await draftMode();
 
   const payload = await getPayload();
-  const { docs: allPosts } = await payload.find({
-    collection: 'posts',
-    sort: '-publishedAt',
-    draft: preview,
-    depth: 2,
-    where: preview
-      ? { slug: { equals: slug } }
-      : {
-          slug: { equals: slug },
-          _status: { equals: 'published' },
-          publishedAt: { less_than_equal: new Date().toISOString() },
-        },
-  })
+  let allPosts: Post[] = []
+  try {
+    const { docs } = await payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      draft: preview,
+      depth: 2,
+      where: preview
+        ? { slug: { equals: slug } }
+        : {
+            slug: { equals: slug },
+            _status: { equals: 'published' },
+            publishedAt: { less_than_equal: new Date().toISOString() },
+          },
+    })
+    allPosts = docs
+  } catch (error) {
+    return (
+      <main className="min-h-screen bg-neutral-50/50 py-12 text-neutral-900 antialiased">
+        <div className="container mx-auto max-w-6xl px-6 sm:px-8">
+          <ErrorState message={error instanceof Error ? error.message : String(error)} />
+        </div>
+      </main>
+    )
+  }
 
   const post = allPosts[0];
   if (!post) notFound();

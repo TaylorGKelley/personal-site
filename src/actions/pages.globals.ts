@@ -14,6 +14,7 @@ export const getHomePage: FetchAction<HomePage> = async (options) => {
 
     return { data }
   } catch (error) {
+    console.error('[getHomePage]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),
@@ -31,6 +32,7 @@ export const getAboutPage: FetchAction<AboutPage> = async (options) => {
 
     return { data }
   } catch (error) {
+    console.error('[getAboutPage]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),
@@ -48,6 +50,7 @@ export const getPostsPage: FetchAction<PostsPage> = async (options) => {
 
     return { data }
   } catch (error) {
+    console.error('[getPostsPage]', error)
     return {
       data: null,
       error: error instanceof Error ? error.message : String(error),

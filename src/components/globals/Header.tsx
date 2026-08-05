@@ -5,8 +5,9 @@ import { NavLink } from "./NavLink";
 import { File } from "@/payload-types";
 
 export async function Header() {
-  const { data } = await getHeader();
+  const { data, error } = await getHeader();
 
+  if (error) console.error('[Header]', error);
   if (!data) return <></>; // Just don't render the header if there is not data filled out
 
   return (

@@ -2,7 +2,11 @@ import { getFooter } from "@/actions/globals"
 import Link from "next/link"
 
 export async function Footer() {
-  const { data } = await getFooter()
+  const { data, error } = await getFooter()
+
+  if (error) console.error('[Footer]', error);
+
+  if (!data) return null;
 
   return (
     <footer className="bg-background text-foreground py-16 border-t border-t-sidebar-border/10 max-sm:text-center">

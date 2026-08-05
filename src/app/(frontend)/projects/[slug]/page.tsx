@@ -1,5 +1,6 @@
 import { getProject } from "@/actions/project.collections";
 import { RenderBlocks } from "@/components/blocks/Projects";
+import { ErrorState } from "@/components/ErrorState";
 import { PayloadIcon } from "@/components/PayloadIcon";
 import { PayloadImage } from "@/components/PayloadImage";
 import { Button } from "@/components/ui/button";
@@ -12,15 +13,20 @@ type ProjectPageProps = {
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const payload = await getPayload();
-  const { docs } = await payload.find({
-    collection: 'projects',
-    draft: false,
-    limit: 1000,
-    select: { slug: true },
-  })
+  try {
+    const payload = await getPayload();
+    const { docs } = await payload.find({
+      collection: 'projects',
+      draft: false,
+      limit: 1000,
+      select: { slug: true },
+    })
 
-  return docs.map((doc) => ({ slug: doc.slug }))
+    return docs.map((doc) => ({ slug: doc.slug }))
+  } catch (error) {
+    console.error('[generateStaticParams] projects', error)
+    return []
+  }
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -32,10 +38,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) {
     return (
       <main>
-        <section className="w-full max-w-6xl mx-auto px-6 pt-16 pb-12 flex flex-col items-center text-center">
-          <h3 className='text-4xl font-serif tracking-tight font-medium texto-neutral-900'>404</h3>
-          <p>{error || 'Project not found'}</p>
-        </section>
+        <ErrorState
+          title={error?.includes('not found') ? '404' : 'Something went wrong'}
+          message={error}
+        />
       </main>
     );
   }

@@ -1,7 +1,6 @@
-import type { Category, RecentPostsBlock } from '@/payload-types';
+import type { Category, Post, RecentPostsBlock } from '@/payload-types';
 import Link from 'next/link';
-import { getPayload } from 'payload';
-import configPromise from '@payload-config';
+import { getPayload } from '@/lib/payload';
 import { ArrowUpRightIcon } from 'lucide-react';
 
 export type RecentPostsProps = RecentPostsBlock;
@@ -12,18 +11,27 @@ export const RecentPosts: React.FC<RecentPostsProps> = async ({
   viewAllText,
   displayCount,
 }) => {
-  const payload = await getPayload({ config: configPromise });
-  const now = new Date().toISOString()
-  const { docs: posts } = await payload.find({
-    collection: 'posts',
-    limit: displayCount || 3,
-    sort: '-publishedAt',
-    draft: false,
-    where: {
-      _status: { equals: 'published' },
-      publishedAt: { less_than_equal: now },
-    },
-  });
+  let posts: Post[] = []
+  let postsError: string | undefined
+
+  try {
+    const payload = await getPayload();
+    const now = new Date().toISOString()
+    const { docs } = await payload.find({
+      collection: 'posts',
+      limit: displayCount || 3,
+      sort: '-publishedAt',
+      draft: false,
+      where: {
+        _status: { equals: 'published' },
+        publishedAt: { less_than_equal: now },
+      },
+    });
+    posts = docs
+  } catch (error) {
+    postsError = error instanceof Error ? error.message : String(error)
+    console.error('[RecentPosts]', error)
+  }
 
   return (
     <section className="w-full px-6 md:px-12 py-20 bg-secondary text-secondary-foreground">
@@ -52,7 +60,12 @@ export const RecentPosts: React.FC<RecentPostsProps> = async ({
 
       {/* Posts List */}
       <div className="grid gap-10 divide-y divide-gray-200/60 group">
-        {posts.map((post) => {
+        {postsError ? (
+          <p className="py-8 text-sm text-gray-600">
+            Could not load recent posts. {postsError}
+          </p>
+        ) : (
+        posts.map((post) => {
           // Format date (e.g., OCT 2024)
           const formattedDate = post.publishedAt
             ? new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -85,7 +98,8 @@ export const RecentPosts: React.FC<RecentPostsProps> = async ({
               </Link>
             </article>
           );
-        })}
+        })
+        )}
         </div>
       </div>
     </section>
