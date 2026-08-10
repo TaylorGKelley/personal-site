@@ -969,7 +969,9 @@ export interface Footer {
   copyright: string;
   navigationLinks: {
     name: string;
-    url: string;
+    linkType?: ('custom' | 'file') | null;
+    url?: string | null;
+    fileDoc?: (number | null) | File;
     id?: string | null;
   }[];
   connectLinks: {
@@ -1169,7 +1171,9 @@ export interface FooterSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
+        linkType?: T;
         url?: T;
+        fileDoc?: T;
         id?: T;
       };
   connectLinks?:

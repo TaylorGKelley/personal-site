@@ -1,4 +1,5 @@
 import { getFooter } from "@/actions/globals"
+import { File } from "@/payload-types";
 import Link from "next/link"
 
 export async function Footer() {
@@ -20,10 +21,21 @@ export async function Footer() {
           <div className='grid gap-4'>
             <h5 className='uppercase font-mono font-semibold text-sm tracking-wide'>Navigation</h5>
             <ul className='grid gap-2'>
-              {data?.navigationLinks.map((link) => (
-                <li key={link.id}>
-                      <Link href={link.url}>{link.name}</Link>
-                </li>))}
+              {data?.navigationLinks.map((link) => {
+                if (link.linkType === 'custom') {
+                  return (
+                    <li key={link.id}>
+                      <Link href={link.url!}>{link.name}</Link>
+                    </li>
+                  )
+                } else {
+                  return (
+                    <li key={link.id}>
+                      <Link href={(link.fileDoc as File).url!}>{link.name}</Link>
+                    </li>
+                  )
+                }
+              })}
             </ul>
           </div>
           <div className='grid gap-4'>
