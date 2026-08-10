@@ -1,3 +1,5 @@
+'use client';
+
 import { getHeader } from "@/actions/globals";
 import Link from "next/link";
 import { Button } from "../ui/button";
