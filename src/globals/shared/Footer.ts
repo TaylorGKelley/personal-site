@@ -26,6 +26,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'navigationLinks',
       type: 'array',
+      required: true,
       fields: [
         {
           name: 'name',
@@ -33,12 +34,37 @@ export const Footer: GlobalConfig = {
           required: true,
         },
         {
+          name: 'linkType',
+          type: 'select',
+          defaultValue: 'custom',
+          options: [
+            { label: 'Custom URL', value: 'custom' },
+            { label: 'File Upload (e.g., Resume)', value: 'file' },
+          ],
+          admin: {
+            width: '50%',
+          },
+        },
+        {
           name: 'url',
           type: 'text',
+          // Only required and visible if linkType is 'custom'
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.linkType === 'custom',
+          },
+        },
+        {
+          name: 'fileDoc',
+          type: 'relationship',
+          relationTo: 'files',
+          // Only required and visible if linkType is 'file'
+          required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.linkType === 'file',
+          },
         },
       ],
-      required: true,
     },
     {
       name: 'connectLinks',

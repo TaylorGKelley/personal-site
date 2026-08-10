@@ -1,4 +1,4 @@
-import 'server-only'
+// import 'server-only'
 import { revalidatePath } from 'next/cache'
 
 export const revalidatePost = (slug?: string) => {
