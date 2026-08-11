@@ -8,9 +8,9 @@ export const TechStackCard = ({ frameworks, columns }: TechStackCardProps) => {
   return (
     <div className={cn("bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm flex flex-col justify-between h-full",
       {
-        'col-span-1': columns === '1',
-        'col-span-2': columns === '2',
-        'col-span-3': columns === '3',
+        'lg:col-span-1': columns === '1',
+        'lg:col-span-2': columns === '2',
+        'lg:col-span-3': columns === '3',
       })}>
       <div>
         <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center mb-6">
