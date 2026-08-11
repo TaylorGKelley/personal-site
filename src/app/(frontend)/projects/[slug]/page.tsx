@@ -71,10 +71,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.title}
             </h1>
 
-            <div className="relative w-full aspect-4/3 md:aspect-video rounded-2xl overflow-hidden shadow-2xl p-8 mb-10">
+            <div className="relative w-full aspect-4/3 md:aspect-video rounded-2xl  shadow-2xl p-8 mb-10">
               <PayloadImage
                 media={project?.coverImage}
-                className="object-cover rounded-xl h-full"
+                className="object-cover rounded-xl w-full aspect-4/3"
               />
             </div>
 
