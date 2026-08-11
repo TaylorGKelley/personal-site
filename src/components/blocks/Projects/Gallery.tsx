@@ -1,4 +1,5 @@
 import { PayloadImage } from '@/components/PayloadImage';
+import { cn } from '@/lib/utils';
 import type { GalleryBlock } from '@/payload-types';
 
 type GalleryProps = GalleryBlock;
@@ -21,13 +22,17 @@ export const Gallery = ({ eyebrow, heading, layout, content }: GalleryProps) => 
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className={cn('grid grid-cols-1 md:grid-cols-2 gap-8',
+        {
+          'md:grid-cols-2': layout === '2-column',
+          'lg:grid-cols-3': layout === '3-column',
+        })}>
         {content?.map((item, idx) => (
           <div key={idx} className="flex flex-col group">
-            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-neutral-100 border border-neutral-200 mb-4 transition-transform duration-300 group-hover:scale-[1.01]">
+            <div className="relative w-full h-min rounded-2xl overflow-hidden bg-neutral-100 border border-neutral-200 mb-4 transition-transform duration-300 group-hover:scale-[1.01]">
               <PayloadImage
                 media={item.media}
-                className="object-cover"
+                className="object-fill"
               />
             </div>
             <p className='text-xs text-muted-foreground uppercase'>Fig {String(idx + 1).padStart(2, '0')}</p>
