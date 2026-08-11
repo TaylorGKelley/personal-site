@@ -1,4 +1,5 @@
 import { getFooter } from "@/actions/globals"
+import { File } from "@/payload-types";
 import Link from "next/link"
 
 export async function Footer() {
@@ -30,7 +31,7 @@ export async function Footer() {
                 } else {
                   return (
                     <li key={link.id}>
-                      <Link href={(link.fileDoc as any).url!}>{link.name}</Link>
+                      <Link href={(link.fileDoc as File).url!}>{link.name}</Link>
                     </li>
                   )
                 }
