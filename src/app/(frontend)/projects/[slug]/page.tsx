@@ -9,6 +9,7 @@ import { buildMetadata, resolveMediaUrl } from '@/lib/metadata';
 import { draftMode } from 'next/headers';
 import Link from "next/link";
 import type { Metadata } from "next";
+import type { Media } from "@/payload-types";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   return buildMetadata({
     title: data.title,
     description: data.subtitle,
-    image: resolveMediaUrl(data.coverImage),
+    image: (data.coverImage as Media)?.thumbnailURL || (data.coverImage as Media)?.url,
     url: `/projects/${data.slug}`,
     type: 'article',
   })
@@ -73,7 +74,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="relative w-full aspect-4/3 md:aspect-video rounded-2xl overflow-hidden shadow-2xl p-8 mb-10">
               <PayloadImage
                 media={project?.coverImage}
-                className="object-cover rounded-xl"
+                className="object-cover rounded-xl h-full"
               />
             </div>
 
