@@ -17,6 +17,7 @@ import { Categories } from './collections/Categories'
 import { Posts } from './collections/Posts'
 import { PostsPage } from './globals/PostsPage'
 import { AboutPage } from './globals/AboutPage'
+import { SEO } from './globals/SEO'
 import { Header } from './globals/shared/Header'
 import { Footer } from './globals/shared/Footer'
 import { CodeBlock } from './blocks/utils/CodeBlock'
@@ -33,7 +34,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Files, Projects, Frameworks, Posts, Categories],
-  globals: [Header, Footer, HomePage, AboutPage, PostsPage],
+  globals: [Header, Footer, HomePage, AboutPage, PostsPage, SEO],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

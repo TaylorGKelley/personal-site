@@ -7,6 +7,7 @@ import { Footer } from '@/components/globals/Footer'
 import { Fira_Code } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cn } from '@/lib/utils'
+import { buildMetadata } from '@/lib/metadata'
 import '../global.css'
 import { Toaster } from '@/components/ui/sonner';
 
@@ -19,9 +20,8 @@ const firaCode = Fira_Code({
   variable: '--font-fira-code',
 })
 
-export const metadata: Metadata = {
-  description: '',
-  title: 'Portfolio and Blog of Taylor Kelley',
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata()
 }
 
 export default function RootLayout({children}: { children: React.ReactNode }) {

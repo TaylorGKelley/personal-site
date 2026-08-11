@@ -9,9 +9,22 @@ import Link from 'next/link'
 import { getPostsPage } from '@/actions/pages.globals'
 import { ErrorState } from '@/components/ErrorState'
 import { draftMode } from 'next/headers'
+import type { Metadata } from 'next'
+import { buildMetadata, getSeo } from '@/lib/metadata'
 import type { Where } from 'payload'
 
 const PER_PAGE = 6
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeo()
+  const { data } = await getPostsPage({ draft: false })
+
+  return buildMetadata({
+    title: data?.title || seo?.title || undefined,
+    description: data?.subtitle || seo?.description || undefined,
+    url: '/posts',
+  })
+}
 
 function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString('en-US', {

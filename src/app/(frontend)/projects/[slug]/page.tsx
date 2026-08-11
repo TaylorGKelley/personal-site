@@ -5,11 +5,28 @@ import { PayloadIcon } from "@/components/PayloadIcon";
 import { PayloadImage } from "@/components/PayloadImage";
 import { Button } from "@/components/ui/button";
 import { getPayload } from '@/lib/payload';
+import { buildMetadata, resolveMediaUrl } from '@/lib/metadata';
 import { draftMode } from 'next/headers';
 import Link from "next/link";
+import type { Metadata } from "next";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const { data } = await getProject(slug, { draft: false });
+
+  if (!data) return {}
+
+  return buildMetadata({
+    title: data.title,
+    description: data.subtitle,
+    image: resolveMediaUrl(data.coverImage),
+    url: `/projects/${data.slug}`,
+    type: 'article',
+  })
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {

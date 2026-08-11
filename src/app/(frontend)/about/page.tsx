@@ -3,6 +3,21 @@ import { RenderBlocks } from "@/components/blocks/About";
 import { PayloadImage } from "@/components/PayloadImage";
 import { ErrorState } from "@/components/ErrorState";
 import { draftMode } from 'next/headers';
+import type { Metadata } from 'next';
+import { buildMetadata, getSeo, resolveMediaUrl } from "@/lib/metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeo()
+  const { data } = await getAboutPage({ draft: false })
+  const portrait = data?.portrait ? resolveMediaUrl(data.portrait) : null
+
+  return buildMetadata({
+    title: data?.heading || seo?.title || undefined,
+    description: data?.subheading || seo?.description || undefined,
+    image: portrait,
+    url: '/about',
+  })
+}
 
 export default async function AboutPage() {
   const { isEnabled } = await draftMode();

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeftIcon } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
+import type { Metadata } from 'next';
 import type { Media, Post, User } from '@/payload-types';
 import { lexicalToMarkdownAsync, extractHeadingsFromMarkdown, calculateReadTimeAsync } from '@/utils/posts';
 import { customConverters } from '@/components/rich-text';
@@ -14,6 +15,8 @@ import { ErrorState } from '@/components/ErrorState';
 import { PayloadImage } from '@/components/PayloadImage';
 import { Button } from '@/components/ui/button';
 import { VideoEmbed } from '@/components/VideoEmbed';
+import { JsonLd } from '@/components/JsonLd';
+import { buildArticleJsonLd, buildMetadata, getYouTubeThumbnail, resolveMediaUrl } from '@/lib/metadata';
 
 type BlogPostPage = {
   params: Promise<{ slug: string }>;
@@ -33,6 +36,48 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   })
 
   return docs.map((doc) => ({ slug: doc.slug }))
+}
+
+export async function generateMetadata({ params }: BlogPostPage): Promise<Metadata> {
+  const { slug } = await params;
+
+  let post: Post | undefined
+  try {
+    const payload = await getPayload();
+    const { docs } = await payload.find({
+      collection: 'posts',
+      draft: false,
+      depth: 2,
+      where: {
+        slug: { equals: slug },
+        _status: { equals: 'published' },
+        publishedAt: { less_than_equal: new Date().toISOString() },
+      },
+    })
+    post = docs[0]
+  } catch (error) {
+    console.error('[generateMetadata] post', error)
+    return {}
+  }
+
+  if (!post) return {}
+
+  const image = post.youtubeUrl
+    ? await getYouTubeThumbnail(post.youtubeUrl)
+    : resolveMediaUrl(post.coverImage)
+  const author = typeof post.author === 'object' ? post.author : undefined
+  const categoryName = typeof post.category === 'object' ? post.category.name : undefined
+
+  return buildMetadata({
+    title: post.title,
+    description: post.excerpt,
+    image,
+    url: `/posts/${post.slug}`,
+    type: 'article',
+    publishedTime: post.publishedAt || undefined,
+    authors: author?.name ? [author.name] : undefined,
+    tags: categoryName ? [categoryName] : undefined,
+  })
 }
 
 export default async function BlogPostPage({params}: BlogPostPage) {
@@ -75,6 +120,7 @@ export default async function BlogPostPage({params}: BlogPostPage) {
 
   return (
     <main className="min-h-screen bg-neutral-50/50 py-12 text-neutral-900 antialiased">
+      <JsonLd data={await buildArticleJsonLd(post)} />
       <div className="container mx-auto max-w-6xl px-6 sm:px-8">
         <Link
           href="/posts"

@@ -103,6 +103,7 @@ export interface Config {
     'home-page': HomePage;
     'about-page': AboutPage;
     'posts-page': PostsPage;
+    seo: Seo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -110,6 +111,7 @@ export interface Config {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
     'posts-page': PostsPageSelect<false> | PostsPageSelect<true>;
+    seo: SeoSelect<false> | SeoSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1143,6 +1145,26 @@ export interface PostsPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo".
+ */
+export interface Seo {
+  id: number;
+  title: string;
+  description: string;
+  /**
+   * Used as the Open Graph share image for the Home and About pages.
+   */
+  profileImage?: (number | null) | Media;
+  siteName?: string | null;
+  /**
+   * Twitter/X handle without the @, e.g. taylorgkelley
+   */
+  xHandle?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1344,6 +1366,20 @@ export interface PostsPageSelect<T extends boolean = true> {
   subtitle?: T;
   featured?: T;
   postCount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo_select".
+ */
+export interface SeoSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  profileImage?: T;
+  siteName?: T;
+  xHandle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
