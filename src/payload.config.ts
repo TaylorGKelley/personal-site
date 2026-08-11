@@ -60,6 +60,12 @@ export default buildConfig({
             return `https://${process.env.SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/${process.env.SUPABASE_BUCKET_NAME}/${filename}`
           },
         },
+        files: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename }) => {
+            return `https://${process.env.SUPABASE_PROJECT_REF}.supabase.co/storage/v1/object/public/${process.env.SUPABASE_BUCKET_NAME}/${filename}`
+          },
+        },
       },
       bucket: process.env.SUPABASE_BUCKET_NAME || '',
       config: {
