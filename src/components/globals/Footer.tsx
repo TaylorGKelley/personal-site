@@ -10,7 +10,7 @@ export async function Footer() {
   if (!data) return null;
 
   return (
-    <footer className="bg-background text-foreground py-16 border-t border-t-sidebar-border/10 max-md:text-center">
+    <footer className="bg-background text-foreground py-16 border-t border-t-sidebar-border/10 text-center md:text-left">
       <div className="container px-4 mx-auto flex flex-col md:flex-row md:justify-between items-center gap-8">
         <div className='grid gap-6 max-w-sm'>
           <h4 className="text-2xl">{data?.title}</h4>

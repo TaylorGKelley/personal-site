@@ -15,7 +15,7 @@ export const FeatureGrid = ({ eyebrow, summaryTitle, cards }: FeatureGridProps) 
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {cards && <RenderBlocks blocks={cards} />}
       </div>
     </section>

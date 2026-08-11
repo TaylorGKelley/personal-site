@@ -15,7 +15,7 @@ export async function Header() {
 
   return (
     <header className="relative z-50 container mx-auto px-4 h-20 flex items-center bg-sidebar text-sidebar-foreground  border-b border-b-sidebar-border/10">
-      <div className='grid grid-cols-[auto_1fr_auto] sm:flex sm:justify-between items-center flex-1'>
+      <div className='grid grid-cols-[auto_1fr_auto] items-center flex-1'>
         <Link href="/" className="font-mono font-semibold text-xl">{data.logo}</Link>
 
         <nav className="hidden md:flex justify-center items-center gap-8">
@@ -24,7 +24,7 @@ export async function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           {data.resume ?
             <Link href={resumeUrl} target="_blank" className="hidden md:inline-flex">
               <Button size="lg" className='px-6 py-2 rounded-full bg-sidebar-primary cursor-pointer'>
