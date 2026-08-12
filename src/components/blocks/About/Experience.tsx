@@ -16,9 +16,8 @@ export function Experience({ title, heading, jobs }: ExperienceProps) {
             </h2>
           </div>
           <div className="relative border-l border-slate-200 ml-2 space-y-12">
-            {jobs && jobs.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()).map((job, index) => (
+            {jobs && jobs.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).map((job, index) => (
               <div key={index} className="relative pl-8">
-                {/* Timeline Bullet */}
                 <span className="absolute -left-[5px] top-0 w-3 h-3 rounded-full bg-slate-900 border-2 border-white" />
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
                   <h3 className="text-xl font-serif text-slate-900">{job.title}</h3>
