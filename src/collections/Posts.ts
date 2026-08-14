@@ -23,7 +23,11 @@ export const Posts: CollectionConfig = {
     },
   },
   versions: {
-    drafts: true, // Enables save-as-draft capability
+    drafts: {
+      autosave: {
+        interval: 1000
+      }
+    }, // Enables save-as-draft capability
   },
   hooks: {
     afterChange: [
