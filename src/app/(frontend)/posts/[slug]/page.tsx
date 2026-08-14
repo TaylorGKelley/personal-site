@@ -163,7 +163,16 @@ export default async function BlogPostPage({params}: BlogPostPage) {
             <TableOfContents headings={headings} />
           </aside>
           <article className="lg:col-span-9 max-w-none">
-            <VideoEmbed youtubeUrl={post.youtubeUrl || null} />
+            {post.youtubeUrl ? (
+                <VideoEmbed youtubeUrl={post.youtubeUrl} />
+              ) : post.coverImage ? (
+                <div className="rounded-2xl overflow-clip mx-auto relative shadow mb-8 aspect-video">
+                  <PayloadImage
+                    media={post.coverImage}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : null}
 
             <RichText
               data={post.content}

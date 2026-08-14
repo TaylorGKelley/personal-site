@@ -95,10 +95,12 @@ export const Posts: CollectionConfig = {
       required: true,
     },
     {
-      name: 'coverImage',
+      name: 'thumbnail',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      admin: {
+        position: 'sidebar',
+      }
     },
     {
       name: 'youtubeUrl',
