@@ -456,7 +456,7 @@ export interface Post {
   slug: string;
   author: number | User;
   excerpt: string;
-  coverImage: number | Media;
+  thumbnail?: (number | null) | Media;
   youtubeUrl?: string | null;
   xUrl?: string | null;
   category: number | Category;
@@ -885,7 +885,7 @@ export interface PostsSelect<T extends boolean = true> {
   slug?: T;
   author?: T;
   excerpt?: T;
-  coverImage?: T;
+  thumbnail?: T;
   youtubeUrl?: T;
   xUrl?: T;
   category?: T;
