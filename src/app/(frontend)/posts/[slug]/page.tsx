@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: BlogPostPage): Promise<Metada
 
   const image = post.youtubeUrl
     ? await getYouTubeThumbnail(post.youtubeUrl)
-    : resolveMediaUrl(post.coverImage)
+    : resolveMediaUrl(post.thumbnail)
   const author = typeof post.author === 'object' ? post.author : undefined
   const categoryName = typeof post.category === 'object' ? post.category.name : undefined
 
@@ -165,10 +165,10 @@ export default async function BlogPostPage({params}: BlogPostPage) {
           <article className="lg:col-span-9 max-w-none">
             {post.youtubeUrl ? (
                 <VideoEmbed youtubeUrl={post.youtubeUrl} />
-              ) : post.coverImage ? (
+              ) : post.thumbnail ? (
                 <div className="rounded-2xl overflow-clip mx-auto relative shadow mb-8 aspect-video">
                   <PayloadImage
-                    media={post.coverImage}
+                    media={post.thumbnail}
                     className="w-full h-full object-cover"
                   />
                 </div>

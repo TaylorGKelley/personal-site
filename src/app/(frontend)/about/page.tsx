@@ -12,8 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const portrait = data?.portrait ? resolveMediaUrl(data.portrait) : null
 
   return buildMetadata({
-    title: data?.heading || seo?.title || undefined,
-    description: data?.subheading || seo?.description || undefined,
+    title: 'About | Taylor Kelley',
+    description: seo?.description || undefined,
     image: portrait,
     url: '/about',
   })
