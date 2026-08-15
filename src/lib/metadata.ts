@@ -104,7 +104,7 @@ export async function buildArticleJsonLd(post: Post): Promise<Record<string, unk
   const seo = await getSeo()
   const image = post.youtubeUrl
     ? await getYouTubeThumbnail(post.youtubeUrl)
-    : resolveMediaUrl(post.coverImage)
+    : resolveMediaUrl(post.thumbnail)
   const author = typeof post.author === 'object' ? post.author : null
   const authorImage =
     author && author.avatar ? resolveMediaUrl(author.avatar as Media) : null
