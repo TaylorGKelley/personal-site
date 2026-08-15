@@ -1,19 +1,10 @@
 'use client'
+
 import { RefreshRouteOnSave as PayloadLivePreview } from '@payloadcms/live-preview-react'
-import { useRouter, useSearchParams } from 'next/navigation.js'
+import { useRouter } from 'next/navigation.js'
 import React from 'react'
 
-type RefreshRouteOnSaveProps = {
-  onlyOnPreview?: boolean
-}
-
-export const RefreshRouteOnSave: React.FC<RefreshRouteOnSaveProps> = ({ onlyOnPreview }) => {
-    const searchParams = useSearchParams();
-
-  if (onlyOnPreview && searchParams.get('preview') === null) {
-    return null
-  }
-
+export const RefreshRouteOnSave: React.FC = () => {
   const router = useRouter()
 
   return (

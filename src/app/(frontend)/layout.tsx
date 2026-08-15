@@ -11,6 +11,7 @@ import { buildMetadata } from '@/lib/metadata'
 import '../global.css'
 import { Toaster } from '@/components/ui/sonner';
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
+import { draftMode } from 'next/headers'
 
 const satoshi = localFont({
   src: '../../fonts/Satoshi-Variable.ttf',
@@ -25,7 +26,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata()
 }
 
-export default function RootLayout({children}: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const isDraft = await draftMode()
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn('font-sans flex flex-col min-h-screen', satoshi.variable, firaCode.variable)}>
@@ -36,8 +39,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
         <Footer />
 
-        {/* Supports payload live preview */}
-        <RefreshRouteOnSave onlyOnPreview={true} />
+        {isDraft && <RefreshRouteOnSave /> /* Supports payload live preview */}
 
         <SpeedInsights />
         <Analytics />
