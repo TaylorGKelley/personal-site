@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const hero = data?.content?.find((block): block is HeroBlock => block.blockType === 'hero')
 
   return buildMetadata({
-    title: hero?.heading || seo?.title || undefined,
+    title: 'Portfolio | Taylor Kelley',
     description: hero?.subheading || seo?.description || undefined,
     url: '/',
   })
