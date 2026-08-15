@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={cn('font-sans flex flex-col min-h-screen', satoshi.variable, firaCode.variable)}>
         <Header />
 

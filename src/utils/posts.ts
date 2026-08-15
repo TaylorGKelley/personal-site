@@ -53,5 +53,5 @@ export function extractHeadingsFromMarkdown(markdown: string): ParsedHeading[] {
       .replace(/\s+/g, '-');
 
     return { id, text, level };
-  });
+  }).filter((heading) => heading.level <= 3);
 }
