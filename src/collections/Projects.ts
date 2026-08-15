@@ -32,7 +32,11 @@ export const Projects: CollectionConfig = {
     },
   },
   versions: {
-    drafts: true, // Enables save-as-draft capability
+    drafts: {
+      autosave: {
+        interval: 500
+      }
+    }, // Enables save-as-draft capability
   },
   hooks: {
     afterChange: [

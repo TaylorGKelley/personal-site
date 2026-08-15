@@ -24,5 +24,8 @@ export async function GET(req: Request): Promise<Response> {
     return new Response('Preview unavailable', { status: 500 })
   }
 
-  redirect(url)
+  const redirectUrl = new URL(url, req.url)
+  redirectUrl.searchParams.set('preview', 'true')
+
+  redirect(redirectUrl.toString())
 }

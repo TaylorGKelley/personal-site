@@ -25,7 +25,7 @@ export const Posts: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 1000
+        interval: 500
       }
     }, // Enables save-as-draft capability
   },

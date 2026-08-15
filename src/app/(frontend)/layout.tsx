@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { buildMetadata } from '@/lib/metadata'
 import '../global.css'
 import { Toaster } from '@/components/ui/sonner';
+import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 
 const satoshi = localFont({
   src: '../../fonts/Satoshi-Variable.ttf',
@@ -34,6 +35,9 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <Toaster position='bottom-right' />
 
         <Footer />
+
+        {/* Supports payload live preview */}
+        <RefreshRouteOnSave onlyOnPreview={true} />
 
         <SpeedInsights />
         <Analytics />
